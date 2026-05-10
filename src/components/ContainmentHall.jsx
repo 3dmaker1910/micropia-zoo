@@ -6,7 +6,7 @@ import MicrobeCard from './MicrobeCard';
 
 const LOGO_URL = 'https://static.prod-images.emergentagent.com/jobs/b09505ba-190e-4ca7-9d47-23f73249f18b/images/35f7f965de88ecd8174371ab9698c7c29a20c26e2c37b5022fd3c115fce3eeac.png';
 
-export default function ContainmentHall() {
+export default function ContainmentHall({ onGoToHub }) {
   const [selectedMicrobe, setSelectedMicrobe] = useState(null);
 
   return (
@@ -83,6 +83,7 @@ export default function ContainmentHall() {
           5 organismos de máxima peligrosidad biológica • Seleccione una muestra para inspección
         </motion.p>
 
+        {/* Warning ticker */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -103,7 +104,7 @@ export default function ContainmentHall() {
       </div>
 
       {/* Containment tubes grid */}
-      <div className="max-w-6xl mx-auto px-4 pb-16">
+      <div className="max-w-6xl mx-auto px-4 pb-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 md:gap-5">
           {microbes.map((microbe, index) => (
             <ContainmentTube
@@ -116,12 +117,55 @@ export default function ContainmentHall() {
         </div>
       </div>
 
+      {/* Dr. Micra's Hub CTA */}
+      <div className="max-w-6xl mx-auto px-4 pb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1 }}
+          className="text-center"
+        >
+          <motion.button
+            onClick={onGoToHub}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="relative px-8 py-4 rounded-xl font-bold tracking-[0.15em] uppercase text-sm
+                     transition-all duration-300 group overflow-hidden"
+            style={{
+              background: 'linear-gradient(180deg, rgba(250,204,21,0.08) 0%, rgba(250,204,21,0.03) 100%)',
+              border: '1px solid rgba(250,204,21,0.2)',
+              color: '#facc15',
+              boxShadow: '0 0 30px rgba(250,204,21,0.05)',
+            }}
+          >
+            {/* Glow effect on hover */}
+            <motion.div
+              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              style={{ background: 'radial-gradient(circle at center, rgba(250,204,21,0.1) 0%, transparent 70%)' }}
+            />
+            <span className="relative z-10 flex items-center gap-3 justify-center">
+              <motion.span
+                animate={{ scale: [1, 1.15, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                🔬
+              </motion.span>
+              ENTRAR A LA OFICINA DE LA DRA. MICRA
+              <span className="text-emergency/50">▶</span>
+            </span>
+            <span className="relative z-10 block text-xs text-neutral-500 mt-1 tracking-wider normal-case font-normal">
+              Expedientes secretos • Exámenes de 3 niveles • Insignias
+            </span>
+          </motion.button>
+        </motion.div>
+      </div>
+
       {/* Footer */}
       <div className="border-t border-neutral-800/50 py-6 text-center">
         <p className="text-neutral-700 tracking-[0.3em] uppercase"
           style={{ fontSize: 'clamp(0.6rem, 1.5vw, 0.75rem)' }}
         >
-          Micropia: El Zoo Invisible • Instalación BSL-4 • Todos los organismos están contenidos
+          Micropia v5.0: El Zoo Invisible • Instalación BSL-4 • Todos los organismos están contenidos
         </p>
       </div>
 
