@@ -4,7 +4,9 @@ import { useSpeech } from '../hooks/useSpeech';
 function StatBar({ label, value, color, delay }) {
   return (
     <div className="flex items-center gap-2">
-      <span className="text-[10px] text-neutral-500 w-20 shrink-0">{label}</span>
+      <span className="text-neutral-300 w-20 shrink-0 font-medium"
+        style={{ fontSize: 'clamp(0.7rem, 2vw, 0.8rem)' }}
+      >{label}</span>
       <div className="flex-1 h-2 bg-neutral-800 rounded-full overflow-hidden">
         <motion.div
           className="h-full rounded-full"
@@ -14,7 +16,7 @@ function StatBar({ label, value, color, delay }) {
           transition={{ delay, duration: 0.8, ease: 'easeOut' }}
         />
       </div>
-      <span className="text-xs font-bold w-8 text-right" style={{ color }}>{value}</span>
+      <span className="font-bold w-8 text-right" style={{ color, fontSize: 'clamp(0.75rem, 2vw, 0.875rem)' }}>{value}</span>
     </div>
   );
 }
@@ -72,34 +74,34 @@ export default function MicrobeCard({ microbe, onClose }) {
             boxShadow: `0 0 60px ${glowColor}, inset 0 1px 0 ${color}15`,
           }}
         >
-          {/* Top border accent */}
           <div className="h-1 rounded-t-xl" style={{ background: `linear-gradient(90deg, transparent, ${color}, transparent)` }} />
 
-          {/* Header */}
           <div className="relative p-6 pb-4">
-            {/* Close button */}
             <button
               onClick={() => { stop(); onClose(); }}
               className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center
-                       text-neutral-500 hover:text-white transition-colors text-lg"
+                       text-neutral-300 hover:text-white transition-colors text-xl font-bold"
             >
               ✕
             </button>
 
-            {/* Classification badge */}
             <div className="flex items-center gap-2 mb-4">
-              <span className="text-[10px] px-2 py-0.5 rounded tracking-[0.2em] uppercase font-bold"
-                style={{ background: `${color}20`, color, border: `1px solid ${color}30` }}
+              <span className="px-2 py-0.5 rounded tracking-[0.2em] uppercase font-bold"
+                style={{
+                  fontSize: 'clamp(0.65rem, 1.8vw, 0.75rem)',
+                  background: `${color}20`, color, border: `1px solid ${color}30`,
+                }}
               >
                 {type}
               </span>
-              <span className="text-[10px] px-2 py-0.5 rounded tracking-[0.2em] uppercase
-                            bg-red-500/10 text-red-400 border border-red-500/20">
+              <span className="px-2 py-0.5 rounded tracking-[0.2em] uppercase
+                            bg-red-500/10 text-red-300 border border-red-500/20"
+                style={{ fontSize: 'clamp(0.65rem, 1.8vw, 0.75rem)' }}
+              >
                 BSL-4
               </span>
             </div>
 
-            {/* Microbe icon + name */}
             <div className="flex items-center gap-4">
               <motion.div
                 className="text-5xl"
@@ -113,17 +115,18 @@ export default function MicrobeCard({ microbe, onClose }) {
                 {icon}
               </motion.div>
               <div>
-                <h2 className="text-2xl font-bold" style={{ color }}>{name}</h2>
-                <p className="text-sm text-neutral-400 italic">{scientific}</p>
+                <h2 className="font-bold" style={{ color, fontSize: 'clamp(1.2rem, 4vw, 1.6rem)' }}>{name}</h2>
+                <p className="text-neutral-300 italic" style={{ fontSize: 'clamp(0.8rem, 2.5vw, 0.95rem)' }}>{scientific}</p>
               </div>
             </div>
           </div>
 
-          {/* Stats section (Pokémon-style) */}
           <div className="px-6 py-4 mx-4 rounded-lg mb-4"
             style={{ background: `${color}08`, border: `1px solid ${color}15` }}
           >
-            <h3 className="text-[10px] tracking-[0.3em] uppercase text-neutral-500 mb-3">
+            <h3 className="tracking-[0.3em] uppercase text-neutral-300 mb-3 font-semibold"
+              style={{ fontSize: 'clamp(0.65rem, 1.8vw, 0.75rem)' }}
+            >
               Estadísticas de Combate
             </h3>
             <div className="space-y-2">
@@ -134,7 +137,6 @@ export default function MicrobeCard({ microbe, onClose }) {
             </div>
           </div>
 
-          {/* Data fields */}
           <div className="px-6 space-y-3 pb-4">
             {[
               { label: '☠ Letalidad', value: letalidad },
@@ -142,53 +144,66 @@ export default function MicrobeCard({ microbe, onClose }) {
               { label: '🔬 Descubrimiento', value: descubrimiento },
             ].map((field) => (
               <div key={field.label}>
-                <div className="text-[10px] tracking-[0.2em] uppercase text-neutral-600 mb-1">
+                <div className="tracking-[0.2em] uppercase text-neutral-400 mb-1 font-medium"
+                  style={{ fontSize: 'clamp(0.65rem, 1.8vw, 0.75rem)' }}
+                >
                   {field.label}
                 </div>
-                <div className="text-sm text-neutral-300">{field.value}</div>
+                <div className="text-white font-medium leading-relaxed"
+                  style={{ fontSize: 'clamp(0.8rem, 2.5vw, 0.95rem)' }}
+                >{field.value}</div>
               </div>
             ))}
 
-            {/* Vector de Transmisión */}
             <div className="p-3 rounded-lg"
               style={{ background: `${color}12`, border: `1px solid ${color}25` }}
             >
-              <div className="text-[10px] tracking-[0.2em] uppercase mb-1" style={{ color: `${color}99` }}>
+              <div className="tracking-[0.2em] uppercase mb-1 font-medium"
+                style={{ color: `${color}cc`, fontSize: 'clamp(0.65rem, 1.8vw, 0.75rem)' }}
+              >
                 📡 Vector de Transmisión
               </div>
-              <div className="text-sm font-medium leading-relaxed" style={{ color: `${color}dd` }}>
+              <div className="font-semibold leading-relaxed"
+                style={{ color, fontSize: 'clamp(0.8rem, 2.5vw, 0.95rem)' }}
+              >
                 {vectorTransmision}
               </div>
             </div>
 
-            {/* Impacto Histórico */}
             <div className="p-3 rounded-lg" style={{ background: `${color}08`, border: `1px solid ${color}10` }}>
-              <div className="text-[10px] tracking-[0.2em] uppercase text-neutral-600 mb-1">
+              <div className="tracking-[0.2em] uppercase text-neutral-400 mb-1 font-medium"
+                style={{ fontSize: 'clamp(0.65rem, 1.8vw, 0.75rem)' }}
+              >
                 📜 Impacto Histórico
               </div>
-              <div className="text-sm text-neutral-300 leading-relaxed">{impacto}</div>
+              <div className="text-white leading-relaxed"
+                style={{ fontSize: 'clamp(0.8rem, 2.5vw, 0.95rem)' }}
+              >{impacto}</div>
             </div>
 
-            {/* Dato de Misterio */}
             <div className="p-3 rounded-lg bg-emergency/5 border border-emergency/15">
-              <div className="text-[10px] tracking-[0.2em] uppercase text-emergency/70 mb-1">
+              <div className="tracking-[0.2em] uppercase text-emergency/90 mb-1 font-medium"
+                style={{ fontSize: 'clamp(0.65rem, 1.8vw, 0.75rem)' }}
+              >
                 🔮 Dato de Misterio
               </div>
-              <div className="text-sm text-neutral-300 leading-relaxed italic">{misterio}</div>
+              <div className="text-white leading-relaxed italic"
+                style={{ fontSize: 'clamp(0.8rem, 2.5vw, 0.95rem)' }}
+              >{misterio}</div>
             </div>
           </div>
 
-          {/* Voice button */}
           <div className="px-6 pb-6 pt-2">
             <motion.button
               onClick={speakCard}
               whileTap={{ scale: 0.95 }}
-              className="w-full py-3 rounded-lg font-bold text-sm tracking-[0.2em] uppercase
+              className="w-full py-3 rounded-lg font-bold tracking-[0.2em] uppercase
                        transition-all duration-300 flex items-center justify-center gap-2"
               style={{
+                fontSize: 'clamp(0.75rem, 2vw, 0.875rem)',
                 background: speaking ? `${color}30` : `${color}15`,
                 border: `1px solid ${speaking ? color : `${color}40`}`,
-                color: speaking ? color : `${color}cc`,
+                color: speaking ? color : `${color}ee`,
                 boxShadow: speaking ? `0 0 20px ${glowColor}` : 'none',
               }}
             >
@@ -208,7 +223,6 @@ export default function MicrobeCard({ microbe, onClose }) {
             </motion.button>
           </div>
 
-          {/* Bottom border accent */}
           <div className="h-0.5 rounded-b-xl" style={{ background: `linear-gradient(90deg, transparent, ${color}40, transparent)` }} />
         </motion.div>
       </motion.div>
