@@ -101,10 +101,19 @@ describe('Quiz Data', () => {
     expect(quizLevels[1].questions).toHaveLength(5);
   });
 
-  it('Level 3 (Gold) should have 5 questions', () => {
+  it('Level 3 (Gold) should have 10 questions (5 original + 5 Hantavirus)', () => {
     expect(quizLevels[2].level).toBe(3);
     expect(quizLevels[2].name).toBe('Oro');
-    expect(quizLevels[2].questions).toHaveLength(5);
+    expect(quizLevels[2].questions).toHaveLength(10);
+  });
+
+  it('Gold tier should contain Hantavirus questions', () => {
+    const goldQuestions = quizLevels[2].questions;
+    const hantaQuestions = goldQuestions.filter(q =>
+      q.question.toLowerCase().includes('hantavirus') ||
+      q.explanation.toLowerCase().includes('hantavirus')
+    );
+    expect(hantaQuestions.length).toBeGreaterThanOrEqual(5);
   });
 
   it('each question should have valid structure', () => {
@@ -134,5 +143,60 @@ describe('Quiz Data', () => {
       expect(level).toHaveProperty('badgeColor');
       expect(level).toHaveProperty('title');
     }
+  });
+});
+
+describe('v6.0 Components - File Existence', () => {
+  it('GlobalIntelligenceMap component should be importable', async () => {
+    const mod = await import('../src/components/GlobalIntelligenceMap.jsx');
+    expect(mod.default).toBeDefined();
+    expect(typeof mod.default).toBe('function');
+  });
+
+  it('HantavirusMission component should be importable', async () => {
+    const mod = await import('../src/components/HantavirusMission.jsx');
+    expect(mod.default).toBeDefined();
+    expect(typeof mod.default).toBe('function');
+  });
+
+  it('App should import all 6 screen components', async () => {
+    const fs = await import('fs');
+    const appContent = fs.readFileSync('src/App.jsx', 'utf-8');
+    expect(appContent).toContain("import GlobalIntelligenceMap from './components/GlobalIntelligenceMap'");
+    expect(appContent).toContain("import HantavirusMission from './components/HantavirusMission'");
+    expect(appContent).toContain("screen === 'map'");
+    expect(appContent).toContain("screen === 'mission'");
+  });
+});
+
+describe('v6.0 Navigation', () => {
+  it('App should support 6 screens: landing, hall, hub, quiz, map, mission', async () => {
+    const fs = await import('fs');
+    const appContent = fs.readFileSync('src/App.jsx', 'utf-8');
+    const screens = ['landing', 'hall', 'hub', 'quiz', 'map', 'mission'];
+    for (const screen of screens) {
+      expect(appContent).toContain(`screen === '${screen}'`);
+    }
+  });
+
+  it('ContainmentHall should have onGoToMap prop', async () => {
+    const fs = await import('fs');
+    const hallContent = fs.readFileSync('src/components/ContainmentHall.jsx', 'utf-8');
+    expect(hallContent).toContain('onGoToMap');
+    expect(hallContent).toContain('MAPA DE INTELIGENCIA GLOBAL');
+  });
+});
+
+describe('v6.0 Version Update', () => {
+  it('ContainmentHall footer should say v6.0', async () => {
+    const fs = await import('fs');
+    const content = fs.readFileSync('src/components/ContainmentHall.jsx', 'utf-8');
+    expect(content).toContain('v6.0');
+  });
+
+  it('DoctorHub footer should say v6.0', async () => {
+    const fs = await import('fs');
+    const content = fs.readFileSync('src/components/DoctorHub.jsx', 'utf-8');
+    expect(content).toContain('v6.0');
   });
 });

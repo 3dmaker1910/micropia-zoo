@@ -75,8 +75,8 @@ export const quizLevels = [
     title: "Maestro Virólogo",
     badge: "🏆",
     badgeColor: "#FFD700",
-    description: "Solo los verdaderos expertos sobreviven este nivel. Datos de los expedientes secretos.",
-    requiredCorrect: 4,
+    description: "Solo los verdaderos expertos sobreviven este nivel. Datos de los expedientes secretos y la Misión Hantavirus.",
+    requiredCorrect: 6,
     questions: [
       {
         question: "¿Qué mutación genética heredada de sobrevivientes de la Peste Negra confiere resistencia parcial al VIH?",
@@ -107,6 +107,36 @@ export const quizLevels = [
         options: ["Envenenaron los pozos", "Catapultaron cadáveres infectados con peste sobre las murallas", "Liberaron ratas infectadas", "Distribuyeron mantas contaminadas"],
         correct: 1,
         explanation: "Los mongoles catapultaron cadáveres infectados con peste sobre las murallas de Caffa. Los sobrevivientes genoveses propagaron la Peste Negra a Europa."
+      },
+      {
+        question: "¿Cuál es el reservorio natural del Hantavirus cepa Andes en Argentina?",
+        options: ["Murciélagos frugívoros", "Oligoryzomys longicaudatus (ratón colilargo)", "Ratas de alcantarilla (Rattus norvegicus)", "Mosquitos Aedes aegypti"],
+        correct: 1,
+        explanation: "El Oligoryzomys longicaudatus (ratón colilargo) es el reservorio principal del Hantavirus Andes en la Patagonia argentina y Chile."
+      },
+      {
+        question: "¿Qué hace único al Hantavirus Andes respecto a otros hantavirus?",
+        options: ["Es el más antiguo conocido", "Es el único con transmisión persona-a-persona confirmada", "Solo afecta a niños", "Se transmite por agua contaminada"],
+        correct: 1,
+        explanation: "El Hantavirus Andes (ANDV) es el ÚNICO hantavirus con transmisión persona-a-persona documentada, descubierta en El Bolsón, Argentina en 1996."
+      },
+      {
+        question: "¿Cuál es la tasa de mortalidad aproximada del Síndrome Pulmonar por Hantavirus (SPH)?",
+        options: ["1-5%", "10-15%", "30-40%", "80-90%"],
+        correct: 2,
+        explanation: "El Síndrome Pulmonar por Hantavirus tiene una tasa de mortalidad del 30-40%, haciéndolo uno de los virus más letales cuando causa enfermedad."
+      },
+      {
+        question: "¿Cómo se transmite principalmente el Hantavirus a los humanos?",
+        options: ["Picadura de mosquito", "Inhalación de partículas de orina/heces de roedores infectados", "Consumo de carne contaminada", "Contacto con agua estancada"],
+        correct: 1,
+        explanation: "El Hantavirus se transmite al inhalar partículas aerosolizadas de orina, heces o saliva de roedores infectados. No requiere contacto directo."
+      },
+      {
+        question: "¿En qué región de Argentina se documentó por primera vez la transmisión persona-a-persona de Hantavirus?",
+        options: ["Buenos Aires", "El Bolsón, Río Negro", "Ushuaia, Tierra del Fuego", "Mendoza"],
+        correct: 1,
+        explanation: "En 1996, en El Bolsón (Río Negro, Patagonia), se documentó el primer caso mundial de transmisión persona-a-persona de Hantavirus Andes."
       }
     ]
   }
