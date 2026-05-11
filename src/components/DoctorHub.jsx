@@ -29,16 +29,14 @@ function SecretFileModal({ file, onClose }) {
           boxShadow: `0 0 80px ${file.color}30, inset 0 1px 0 ${file.color}20`,
         }}
       >
-        {/* Top bar */}
         <div className="h-1.5 rounded-t-xl" style={{ background: `linear-gradient(90deg, transparent, ${file.color}, transparent)` }} />
 
-        {/* Header */}
         <div className="p-6 pb-4">
           <button
             onClick={onClose}
             className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center text-neutral-300 hover:text-white text-xl font-bold z-10"
           >
-            ✕
+            \u2715
           </button>
 
           <div className="flex items-center gap-2 mb-3">
@@ -55,7 +53,7 @@ function SecretFileModal({ file, onClose }) {
               animate={{ rotate: [0, -5, 5, 0], scale: [1, 1.1, 1] }}
               transition={{ duration: 3, repeat: Infinity }}
             >
-              📁
+              \ud83d\udcc1
             </motion.span>
             <div>
               <h2 className="font-bold text-lg" style={{ color: file.color }}>{file.codeName}</h2>
@@ -63,15 +61,13 @@ function SecretFileModal({ file, onClose }) {
             </div>
           </div>
 
-          {/* Redacted stamp */}
           <div className="mt-3 p-2 rounded border border-red-500/20 bg-red-500/5 text-center">
             <span className="text-red-400/70 text-xs tracking-[0.4em] font-bold uppercase">
-              ⚠ DOCUMENTO CLASIFICADO — SOLO PERSONAL AUTORIZADO ⚠
+              \u26a0 DOCUMENTO CLASIFICADO \u2014 SOLO PERSONAL AUTORIZADO \u26a0
             </span>
           </div>
         </div>
 
-        {/* Fact tabs */}
         <div className="px-6 flex gap-2 overflow-x-auto pb-2">
           {file.facts.map((fact, i) => (
             <button
@@ -89,7 +85,6 @@ function SecretFileModal({ file, onClose }) {
           ))}
         </div>
 
-        {/* Active fact content */}
         <div className="px-6 py-4">
           <AnimatePresence mode="wait">
             <motion.div
@@ -105,7 +100,7 @@ function SecretFileModal({ file, onClose }) {
               }}
             >
               <h3 className="font-bold mb-3 flex items-center gap-2" style={{ color: file.color }}>
-                <span className="text-lg">🔬</span>
+                <span className="text-lg">\ud83d\udd2c</span>
                 {file.facts[activeFactIndex].title}
               </h3>
               <p className="text-neutral-200 leading-relaxed text-sm">
@@ -115,11 +110,10 @@ function SecretFileModal({ file, onClose }) {
           </AnimatePresence>
         </div>
 
-        {/* Bottom bar */}
         <div className="px-6 pb-6">
           <div className="flex items-center justify-between text-xs text-neutral-600">
             <span className="tracking-[0.2em]">ARCHIVO {activeFactIndex + 1}/{file.facts.length}</span>
-            <span className="tracking-[0.2em]">Dr. Micra — Expedientes Secretos</span>
+            <span className="tracking-[0.2em]">Dr. Micra \u2014 Expedientes Secretos</span>
           </div>
         </div>
 
@@ -140,7 +134,6 @@ export default function DoctorHub({ onBack, onStartQuiz }) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      {/* Top bar */}
       <div className="sticky top-0 z-40 bg-lab-black/90 backdrop-blur-md border-b border-emergency/20">
         <div className="h-0.5"
           style={{ background: 'repeating-linear-gradient(90deg, #facc15, #facc15 10px, transparent 10px, transparent 20px)' }}
@@ -151,7 +144,7 @@ export default function DoctorHub({ onBack, onStartQuiz }) {
               onClick={onBack}
               className="text-bio-green/70 hover:text-bio-green text-sm tracking-widest uppercase transition-colors flex items-center gap-1"
             >
-              ◀ CONTENCIÓN
+              \u25c0 CONTENCI\u00d3N
             </button>
           </div>
           <div className="text-center">
@@ -159,7 +152,7 @@ export default function DoctorHub({ onBack, onStartQuiz }) {
               OFICINA DE LA DRA. MICRA
             </h1>
             <p className="tracking-[0.3em] text-neutral-600" style={{ fontSize: 'clamp(0.5rem, 1.3vw, 0.65rem)' }}>
-              CENTRO DE INVESTIGACIÓN NIVEL 5
+              CENTRO DE INVESTIGACI\u00d3N NIVEL 5
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -169,15 +162,13 @@ export default function DoctorHub({ onBack, onStartQuiz }) {
               transition={{ duration: 1.5, repeat: Infinity }}
             />
             <span className="text-emergency/60 tracking-[0.2em] hidden sm:inline" style={{ fontSize: '0.65rem' }}>
-              SESIÓN ACTIVA
+              SESI\u00d3N ACTIVA
             </span>
           </div>
         </div>
       </div>
 
-      {/* Desk scene */}
       <div className="max-w-6xl mx-auto px-4 pt-8 pb-6">
-        {/* Header with microscope glow */}
         <div className="text-center mb-10 relative">
           <motion.div
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full blur-3xl"
@@ -199,7 +190,7 @@ export default function DoctorHub({ onBack, onStartQuiz }) {
                 transition={{ duration: 2, repeat: Infinity }}
                 className="inline-block"
               >
-                🔬
+                \ud83d\udd2c
               </motion.span>
             </div>
             <h2 className="font-bold tracking-[0.15em] text-emergency mb-2"
@@ -208,14 +199,12 @@ export default function DoctorHub({ onBack, onStartQuiz }) {
               EXPEDIENTES SECRETOS
             </h2>
             <p className="text-neutral-400 tracking-wider max-w-lg mx-auto" style={{ fontSize: 'clamp(0.7rem, 2vw, 0.85rem)' }}>
-              Archivos clasificados de la Dra. Micra. Cada carpeta contiene datos oscuros y desconocidos sobre los patógenos más letales del planeta.
+              Archivos clasificados de la Dra. Micra. Cada carpeta contiene datos oscuros y desconocidos sobre los pat\u00f3genos m\u00e1s letales del planeta.
             </p>
           </motion.div>
         </div>
 
-        {/* Desk surface — folder grid */}
         <div className="relative mb-12">
-          {/* Desk surface */}
           <div className="rounded-2xl p-6 sm:p-8"
             style={{
               background: 'linear-gradient(180deg, rgba(20,15,10,0.9) 0%, rgba(15,10,5,0.95) 100%)',
@@ -223,7 +212,6 @@ export default function DoctorHub({ onBack, onStartQuiz }) {
               boxShadow: '0 0 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(139,90,43,0.1)',
             }}
           >
-            {/* Desk lamp glow */}
             <div className="absolute top-0 right-8 w-32 h-32 rounded-full blur-3xl opacity-20"
               style={{ background: 'radial-gradient(circle, rgba(250,204,21,0.3) 0%, transparent 70%)' }}
             />
@@ -254,14 +242,12 @@ export default function DoctorHub({ onBack, onStartQuiz }) {
                         boxShadow: hoveredFolder === file.microbeId ? `0 0 30px ${file.color}20` : 'none',
                       }}
                     >
-                      {/* Folder icon */}
                       <motion.div
                         className="text-4xl mb-3 relative"
                         animate={hoveredFolder === file.microbeId ? { rotate: [-2, 2, -2] } : {}}
                         transition={{ duration: 0.5, repeat: Infinity }}
                       >
-                        📂
-                        {/* Microbe thumbnail */}
+                        \ud83d\udcc2
                         {microbe?.image && (
                           <img
                             src={microbe.image}
@@ -282,12 +268,11 @@ export default function DoctorHub({ onBack, onStartQuiz }) {
                         {file.classification}
                       </p>
 
-                      {/* Hover indicator */}
                       <motion.div
                         className="mt-3 text-xs tracking-wider uppercase opacity-0 group-hover:opacity-100 transition-opacity"
                         style={{ color: file.color }}
                       >
-                        ▶ ABRIR
+                        \u25b6 ABRIR
                       </motion.div>
                     </motion.div>
                   </motion.div>
@@ -297,7 +282,6 @@ export default function DoctorHub({ onBack, onStartQuiz }) {
           </div>
         </div>
 
-        {/* Quiz invitation */}
         <div className="text-center mb-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -315,15 +299,15 @@ export default function DoctorHub({ onBack, onStartQuiz }) {
               animate={{ scale: [1, 1.1, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
             >
-              🧪
+              \ud83e\uddea
             </motion.div>
             <h3 className="font-bold tracking-[0.15em] text-emergency mb-3"
               style={{ fontSize: 'clamp(1rem, 3vw, 1.3rem)' }}
             >
-              ¿LISTO PARA EL EXAMEN?
+              \u00bfLISTO PARA EL EXAMEN?
             </h3>
             <p className="text-neutral-400 text-sm mb-6 leading-relaxed max-w-md mx-auto">
-              La Dra. Micra ha preparado un examen de 3 niveles. Demuestra tus conocimientos sobre los patógenos más letales de la historia y consigue las insignias de Bronce, Plata y Oro.
+              La Dra. Micra ha preparado un examen de 3 niveles. Demuestra tus conocimientos sobre los pat\u00f3genos m\u00e1s letales de la historia y consigue las insignias de Bronce, Plata y Oro.
             </p>
             <motion.button
               onClick={onStartQuiz}
@@ -334,20 +318,18 @@ export default function DoctorHub({ onBack, onStartQuiz }) {
                        hover:bg-emergency/20 hover:border-emergency/50 hover:shadow-[0_0_20px_rgba(250,204,21,0.15)]
                        transition-all duration-300"
             >
-              🏆 INICIAR EXAMEN MULTI-NIVEL
+              \ud83c\udfc6 INICIAR EXAMEN MULTI-NIVEL
             </motion.button>
           </motion.div>
         </div>
       </div>
 
-      {/* Footer */}
       <div className="border-t border-neutral-800/50 py-6 text-center">
         <p className="text-neutral-700 tracking-[0.3em] uppercase" style={{ fontSize: 'clamp(0.55rem, 1.3vw, 0.7rem)' }}>
-          Micropia v5.0 • El Horror Laboratory • Oficina de la Dra. Micra
+          Micropia v6.0 \u2022 El Horror Laboratory \u2022 Oficina de la Dra. Micra
         </p>
       </div>
 
-      {/* Secret file modal */}
       <AnimatePresence>
         {selectedFile && (
           <SecretFileModal file={selectedFile} onClose={() => setSelectedFile(null)} />
