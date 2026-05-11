@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { microbes } from '../data/microbes';
 import ContainmentTube from './ContainmentTube';
 import MicrobeCard from './MicrobeCard';
+import SecurityGuard from './SecurityGuard';
 
 const LOGO_URL = 'https://static.prod-images.emergentagent.com/jobs/b09505ba-190e-4ca7-9d47-23f73249f18b/images/35f7f965de88ecd8174371ab9698c7c29a20c26e2c37b5022fd3c115fce3eeac.png';
 
@@ -80,7 +81,7 @@ export default function ContainmentHall({ onGoToHub, onGoToMap }) {
           className="tracking-[0.3em] text-neutral-500 uppercase max-w-md mx-auto"
           style={{ fontSize: 'clamp(0.65rem, 2vw, 0.85rem)' }}
         >
-          5 organismos de máxima peligrosidad biológica • Seleccione una muestra para inspección
+          5 organismos de máxima peligrosidad biológica • Toca un domo para inspección
         </motion.p>
 
         {/* Warning ticker */}
@@ -96,9 +97,9 @@ export default function ContainmentHall({ onGoToHub, onGoToMap }) {
             className="text-red-500/40 tracking-[0.2em] whitespace-nowrap"
             style={{ fontSize: 'clamp(0.6rem, 1.5vw, 0.75rem)' }}
           >
-            ⚠ ADVERTENCIA: MATERIAL BIOLÓGICO NIVEL 4 • NO ROMPER EL VIDRIO DE CONTENCIÓN • 
-            PROTOCOLO DE EMERGENCIA: EVACUACIÓN INMEDIATA SI SE DETECTA RUPTURA • 
-            EQUIPO DE PROTECCIÓN OBLIGATORIO ⚠
+            ⚢ ADVERTENCIA: MATERIAL BIOLÓGICO NIVEL 4 • NO ROMPER EL VIDRIO DE CONTENCIÓN • 
+            PROTOCOLO DE EMERGENCIA: EVACUACION INMEDIATA SI SE DETECTA RUPTURA • 
+            EQUIPO DE PROTECCHϓSOBLIGATORIO ⚠
           </motion.p>
         </motion.div>
       </div>
@@ -117,10 +118,16 @@ export default function ContainmentHall({ onGoToHub, onGoToMap }) {
         </div>
       </div>
 
-      {/* Navigation buttons — clearly visible "Siguiente Sala" CTAs */}
+      {/* Security Guard NPC */}
+      <div className="max-w-6xl mx-auto px-4 pb-8">
+        <div className="maw-w-md">
+          <SecurityGuard />
+        </div>
+      </div>
+
+      {/* Navigation buttons */}
       <div className="max-w-6xl mx-auto px-4 pb-8">
         <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
-          {/* Dr. Micra's Hub CTA */}
           <motion.button
             onClick={onGoToHub}
             whileHover={{ scale: 1.02, boxShadow: '0 0 25px rgba(250,204,21,0.15)' }}
@@ -156,7 +163,6 @@ export default function ContainmentHall({ onGoToHub, onGoToMap }) {
             </span>
           </motion.button>
 
-          {/* Global Intelligence Map CTA */}
           <motion.button
             onClick={onGoToMap}
             whileHover={{ scale: 1.02, boxShadow: '0 0 25px rgba(239,68,68,0.15)' }}
@@ -199,7 +205,7 @@ export default function ContainmentHall({ onGoToHub, onGoToMap }) {
         <p className="text-neutral-700 tracking-[0.3em] uppercase"
           style={{ fontSize: 'clamp(0.6rem, 1.5vw, 0.75rem)' }}
         >
-          Micropia v6.6: El Zoo Invisible • Instalación BSL-4 • Todos los organismos están contenidos
+          Micropia v7.0: El Zoo Invisible • Instalación BSL-4 • Todos los organismos están contenidos
         </p>
       </div>
 
