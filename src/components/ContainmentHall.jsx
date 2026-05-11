@@ -11,6 +11,7 @@ export default function ContainmentHall({ onGoToHub, onGoToMap }) {
 
   return (
     <div className="min-h-screen relative">
+      {/* Top warning bar */}
       <div className="sticky top-0 z-40 bg-lab-black/90 backdrop-blur-md border-b border-emergency/20">
         <div className="h-0.5"
           style={{
@@ -39,7 +40,7 @@ export default function ContainmentHall({ onGoToHub, onGoToMap }) {
               <p className="tracking-[0.3em] text-neutral-600"
                 style={{ fontSize: 'clamp(0.55rem, 1.5vw, 0.7rem)' }}
               >
-                SALA DE CONTENCI\u00d3N BSL-4
+                SALA DE CONTENCIÓN BSL-4
               </p>
             </div>
           </div>
@@ -53,12 +54,13 @@ export default function ContainmentHall({ onGoToHub, onGoToMap }) {
             <span className="text-bio-green/70 tracking-[0.2em] hidden sm:inline"
               style={{ fontSize: 'clamp(0.6rem, 1.5vw, 0.75rem)' }}
             >
-              CONTENCI\u00d3N ACTIVA
+              CONTENCIÓN ACTIVA
             </span>
           </div>
         </div>
       </div>
 
+      {/* Header section */}
       <div className="max-w-6xl mx-auto px-4 pt-10 pb-6 text-center">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -69,7 +71,7 @@ export default function ContainmentHall({ onGoToHub, onGoToMap }) {
             textShadow: '0 0 30px rgba(250, 204, 21, 0.2)',
           }}
         >
-          SALA DE CONTENCI\u00d3N
+          SALA DE CONTENCIÓN
         </motion.h2>
         <motion.p
           initial={{ opacity: 0 }}
@@ -78,9 +80,10 @@ export default function ContainmentHall({ onGoToHub, onGoToMap }) {
           className="tracking-[0.3em] text-neutral-500 uppercase max-w-md mx-auto"
           style={{ fontSize: 'clamp(0.65rem, 2vw, 0.85rem)' }}
         >
-          5 organismos de m\u00e1xima peligrosidad biol\u00f3gica \u2022 Seleccione una muestra para inspecci\u00f3n
+          5 organismos de máxima peligrosidad biológica • Seleccione una muestra para inspección
         </motion.p>
 
+        {/* Warning ticker */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -93,13 +96,14 @@ export default function ContainmentHall({ onGoToHub, onGoToMap }) {
             className="text-red-500/40 tracking-[0.2em] whitespace-nowrap"
             style={{ fontSize: 'clamp(0.6rem, 1.5vw, 0.75rem)' }}
           >
-            \u26a0 ADVERTENCIA: MATERIAL BIOL\u00d3GICO NIVEL 4 \u2022 NO ROMPER EL VIDRIO DE CONTENCI\u00d3N \u2022 
-            PROTOCOLO DE EMERGENCIA: EVACUACI\u00d3N INMEDIATA SI SE DETECTA RUPTURA \u2022 
-            EQUIPO DE PROTECCI\u00d3N OBLIGATORIO \u26a0
+            ⚠ ADVERTENCIA: MATERIAL BIOLÓGICO NIVEL 4 • NO ROMPER EL VIDRIO DE CONTENCIÓN • 
+            PROTOCOLO DE EMERGENCIA: EVACUACIÓN INMEDIATA SI SE DETECTA RUPTURA • 
+            EQUIPO DE PROTECCIÓN OBLIGATORIO ⚠
           </motion.p>
         </motion.div>
       </div>
 
+      {/* Containment tubes grid */}
       <div className="max-w-6xl mx-auto px-4 pb-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 md:gap-5">
           {microbes.map((microbe, index) => (
@@ -113,19 +117,19 @@ export default function ContainmentHall({ onGoToHub, onGoToMap }) {
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 pb-16">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1 }}
-          className="text-center"
-        >
+      {/* Navigation buttons — clearly visible "Siguiente Sala" CTAs */}
+      <div className="max-w-6xl mx-auto px-4 pb-8">
+        <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+          {/* Dr. Micra's Hub CTA */}
           <motion.button
             onClick={onGoToHub}
-            whileHover={{ scale: 1.02 }}
+            whileHover={{ scale: 1.02, boxShadow: '0 0 25px rgba(250,204,21,0.15)' }}
             whileTap={{ scale: 0.98 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8 }}
             className="relative px-8 py-4 rounded-xl font-bold tracking-[0.15em] uppercase text-sm
-                     transition-all duration-300 group overflow-hidden"
+                     transition-all duration-300 group overflow-hidden w-full sm:w-auto"
             style={{
               background: 'linear-gradient(180deg, rgba(250,204,21,0.08) 0%, rgba(250,204,21,0.03) 100%)',
               border: '1px solid rgba(250,204,21,0.2)',
@@ -142,31 +146,26 @@ export default function ContainmentHall({ onGoToHub, onGoToMap }) {
                 animate={{ scale: [1, 1.15, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
-                \ud83d\udd2c
+                🔬
               </motion.span>
-              ENTRAR A LA OFICINA DE LA DRA. MICRA
-              <span className="text-emergency/50">\u25b6</span>
+              SIGUIENTE SALA: DRA. MICRA
+              <span className="text-emergency/50">▶</span>
             </span>
             <span className="relative z-10 block text-xs text-neutral-500 mt-1 tracking-wider normal-case font-normal">
-              Expedientes secretos \u2022 Ex\u00e1menes de 3 niveles \u2022 Insignias
+              Expedientes secretos • Exámenes de 3 niveles • Insignias
             </span>
           </motion.button>
-        </motion.div>
-      </div>
 
-      <div className="max-w-6xl mx-auto px-4 pb-16">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.3 }}
-          className="text-center"
-        >
+          {/* Global Intelligence Map CTA */}
           <motion.button
             onClick={onGoToMap}
-            whileHover={{ scale: 1.02 }}
+            whileHover={{ scale: 1.02, boxShadow: '0 0 25px rgba(239,68,68,0.15)' }}
             whileTap={{ scale: 0.98 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.0 }}
             className="relative px-8 py-4 rounded-xl font-bold tracking-[0.15em] uppercase text-sm
-                     transition-all duration-300 group overflow-hidden"
+                     transition-all duration-300 group overflow-hidden w-full sm:w-auto"
             style={{
               background: 'linear-gradient(180deg, rgba(239,68,68,0.08) 0%, rgba(239,68,68,0.03) 100%)',
               border: '1px solid rgba(239,68,68,0.2)',
@@ -183,26 +182,28 @@ export default function ContainmentHall({ onGoToHub, onGoToMap }) {
                 animate={{ scale: [1, 1.15, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
-                \ud83c\udf10
+                🌐
               </motion.span>
-              MAPA DE INTELIGENCIA GLOBAL
-              <span className="text-red-400/50">\u25b6</span>
+              SIGUIENTE SALA: MAPA GLOBAL
+              <span className="text-red-400/50">▶</span>
             </span>
             <span className="relative z-10 block text-xs text-neutral-500 mt-1 tracking-wider normal-case font-normal">
-              Red de vigilancia epidemiol\u00f3gica \u2022 Misi\u00f3n Hantavirus \u2022 Argentina
+              Red de vigilancia epidemiológica • Misión Hantavirus • Argentina
             </span>
           </motion.button>
-        </motion.div>
+        </div>
       </div>
 
+      {/* Footer */}
       <div className="border-t border-neutral-800/50 py-6 text-center">
         <p className="text-neutral-700 tracking-[0.3em] uppercase"
           style={{ fontSize: 'clamp(0.6rem, 1.5vw, 0.75rem)' }}
         >
-          Micropia v6.0: El Zoo Invisible \u2022 Instalaci\u00f3n BSL-4 \u2022 Todos los organismos est\u00e1n contenidos
+          Micropia v6.6: El Zoo Invisible • Instalación BSL-4 • Todos los organismos están contenidos
         </p>
       </div>
 
+      {/* Modal */}
       {selectedMicrobe && (
         <MicrobeCard
           microbe={selectedMicrobe}
