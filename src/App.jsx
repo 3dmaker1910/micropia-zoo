@@ -6,9 +6,10 @@ import DoctorHub from './components/DoctorHub';
 import QuizSystem from './components/QuizSystem';
 import GlobalIntelligenceMap from './components/GlobalIntelligenceMap';
 import HantavirusMission from './components/HantavirusMission';
+import VectorRoom from './components/VectorRoom';
 
 function App() {
-  const [screen, setScreen] = useState('landing'); // landing, hall, hub, quiz, map, mission
+  const [screen, setScreen] = useState('landing');
 
   const handleEnter = useCallback(() => {
     setScreen('hall');
@@ -34,6 +35,10 @@ function App() {
     setScreen('map');
   }, []);
 
+  const handleGoToVectors = useCallback(() => {
+    setScreen('vectors');
+  }, []);
+
   const handleNavigate = useCallback((target) => {
     setScreen(target);
   }, []);
@@ -45,7 +50,7 @@ function App() {
           <LandingScreen key="landing" onEnter={handleEnter} />
         )}
         {screen === 'hall' && (
-          <ContainmentHall key="hall" onGoToHub={handleGoToHub} onGoToMap={handleGoToMap} />
+          <ContainmentHall key="hall" onGoToHub={handleGoToHub} onGoToMap={handleGoToMap} onGoToVectors={handleGoToVectors} />
         )}
         {screen === 'hub' && (
           <DoctorHub key="hub" onBack={handleBackToHall} onStartQuiz={handleStartQuiz} />
@@ -58,6 +63,9 @@ function App() {
         )}
         {screen === 'mission' && (
           <HantavirusMission key="mission" onNavigate={handleNavigate} />
+        )}
+        {screen === 'vectors' && (
+          <VectorRoom key="vectors" onNavigate={handleNavigate} />
         )}
       </AnimatePresence>
     </div>
