@@ -7,9 +7,10 @@ import QuizSystem from './components/QuizSystem';
 import GlobalIntelligenceMap from './components/GlobalIntelligenceMap';
 import HantavirusMission from './components/HantavirusMission';
 import VectorRoom from './components/VectorRoom';
+import BodyScanner from './components/BodyScanner';
 
 function App() {
-  const [screen, setScreen] = useState('landing');
+  const [screen, setScreen] = useState('landing'); // landing, hall, vectors, bodyscan, hub, quiz, map, mission
 
   const handleEnter = useCallback(() => {
     setScreen('hall');
@@ -66,6 +67,9 @@ function App() {
         )}
         {screen === 'vectors' && (
           <VectorRoom key="vectors" onNavigate={handleNavigate} />
+        )}
+        {screen === 'bodyscan' && (
+          <BodyScanner key="bodyscan" onNavigate={handleNavigate} />
         )}
       </AnimatePresence>
     </div>
