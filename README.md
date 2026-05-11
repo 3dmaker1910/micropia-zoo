@@ -1,38 +1,31 @@
-# 🧬 Micropia: El Zoo Invisible
+# Micropia v8.0 - El Zoo Invisible
 
-> Un laboratorio virtual BSL-4 que exhibe los microorganismos más peligrosos de la historia humana.
+Experiencia educativa interactiva BSL-4 sobre los microorganismos mas letales de la historia.
 
-## 🔬 Características
+## Caracteristicas v8.0
 
-- **Pantalla de entrada** con efecto de escaneo de seguridad
-- **Sala de contención** con 5 tubos de cristal brillante
-- **5 microorganismos**: Peste Negra, Viruela, Gripe Española, Cólera, Tuberculosis
-- **Animaciones** con Framer Motion: organismos vivos que pulsan, cambian y golpean el cristal
-- **Tarjetas estilo Pokémon** con datos técnicos: Letalidad, Peligrosidad, Descubrimiento, Impacto Histórico, Dato de Misterio
-- **Voz de Seguridad** mediante Web Speech API para lectura robótica de expedientes
+- **Landing Page**: Retrato de cientifica, microscopio, logo oficial, titulo con neon amarillo
+- **Sala de Contencion**: 5 tubos con animaciones horror (burbujas, slime, pulso), guardia NPC con chismes
+- **Mapa Global**: Mapa de alta resolucion, icono de barco MV Hondius (Argentina), Corcovado (Brasil)
+- **Laboratorio del Estomago**: Scanner corporal, zoom al estomago, H. pylori/Lombrices/Norovirus con animaciones unicas
+- **Sala de Vectores**: Anatomia interactiva de la pulga, conexion con Peste Negra
+- **Mision Hantavirus**: Juego detective con pistas y preguntas sobre Hantavirus Andes
+- **Quiz 3 Niveles**: Bronce/Plata/Oro con preguntas expertas sobre Hantavirus
+- **Visor 3D**: Modelos procedurales de bacteria de peste y pulga con Three.js
+- **Oficina Dra. Micra**: Expedientes secretos interactivos
 
-## 🎨 Tema
+## Stack
 
-- BSL-4 Biohazard Lab
-- Negro profundo (#0a0a0a)
-- Amarillo emergencia (#facc15)
-- Verde bioluminiscente (#22c55e)
-
-## 🛠 Tech Stack
-
-- React (Vite)
-- Tailwind CSS v4
+- React 18 + Vite 6
 - Framer Motion
+- Three.js / React Three Fiber
+- Vitest
 
-## 🚀 Instalación
+## Comandos
 
 ```bash
 npm install
-npm run dev
-```
-
-## 📦 Build
-
-```bash
-npm run build
+npm run dev     # Servidor de desarrollo
+npm run build   # Build de produccion
+npm test        # Tests
 ```

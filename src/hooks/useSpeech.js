@@ -2,24 +2,19 @@ import { useState, useCallback, useRef } from 'react';
 
 export function useSpeech() {
   const [speaking, setSpeaking] = useState(false);
-  const utteranceRef = useRef(null);
+  const utterRef = useRef(null);
 
   const speak = useCallback((text) => {
-    if (!('speechSynthesis' in window)) return;
+    if (!window.speechSynthesis) return;
     window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'es-ES';
-    utterance.rate = 0.85;
-    utterance.pitch = 0.3;
-    utterance.volume = 1;
-    const voices = window.speechSynthesis.getVoices();
-    const spanishVoice = voices.find(v => v.lang.startsWith('es'));
-    if (spanishVoice) utterance.voice = spanishVoice;
-    utterance.onstart = () => setSpeaking(true);
-    utterance.onend = () => setSpeaking(false);
-    utterance.onerror = () => setSpeaking(false);
-    utteranceRef.current = utterance;
-    window.speechSynthesis.speak(utterance);
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'es-ES';
+    u.rate = 0.9;
+    u.onstart = () => setSpeaking(true);
+    u.onend = () => setSpeaking(false);
+    u.onerror = () => setSpeaking(false);
+    utterRef.current = u;
+    window.speechSynthesis.speak(u);
   }, []);
 
   const stop = useCallback(() => {
