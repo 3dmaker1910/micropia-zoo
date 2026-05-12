@@ -434,7 +434,7 @@ export default function BodyScanner({ onNavigate }) {
         fontSize: '0.5rem', color: '#555',
         fontFamily: "'Orbitron', sans-serif"
       }}>
-        MICROPIA v8.0 • Escáner Corporal Biológico
+        MICROPIA v9.0 • Escáner Corporal Biológico
       </div>
     </motion.div>
   );
