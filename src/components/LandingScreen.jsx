@@ -203,7 +203,7 @@ export default function LandingScreen({ onEnter }) {
         className="tracking-[0.5em] uppercase mb-12 text-red-500/70"
         style={{ fontSize: 'clamp(0.6rem, 1.8vw, 0.8rem)' }}
       >
-        \u26a0 Instalaci\u00f3n BSL-4 \u2022 Acceso Restringido \u26a0
+        ⚠ Instalación BSL-4 • Acceso Restringido ⚠
       </motion.div>
 
       {/* Scan button / progress */}
@@ -224,7 +224,7 @@ export default function LandingScreen({ onEnter }) {
                           transition-all duration-300"
               style={{ fontSize: 'clamp(0.75rem, 2.5vw, 0.9rem)' }}
             >
-              \u25b6 ENTRADA AL LABORATORIO
+              ▶ ENTRADA AL LABORATORIO
             </div>
             <div className="absolute -bottom-6 left-0 right-0 text-center text-neutral-600 tracking-widest"
               style={{ fontSize: 'clamp(0.55rem, 1.5vw, 0.65rem)' }}
@@ -244,7 +244,7 @@ export default function LandingScreen({ onEnter }) {
             <div className="text-center text-bio-green tracking-[0.3em] mb-4"
               style={{ animation: 'flicker 0.5s infinite', fontSize: 'clamp(0.65rem, 2vw, 0.8rem)' }}
             >
-              \u25c9 ESCANEANDO AUTORIZACI\u00d3N...
+              ◉ ESCANEANDO AUTORIZACIÓN...
             </div>
 
             <div className="h-1 bg-neutral-800 rounded-full overflow-hidden mb-3">
@@ -261,11 +261,11 @@ export default function LandingScreen({ onEnter }) {
             <div className="text-neutral-500 space-y-1 font-mono"
               style={{ fontSize: 'clamp(0.6rem, 1.5vw, 0.7rem)' }}
             >
-              {scanProgress > 10 && <p className="text-bio-green/60">\u2713 Huella dactilar verificada</p>}
-              {scanProgress > 30 && <p className="text-bio-green/60">\u2713 Retina escaneada</p>}
-              {scanProgress > 50 && <p className="text-bio-green/60">\u2713 Nivel de clearance: OMEGA</p>}
-              {scanProgress > 70 && <p className="text-bio-green/60">\u2713 Protocolos de contenci\u00f3n activos</p>}
-              {scanProgress > 90 && <p className="text-emergency/80">\u26a1 Despresurizando c\u00e1mara...</p>}
+              {scanProgress > 10 && <p className="text-bio-green/60">✓ Huella dactilar verificada</p>}
+              {scanProgress > 30 && <p className="text-bio-green/60">✓ Retina escaneada</p>}
+              {scanProgress > 50 && <p className="text-bio-green/60">✓ Nivel de clearance: OMEGA</p>}
+              {scanProgress > 70 && <p className="text-bio-green/60">✓ Protocolos de contención activos</p>}
+              {scanProgress > 90 && <p className="text-emergency/80">⚡ Despresurizando cámara...</p>}
             </div>
           </motion.div>
         )}
