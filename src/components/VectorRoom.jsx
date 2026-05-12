@@ -374,7 +374,7 @@ export default function VectorRoom({ onNavigate }) {
         fontSize: '0.5rem', color: '#555',
         fontFamily: "'Orbitron', sans-serif"
       }}>
-        MICROPIA v8.0 • Sala de Vectores
+        MICROPIA v9.0 • Sala de Vectores
       </div>
     </motion.div>
   );
