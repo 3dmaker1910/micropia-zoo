@@ -105,6 +105,18 @@ export default function ContainmentHall({ onGoToHub, onGoToMap, onGoToVectors })
         </motion.div>
       </div>
 
+      {/* Security Guard NPC — visible prominently ABOVE the tubes */}
+      <div className="max-w-6xl mx-auto px-4 pb-6">
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.5 }}
+          className="max-w-lg"
+        >
+          <SecurityGuard />
+        </motion.div>
+      </div>
+
       {/* Containment tubes grid */}
       <div className="max-w-6xl mx-auto px-4 pb-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 md:gap-5">
@@ -119,14 +131,7 @@ export default function ContainmentHall({ onGoToHub, onGoToMap, onGoToVectors })
         </div>
       </div>
 
-      {/* Security Guard NPC */}
-      <div className="max-w-6xl mx-auto px-4 pb-8">
-        <div className="max-w-md">
-          <SecurityGuard />
-        </div>
-      </div>
-
-      {/* 3D Model Viewer — Yersinia pestis (Black Plague) in its containment tube */}
+      {/* 3D Model Viewer */}
       <div className="max-w-6xl mx-auto px-4 pb-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -137,7 +142,7 @@ export default function ContainmentHall({ onGoToHub, onGoToMap, onGoToVectors })
         </motion.div>
       </div>
 
-      {/* Navigation buttons — Flow: Hall → Vector Room → Body Scanner → Doctor Hub */}
+      {/* Navigation buttons */}
       <div className="max-w-6xl mx-auto px-4 pb-8">
         <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
           <motion.button
@@ -252,7 +257,7 @@ export default function ContainmentHall({ onGoToHub, onGoToMap, onGoToVectors })
         <p className="text-neutral-700 tracking-[0.3em] uppercase"
           style={{ fontSize: 'clamp(0.6rem, 1.5vw, 0.75rem)' }}
         >
-          Micropia v8.0: El Zoo Invisible • Instalación BSL-4 • Todos los organismos están contenidos
+          Micropia v9.5: El Zoo Invisible • Instalación BSL-4 • Todos los organismos están contenidos
         </p>
       </div>
 
