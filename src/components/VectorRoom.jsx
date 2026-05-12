@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const FLEA_IMAGE_URL = 'https://customer-assets.emergentagent.com/wingman/b09505ba-190e-4ca7-9d47-23f73249f18b/attachments/e78b4b60f3e04c1f97af40b8a19b8a7a_pulga%20mapa.png';
+const FLEA_IMAGE_URL = 'https://customer-assets.emergentagent.com/wingman/b09505ba-190e-4ca7-9d47-23f73249f18b/attachments/a71221b6a3784df6992d997f37ccb83e_PULGA.jpg';
 
 const HOTSPOTS = [
   {
     id: 'bucal',
     label: 'Aparato Bucal',
-    x: '18%',
-    y: '32%',
+    x: '15%',
+    y: '38%',
     color: '#ef4444',
     icon: '🦷',
     title: 'APARATO BUCAL — Sistema de Alimentación',
@@ -22,8 +22,8 @@ const HOTSPOTS = [
   {
     id: 'patas',
     label: 'Patas Saltarinas',
-    x: '50%',
-    y: '78%',
+    x: '45%',
+    y: '82%',
     color: '#22c55e',
     icon: '🦿',
     title: 'PATAS SALTARINAS — Propulsión Extrema',
@@ -37,8 +37,8 @@ const HOTSPOTS = [
   {
     id: 'abdomen',
     label: 'Abdomen',
-    x: '75%',
-    y: '40%',
+    x: '72%',
+    y: '42%',
     color: '#f97316',
     icon: '🫘',
     title: 'ABDOMEN — Reservorio Biológico',
@@ -53,7 +53,7 @@ const HOTSPOTS = [
 
 const pesteNegraFacts = [
   'La pulga Xenopsylla cheopis es el vector principal de Yersinia pestis.',
-  'Cuando el proventriculo se bloquea, la pulga no puede alimentarse y pica frenéticamente, regurgitando bacterias en cada intento.',
+  'Cuando el proventrículo se bloquea, la pulga no puede alimentarse y pica frenéticamente, regurgitando bacterias en cada intento.',
   'Una sola pulga infectada puede transmitir miles de bacterias en una sola picadura.',
   'Las ratas negras (Rattus rattus) eran el reservorio: las pulgas saltaban a humanos cuando las ratas morían.',
   'La Peste Negra viajó por las rutas comerciales de la Seda y las rutas marítimas, llevada por ratas y sus pulgas.',
@@ -125,34 +125,25 @@ export default function VectorRoom({ onNavigate }) {
         <div style={{
           position: 'relative',
           width: '100%',
-          maxWidth: '600px',
-          aspectRatio: '3/2',
+          maxWidth: '700px',
           margin: '0 auto',
-          background: '#111',
+          background: 'linear-gradient(135deg, #0d0906 0%, #1a1208 50%, #0d0906 100%)',
           borderRadius: '16px',
-          border: '1px solid rgba(234,88,12,0.2)',
-          overflow: 'hidden'
+          border: '1px solid rgba(234,88,12,0.25)',
+          overflow: 'hidden',
+          boxShadow: '0 0 40px rgba(234,88,12,0.08), inset 0 0 60px rgba(0,0,0,0.5)'
         }}>
           <img
             src={FLEA_IMAGE_URL}
-            alt="Xenopsylla cheopis - Pulga vector de la Peste Negra"
+            alt="Xenopsylla cheopis — Pulga vector de la Peste Negra"
             style={{
-              width: '100%', height: '100%',
-              objectFit: 'contain',
-              opacity: 0.85
+              width: '100%',
+              height: 'auto',
+              display: 'block',
+              filter: 'brightness(0.9) contrast(1.1)',
             }}
             onError={(e) => { e.target.style.display = 'none'; }}
           />
-
-          {/* Fallback SVG if image fails */}
-          <svg viewBox="0 0 300 200" style={{
-            position: 'absolute', inset: 0, width: '100%', height: '100%',
-            opacity: 0.3, pointerEvents: 'none'
-          }}>
-            <ellipse cx="150" cy="90" rx="70" ry="50" fill="#3d2817" stroke="#ea580c" strokeWidth="0.5" />
-            <ellipse cx="65" cy="75" rx="25" ry="20" fill="#4a3020" stroke="#ea580c" strokeWidth="0.5" />
-            <path d="M180 100 Q200 90, 195 120 Q190 150, 200 180" fill="none" stroke="#5a4030" strokeWidth="3" />
-          </svg>
 
           {/* Interactive hotspots */}
           {HOTSPOTS.map((spot) => (
@@ -168,32 +159,66 @@ export default function VectorRoom({ onNavigate }) {
               whileHover={{ scale: 1.3 }}
               onClick={() => setSelectedHotspot(spot)}
             >
+              {/* Outer pulse ring */}
+              <motion.div
+                animate={{ scale: [1, 2, 1], opacity: [0.5, 0, 0.5] }}
+                transition={{ duration: 2.5, repeat: Infinity }}
+                style={{
+                  position: 'absolute',
+                  width: '30px', height: '30px',
+                  borderRadius: '50%',
+                  border: `2px solid ${spot.color}`,
+                }}
+              />
               <motion.div
                 animate={{ scale: [1, 1.5, 1], opacity: [0.6, 1, 0.6] }}
                 transition={{ duration: 2, repeat: Infinity }}
                 style={{
-                  width: '20px', height: '20px',
+                  width: '24px', height: '24px',
                   borderRadius: '50%',
                   background: `${spot.color}40`,
                   border: `2px solid ${spot.color}`,
-                  boxShadow: `0 0 10px ${spot.color}50`,
+                  boxShadow: `0 0 12px ${spot.color}60`,
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: '0.6rem'
+                  fontSize: '0.65rem'
                 }}
               >
                 {spot.icon}
               </motion.div>
               <span style={{
-                fontSize: '0.45rem',
+                fontSize: '0.5rem',
                 color: spot.color,
                 fontFamily: "'Orbitron', sans-serif",
-                textShadow: '0 1px 3px rgba(0,0,0,0.8)',
-                whiteSpace: 'nowrap'
+                fontWeight: 700,
+                textShadow: `0 1px 4px rgba(0,0,0,0.9), 0 0 8px ${spot.color}40`,
+                whiteSpace: 'nowrap',
+                background: 'rgba(0,0,0,0.6)',
+                padding: '1px 6px',
+                borderRadius: '4px',
               }}>
                 {spot.label}
               </span>
             </motion.div>
           ))}
+
+          {/* Corner HUD */}
+          <div style={{
+            position: 'absolute', top: '8px', left: '10px',
+            fontSize: '0.45rem', color: 'rgba(234,88,12,0.5)',
+            fontFamily: "'Orbitron', sans-serif",
+            textShadow: '0 1px 3px rgba(0,0,0,0.8)',
+            letterSpacing: '1px'
+          }}>
+            VECTOR SCAN • XENOPSYLLA CHEOPIS
+          </div>
+          <div style={{
+            position: 'absolute', bottom: '8px', right: '10px',
+            fontSize: '0.4rem', color: 'rgba(234,88,12,0.4)',
+            fontFamily: "'Orbitron', sans-serif",
+            textShadow: '0 1px 3px rgba(0,0,0,0.8)',
+          }}>
+            IMG: NANDO • MICROPIA v9.5
+          </div>
         </div>
 
         {/* Hotspot detail panel */}
@@ -209,7 +234,7 @@ export default function VectorRoom({ onNavigate }) {
                 border: `1px solid ${selectedHotspot.color}40`,
                 borderRadius: '12px',
                 padding: '16px',
-                maxWidth: '600px',
+                maxWidth: '700px',
                 margin: '16px auto 0'
               }}
             >
@@ -374,7 +399,7 @@ export default function VectorRoom({ onNavigate }) {
         fontSize: '0.5rem', color: '#555',
         fontFamily: "'Orbitron', sans-serif"
       }}>
-        MICROPIA v9.0 • Sala de Vectores
+        MICROPIA v9.5 • Sala de Vectores
       </div>
     </motion.div>
   );
