@@ -50,3 +50,332 @@ const HOTSPOTS = [
     ],
   },
 ];
+
+const pesteNegraFacts = [
+  'La pulga Xenopsylla cheopis es el vector principal de Yersinia pestis.',
+  'Cuando el proventriculo se bloquea, la pulga no puede alimentarse y pica frenéticamente, regurgitando bacterias en cada intento.',
+  'Una sola pulga infectada puede transmitir miles de bacterias en una sola picadura.',
+  'Las ratas negras (Rattus rattus) eran el reservorio: las pulgas saltaban a humanos cuando las ratas morían.',
+  'La Peste Negra viajó por las rutas comerciales de la Seda y las rutas marítimas, llevada por ratas y sus pulgas.',
+];
+
+export default function VectorRoom({ onNavigate }) {
+  const [selectedHotspot, setSelectedHotspot] = useState(null);
+  const [showPesteNegra, setShowPesteNegra] = useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      style={{
+        minHeight: '100vh',
+        background: 'radial-gradient(ellipse at center, #1a1208 0%, #0a0a0a 70%)'
+      }}
+    >
+      {/* Header */}
+      <div style={{
+        padding: '16px 20px',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        borderBottom: '1px solid rgba(234,88,12,0.3)'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <span style={{ fontSize: '1.3rem' }}>🪳</span>
+          <span style={{
+            fontFamily: "'Orbitron', sans-serif",
+            fontSize: 'clamp(0.6rem, 1.2vw, 0.85rem)',
+            color: '#ea580c', fontWeight: 700, letterSpacing: '2px'
+          }}>
+            SALA DE VECTORES
+          </span>
+        </div>
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => onNavigate('hall')}
+          style={{
+            fontFamily: "'Orbitron', sans-serif", fontSize: '0.6rem',
+            color: '#ea580c', background: 'rgba(234,88,12,0.1)',
+            border: '1px solid rgba(234,88,12,0.3)',
+            borderRadius: '6px', padding: '6px 14px', cursor: 'pointer'
+          }}
+        >
+          ← Contención
+        </motion.button>
+      </div>
+
+      <div style={{ padding: '20px', maxWidth: '1000px', margin: '0 auto' }}>
+        <h3 style={{
+          fontFamily: "'Orbitron', sans-serif",
+          fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
+          color: '#ea580c',
+          textAlign: 'center',
+          marginBottom: '8px'
+        }}>
+          Anatomía de la Pulga (Xenopsylla cheopis)
+        </h3>
+        <p style={{
+          textAlign: 'center', fontSize: 'clamp(0.55rem, 0.9vw, 0.7rem)',
+          color: '#888', marginBottom: '24px'
+        }}>
+          Haz clic en los puntos para explorar cada parte del vector
+        </p>
+
+        {/* Flea image with hotspots */}
+        <div style={{
+          position: 'relative',
+          width: '100%',
+          maxWidth: '600px',
+          aspectRatio: '3/2',
+          margin: '0 auto',
+          background: '#111',
+          borderRadius: '16px',
+          border: '1px solid rgba(234,88,12,0.2)',
+          overflow: 'hidden'
+        }}>
+          <img
+            src={FLEA_IMAGE_URL}
+            alt="Xenopsylla cheopis - Pulga vector de la Peste Negra"
+            style={{
+              width: '100%', height: '100%',
+              objectFit: 'contain',
+              opacity: 0.85
+            }}
+            onError={(e) => { e.target.style.display = 'none'; }}
+          />
+
+          {/* Fallback SVG if image fails */}
+          <svg viewBox="0 0 300 200" style={{
+            position: 'absolute', inset: 0, width: '100%', height: '100%',
+            opacity: 0.3, pointerEvents: 'none'
+          }}>
+            <ellipse cx="150" cy="90" rx="70" ry="50" fill="#3d2817" stroke="#ea580c" strokeWidth="0.5" />
+            <ellipse cx="65" cy="75" rx="25" ry="20" fill="#4a3020" stroke="#ea580c" strokeWidth="0.5" />
+            <path d="M180 100 Q200 90, 195 120 Q190 150, 200 180" fill="none" stroke="#5a4030" strokeWidth="3" />
+          </svg>
+
+          {/* Interactive hotspots */}
+          {HOTSPOTS.map((spot) => (
+            <motion.div
+              key={spot.id}
+              style={{
+                position: 'absolute',
+                left: spot.x, top: spot.y,
+                transform: 'translate(-50%, -50%)',
+                zIndex: 10, cursor: 'pointer',
+                display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px'
+              }}
+              whileHover={{ scale: 1.3 }}
+              onClick={() => setSelectedHotspot(spot)}
+            >
+              <motion.div
+                animate={{ scale: [1, 1.5, 1], opacity: [0.6, 1, 0.6] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                style={{
+                  width: '20px', height: '20px',
+                  borderRadius: '50%',
+                  background: `${spot.color}40`,
+                  border: `2px solid ${spot.color}`,
+                  boxShadow: `0 0 10px ${spot.color}50`,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontSize: '0.6rem'
+                }}
+              >
+                {spot.icon}
+              </motion.div>
+              <span style={{
+                fontSize: '0.45rem',
+                color: spot.color,
+                fontFamily: "'Orbitron', sans-serif",
+                textShadow: '0 1px 3px rgba(0,0,0,0.8)',
+                whiteSpace: 'nowrap'
+              }}>
+                {spot.label}
+              </span>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Hotspot detail panel */}
+        <AnimatePresence>
+          {selectedHotspot && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              style={{
+                marginTop: '16px',
+                background: '#1a1a1a',
+                border: `1px solid ${selectedHotspot.color}40`,
+                borderRadius: '12px',
+                padding: '16px',
+                maxWidth: '600px',
+                margin: '16px auto 0'
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span style={{ fontSize: '1.2rem' }}>{selectedHotspot.icon}</span>
+                  <h4 style={{
+                    fontFamily: "'Orbitron', sans-serif",
+                    fontSize: 'clamp(0.65rem, 1.1vw, 0.8rem)',
+                    color: selectedHotspot.color, margin: 0
+                  }}>
+                    {selectedHotspot.title}
+                  </h4>
+                </div>
+                <button
+                  onClick={() => setSelectedHotspot(null)}
+                  style={{
+                    background: 'rgba(255,255,255,0.1)',
+                    border: '1px solid rgba(255,255,255,0.2)',
+                    borderRadius: '50%', width: '28px', height: '28px',
+                    color: '#888', cursor: 'pointer', fontSize: '0.8rem'
+                  }}
+                >
+                  ✕
+                </button>
+              </div>
+              <p style={{
+                fontSize: 'clamp(0.6rem, 1vw, 0.75rem)',
+                color: '#d4d4d4', lineHeight: 1.6, marginBottom: '12px'
+              }}>
+                {selectedHotspot.description}
+              </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                {selectedHotspot.facts.map((fact, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                    style={{
+                      background: '#262626',
+                      borderLeft: `3px solid ${selectedHotspot.color}`,
+                      borderRadius: '0 8px 8px 0',
+                      padding: '8px 12px',
+                      fontSize: 'clamp(0.55rem, 0.9vw, 0.7rem)',
+                      color: '#bbb', lineHeight: 1.5
+                    }}
+                  >
+                    <span style={{ color: selectedHotspot.color, marginRight: '6px' }}>⚬</span>
+                    {fact}
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Link to Peste Negra */}
+        <div style={{ textAlign: 'center', marginTop: '30px' }}>
+          <motion.button
+            whileHover={{ scale: 1.05, boxShadow: '0 0 20px rgba(147,51,234,0.3)' }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setShowPesteNegra(true)}
+            style={{
+              fontFamily: "'Orbitron', sans-serif",
+              fontSize: 'clamp(0.6rem, 1vw, 0.75rem)',
+              color: '#c084fc',
+              background: 'rgba(147,51,234,0.1)',
+              border: '1px solid rgba(147,51,234,0.3)',
+              borderRadius: '8px',
+              padding: '12px 24px',
+              cursor: 'pointer',
+              letterSpacing: '1px'
+            }}
+          >
+            ☠️ Conexión con la Peste Negra
+          </motion.button>
+        </div>
+
+        {/* Peste Negra connection modal */}
+        <AnimatePresence>
+          {showPesteNegra && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowPesteNegra(false)}
+              style={{
+                position: 'fixed', inset: 0,
+                background: 'rgba(0,0,0,0.85)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                zIndex: 1000, padding: '20px'
+              }}
+            >
+              <motion.div
+                initial={{ scale: 0.8 }}
+                animate={{ scale: 1 }}
+                exit={{ scale: 0.8 }}
+                onClick={(e) => e.stopPropagation()}
+                style={{
+                  background: '#1a1a1a',
+                  border: '2px solid #9333ea',
+                  borderRadius: '16px',
+                  padding: '24px',
+                  maxWidth: '500px', width: '100%',
+                  maxHeight: '80vh', overflow: 'auto'
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
+                  <span style={{ fontSize: '2rem' }}>☠️</span>
+                  <h3 style={{
+                    fontFamily: "'Orbitron', sans-serif",
+                    fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
+                    color: '#9333ea', margin: 0
+                  }}>
+                    Conexión: Peste Negra
+                  </h3>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  {pesteNegraFacts.map((fact, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.1 }}
+                      style={{
+                        background: '#262626',
+                        borderLeft: '3px solid #9333ea',
+                        borderRadius: '0 8px 8px 0',
+                        padding: '10px 14px',
+                        fontSize: 'clamp(0.65rem, 1.1vw, 0.8rem)',
+                        color: '#d4d4d4', lineHeight: 1.5
+                      }}
+                    >
+                      {fact}
+                    </motion.div>
+                  ))}
+                </div>
+                <div style={{ textAlign: 'center', marginTop: '16px' }}>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    onClick={() => setShowPesteNegra(false)}
+                    style={{
+                      fontFamily: "'Orbitron', sans-serif", fontSize: '0.6rem',
+                      color: '#888', background: 'rgba(255,255,255,0.05)',
+                      border: '1px solid #333', borderRadius: '6px',
+                      padding: '8px 16px', cursor: 'pointer'
+                    }}
+                  >
+                    Cerrar
+                  </motion.button>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Footer */}
+      <div style={{
+        textAlign: 'center', padding: '20px',
+        fontSize: '0.5rem', color: '#555',
+        fontFamily: "'Orbitron', sans-serif"
+      }}>
+        MICROPIA v8.0 • Sala de Vectores
+      </div>
+    </motion.div>
+  );
+}
