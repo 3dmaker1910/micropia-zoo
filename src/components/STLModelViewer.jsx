@@ -277,21 +277,21 @@ export default function STLModelViewer({ modelType = 'flea', height = 350 }) {
   const config = {
     flea: {
       title: 'XENOPSYLLA CHEOPIS',
-      subtitle: 'Pulga de la Rata \u2014 Vector de la Peste Negra',
+      subtitle: 'Pulga de la Rata — Vector de la Peste Negra',
       bgGradient: 'linear-gradient(180deg, rgba(139,69,19,0.08) 0%, rgba(5,5,10,0.98) 100%)',
       borderColor: 'rgba(168,85,247,0.2)',
       glowColor: 'rgba(168,85,247,0.1)',
       accentColor: '#a855f7',
-      icon: '\ud83e\udeb3',
+      icon: '🪳',
     },
     plague: {
       title: 'YERSINIA PESTIS',
-      subtitle: 'Bacteria de la Peste Negra \u2014 Pat\u00f3geno BSL-3',
+      subtitle: 'Bacteria de la Peste Negra — Patógeno BSL-3',
       bgGradient: 'linear-gradient(180deg, rgba(107,33,168,0.08) 0%, rgba(5,5,10,0.98) 100%)',
       borderColor: 'rgba(147,51,234,0.2)',
       glowColor: 'rgba(147,51,234,0.1)',
       accentColor: '#9333EA',
-      icon: '\u2623',
+      icon: '☣',
     },
   };
 
@@ -312,7 +312,7 @@ export default function STLModelViewer({ modelType = 'flea', height = 350 }) {
           <span className="text-lg">{cfg.icon}</span>
           <div>
             <h3 className="font-bold text-xs tracking-[0.2em] uppercase" style={{ color: cfg.accentColor }}>
-              MODELO 3D \u2014 {cfg.title}
+              MODELO 3D — {cfg.title}
             </h3>
             <p className="text-neutral-600 text-[10px] tracking-wider">{cfg.subtitle}</p>
           </div>
@@ -378,10 +378,10 @@ export default function STLModelViewer({ modelType = 'flea', height = 350 }) {
       {/* Controls hint */}
       <div className="px-4 py-2 flex items-center justify-between border-t" style={{ borderColor: `${cfg.accentColor}10` }}>
         <div className="flex items-center gap-3">
-          <span className="text-neutral-600 text-[10px] tracking-wider">\ud83d\uddb1 ARRASTRAR: Rotar</span>
-          <span className="text-neutral-600 text-[10px] tracking-wider">\ud83d\udd0d SCROLL: Zoom</span>
+          <span className="text-neutral-600 text-[10px] tracking-wider">🖱 ARRASTRAR: Rotar</span>
+          <span className="text-neutral-600 text-[10px] tracking-wider">🔍 SCROLL: Zoom</span>
         </div>
-        <span className="text-neutral-700 text-[10px] tracking-wider">MODELO PROCEDURAL \u2022 THREE.JS</span>
+        <span className="text-neutral-700 text-[10px] tracking-wider">MODELO PROCEDURAL • THREE.JS</span>
       </div>
     </div>
   );
