@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import BiohazardIcon from './BiohazardIcon';
 
 const LOGO_URL = 'https://static.prod-images.emergentagent.com/jobs/b09505ba-190e-4ca7-9d47-23f73249f18b/images/35f7f965de88ecd8174371ab9698c7c29a20c26e2c37b5022fd3c115fce3eeac.png';
+const SCIENTIST_URL = 'https://static.prod-images.emergentagent.com/jobs/b09505ba-190e-4ca7-9d47-23f73249f18b/images/6ad01c0408cd7402b4a8a5d5db8db0a1591fca247dec59ef735d67e5e2975bda.png';
+const MICROSCOPE_URL = 'https://static.prod-images.emergentagent.com/jobs/b09505ba-190e-4ca7-9d47-23f73249f18b/images/beeae114543efbdd3ae63f4e4ea773594112e315c7e6dabe96525fcf07073d56.png';
 
 export default function LandingScreen({ onEnter }) {
   const [phase, setPhase] = useState('idle');
@@ -59,6 +61,76 @@ export default function LandingScreen({ onEnter }) {
           }}
         />
       ))}
+
+      {/* Scientist Portrait — left side */}
+      <motion.div
+        className="absolute left-4 sm:left-8 lg:left-16 bottom-12 pointer-events-none"
+        initial={{ opacity: 0, x: -40 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.6, duration: 0.8 }}
+      >
+        <div className="relative">
+          <img
+            src={SCIENTIST_URL}
+            alt="Doctora Micra"
+            style={{
+              width: 'clamp(80px, 18vw, 200px)',
+              height: 'auto',
+              objectFit: 'contain',
+              filter: 'drop-shadow(0 0 20px rgba(34, 197, 94, 0.3))',
+              opacity: 0.85,
+            }}
+          />
+          <motion.div
+            className="absolute inset-0"
+            style={{
+              background: 'radial-gradient(circle at 50% 50%, rgba(34,197,94,0.08) 0%, transparent 70%)',
+            }}
+            animate={{ opacity: [0.3, 0.7, 0.3] }}
+            transition={{ duration: 3, repeat: Infinity }}
+          />
+        </div>
+        <p className="text-bio-green/40 text-center mt-1 tracking-[0.2em] uppercase"
+          style={{ fontSize: 'clamp(0.45rem, 1vw, 0.6rem)' }}
+        >
+          Dra. Micra
+        </p>
+      </motion.div>
+
+      {/* Microscope — right side */}
+      <motion.div
+        className="absolute right-4 sm:right-8 lg:right-16 bottom-12 pointer-events-none"
+        initial={{ opacity: 0, x: 40 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.8, duration: 0.8 }}
+      >
+        <div className="relative">
+          <img
+            src={MICROSCOPE_URL}
+            alt="Microscopio"
+            style={{
+              width: 'clamp(70px, 16vw, 180px)',
+              height: 'auto',
+              objectFit: 'contain',
+              filter: 'drop-shadow(0 0 20px rgba(250, 204, 21, 0.3))',
+              opacity: 0.8,
+            }}
+          />
+          <motion.div
+            className="absolute inset-0"
+            style={{
+              background: 'radial-gradient(circle at 50% 50%, rgba(250,204,21,0.08) 0%, transparent 70%)',
+            }}
+            animate={{ opacity: [0.3, 0.6, 0.3] }}
+            transition={{ duration: 4, repeat: Infinity }}
+          />
+        </div>
+        <p className="text-emergency/40 text-center mt-1 tracking-[0.2em] uppercase"
+          style={{ fontSize: 'clamp(0.45rem, 1vw, 0.6rem)' }}
+        >
+          Microscopio BSL-4
+        </p>
+      </motion.div>
 
       {/* Official Logo */}
       <motion.div
@@ -131,7 +203,7 @@ export default function LandingScreen({ onEnter }) {
         className="tracking-[0.5em] uppercase mb-12 text-red-500/70"
         style={{ fontSize: 'clamp(0.6rem, 1.8vw, 0.8rem)' }}
       >
-        ⚠ Instalación BSL-4 • Acceso Restringido ⚠
+        \u26a0 Instalaci\u00f3n BSL-4 \u2022 Acceso Restringido \u26a0
       </motion.div>
 
       {/* Scan button / progress */}
@@ -152,7 +224,7 @@ export default function LandingScreen({ onEnter }) {
                           transition-all duration-300"
               style={{ fontSize: 'clamp(0.75rem, 2.5vw, 0.9rem)' }}
             >
-              ▶ ENTRADA AL LABORATORIO
+              \u25b6 ENTRADA AL LABORATORIO
             </div>
             <div className="absolute -bottom-6 left-0 right-0 text-center text-neutral-600 tracking-widest"
               style={{ fontSize: 'clamp(0.55rem, 1.5vw, 0.65rem)' }}
@@ -172,7 +244,7 @@ export default function LandingScreen({ onEnter }) {
             <div className="text-center text-bio-green tracking-[0.3em] mb-4"
               style={{ animation: 'flicker 0.5s infinite', fontSize: 'clamp(0.65rem, 2vw, 0.8rem)' }}
             >
-              ◉ ESCANEANDO AUTORIZACIÓN...
+              \u25c9 ESCANEANDO AUTORIZACI\u00d3N...
             </div>
 
             <div className="h-1 bg-neutral-800 rounded-full overflow-hidden mb-3">
@@ -189,11 +261,11 @@ export default function LandingScreen({ onEnter }) {
             <div className="text-neutral-500 space-y-1 font-mono"
               style={{ fontSize: 'clamp(0.6rem, 1.5vw, 0.7rem)' }}
             >
-              {scanProgress > 10 && <p className="text-bio-green/60">✓ Huella dactilar verificada</p>}
-              {scanProgress > 30 && <p className="text-bio-green/60">✓ Retina escaneada</p>}
-              {scanProgress > 50 && <p className="text-bio-green/60">✓ Nivel de clearance: OMEGA</p>}
-              {scanProgress > 70 && <p className="text-bio-green/60">✓ Protocolos de contención activos</p>}
-              {scanProgress > 90 && <p className="text-emergency/80">⚡ Despresurizando cámara...</p>}
+              {scanProgress > 10 && <p className="text-bio-green/60">\u2713 Huella dactilar verificada</p>}
+              {scanProgress > 30 && <p className="text-bio-green/60">\u2713 Retina escaneada</p>}
+              {scanProgress > 50 && <p className="text-bio-green/60">\u2713 Nivel de clearance: OMEGA</p>}
+              {scanProgress > 70 && <p className="text-bio-green/60">\u2713 Protocolos de contenci\u00f3n activos</p>}
+              {scanProgress > 90 && <p className="text-emergency/80">\u26a1 Despresurizando c\u00e1mara...</p>}
             </div>
           </motion.div>
         )}
