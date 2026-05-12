@@ -272,7 +272,7 @@ export default function DoctorHub({ onBack, onStartQuiz }) {
         fontSize: '0.5rem', color: '#555',
         fontFamily: "'Orbitron', sans-serif"
       }}>
-        MICROPIA v8.0 • Oficina de la Dra. Micra
+        MICROPIA v9.0 • Oficina de la Dra. Micra
       </div>
     </div>
   );
