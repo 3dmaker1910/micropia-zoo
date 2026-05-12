@@ -26,6 +26,17 @@ const HOTSPOTS = [
     critical: false,
     navigateTo: null,
   },
+  {
+    id: 'cyanobacteria',
+    x: '72%',
+    y: '68%',
+    label: 'AUSTRALIA — Shark Bay',
+    sublabel: 'Sala 3 • Cianobacterias: El Primer Aliento',
+    icon: '🦠',
+    color: '#00c896',
+    critical: true,
+    navigateTo: 'cyanobacteria',
+  },
 ];
 
 function HotspotMarker({ spot, onClick, isHovered, onHover, onLeave }) {
@@ -433,17 +444,17 @@ export default function GlobalIntelligenceMap({ onNavigate }) {
                 animate={{ scale: [1, 1.3, 1], rotate: [0, 10, -10, 0] }}
                 transition={{ duration: 1, repeat: Infinity }}
               >
-                🚢
+                {selectedSpot.icon}
               </motion.div>
               <motion.p
                 className="text-red-400 font-bold tracking-[0.3em] text-lg"
                 animate={{ opacity: [0.5, 1, 0.5] }}
                 transition={{ duration: 0.8, repeat: Infinity }}
               >
-                INICIANDO MISIÓN...
+                NAVEGANDO...
               </motion.p>
               <p className="text-neutral-600 text-xs tracking-wider mt-2">
-                CONECTANDO CON USHUAIA • HANTAVIRUS
+                {selectedSpot.label}
               </p>
             </div>
           </motion.div>
