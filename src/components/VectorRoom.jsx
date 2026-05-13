@@ -217,7 +217,7 @@ export default function VectorRoom({ onNavigate }) {
             fontFamily: "'Orbitron', sans-serif",
             textShadow: '0 1px 3px rgba(0,0,0,0.8)',
           }}>
-            IMG: NANDO • MICROPIA v9.5
+            IMG: NANDO • MICROPIA v10.5
           </div>
         </div>
 
@@ -399,7 +399,7 @@ export default function VectorRoom({ onNavigate }) {
         fontSize: '0.5rem', color: '#555',
         fontFamily: "'Orbitron', sans-serif"
       }}>
-        MICROPIA v9.5 • Sala de Vectores
+        MICROPIA v10.5 • Sala de Vectores
       </div>
     </motion.div>
   );
