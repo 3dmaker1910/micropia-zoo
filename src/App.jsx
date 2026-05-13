@@ -12,7 +12,7 @@ import CyanobacteriaRoom from './components/CyanobacteriaRoom';
 import BiotecnofilosRoom from './components/BiotecnofilosRoom';
 
 function App() {
-  const [screen, setScreen] = useState('landing'); // landing, hall, vectors, bodyscan, hub, quiz, map, mission, cyanobacteria, biotecnofilos
+  const [screen, setScreen] = useState('landing');
 
   const handleEnter = useCallback(() => {
     setScreen('hall');
@@ -53,7 +53,7 @@ function App() {
           <LandingScreen key="landing" onEnter={handleEnter} />
         )}
         {screen === 'hall' && (
-          <ContainmentHall key="hall" onGoToHub={handleGoToHub} onGoToMap={handleGoToMap} onGoToVectors={handleGoToVectors} />
+          <ContainmentHall key="hall" onGoToHub={handleGoToHub} onGoToMap={handleGoToMap} onGoToVectors={handleGoToVectors} onNavigate={handleNavigate} />
         )}
         {screen === 'hub' && (
           <DoctorHub key="hub" onBack={handleBackToHall} onStartQuiz={handleStartQuiz} />

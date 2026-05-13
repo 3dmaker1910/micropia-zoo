@@ -1,26 +1,38 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 
-export function useSpeech() {
-  const [speaking, setSpeaking] = useState(false);
-  const utterRef = useRef(null);
+export default function useSpeech() {
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const utteranceRef = useRef(null);
 
   const speak = useCallback((text) => {
-    if (!window.speechSynthesis) return;
-    window.speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = 'es-ES';
-    u.rate = 0.9;
-    u.onstart = () => setSpeaking(true);
-    u.onend = () => setSpeaking(false);
-    u.onerror = () => setSpeaking(false);
-    utterRef.current = u;
-    window.speechSynthesis.speak(u);
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'es-ES';
+      utterance.rate = 0.9;
+      utterance.pitch = 1.1;
+      utterance.onstart = () => setIsSpeaking(true);
+      utterance.onend = () => setIsSpeaking(false);
+      utterance.onerror = () => setIsSpeaking(false);
+      utteranceRef.current = utterance;
+      window.speechSynthesis.speak(utterance);
+    }
   }, []);
 
   const stop = useCallback(() => {
-    window.speechSynthesis.cancel();
-    setSpeaking(false);
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      setIsSpeaking(false);
+    }
   }, []);
 
-  return { speak, stop, speaking };
+  useEffect(() => {
+    return () => {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, []);
+
+  return { speak, stop, isSpeaking };
 }
