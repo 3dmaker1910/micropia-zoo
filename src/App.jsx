@@ -9,9 +9,10 @@ import HantavirusMission from './components/HantavirusMission';
 import VectorRoom from './components/VectorRoom';
 import BodyScanner from './components/BodyScanner';
 import CyanobacteriaRoom from './components/CyanobacteriaRoom';
+import BiotecnofilosRoom from './components/BiotecnofilosRoom';
 
 function App() {
-  const [screen, setScreen] = useState('landing'); // landing, hall, vectors, bodyscan, hub, quiz, map, mission, cyanobacteria
+  const [screen, setScreen] = useState('landing'); // landing, hall, vectors, bodyscan, hub, quiz, map, mission, cyanobacteria, biotecnofilos
 
   const handleEnter = useCallback(() => {
     setScreen('hall');
@@ -74,6 +75,9 @@ function App() {
         )}
         {screen === 'cyanobacteria' && (
           <CyanobacteriaRoom key="cyanobacteria" onNavigate={handleNavigate} />
+        )}
+        {screen === 'biotecnofilos' && (
+          <BiotecnofilosRoom key="biotecnofilos" onNavigate={handleNavigate} />
         )}
       </AnimatePresence>
     </div>
