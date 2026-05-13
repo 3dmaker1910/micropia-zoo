@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import BiohazardIcon from './BiohazardIcon';
 
 const LOGO_URL = 'https://static.prod-images.emergentagent.com/jobs/b09505ba-190e-4ca7-9d47-23f73249f18b/images/35f7f965de88ecd8174371ab9698c7c29a20c26e2c37b5022fd3c115fce3eeac.png';
 const SCIENTIST_URL = 'https://static.prod-images.emergentagent.com/jobs/b09505ba-190e-4ca7-9d47-23f73249f18b/images/6ad01c0408cd7402b4a8a5d5db8db0a1591fca247dec59ef735d67e5e2975bda.png';
@@ -33,285 +32,133 @@ export default function LandingScreen({ onEnter }) {
 
   return (
     <motion.div
-      className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden"
+      className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden p-6 text-center"
       style={{ background: 'radial-gradient(ellipse at center, #111 0%, #0a0a0a 70%)' }}
       exit={{ opacity: 0, scale: 1.1 }}
       transition={{ duration: 0.6 }}
     >
       {/* Warning stripes */}
       <div className="absolute top-0 left-0 right-0 h-2"
-        style={{
-          background: 'repeating-linear-gradient(90deg, #facc15, #facc15 20px, #0a0a0a 20px, #0a0a0a 40px)',
-        }}
+        style={{ background: 'repeating-linear-gradient(90deg, #facc15, #facc15 20px, #0a0a0a 20px, #0a0a0a 40px)' }}
       />
       <div className="absolute bottom-0 left-0 right-0 h-2"
-        style={{
-          background: 'repeating-linear-gradient(90deg, #facc15, #facc15 20px, #0a0a0a 20px, #0a0a0a 40px)',
-        }}
+        style={{ background: 'repeating-linear-gradient(90deg, #facc15, #facc15 20px, #0a0a0a 20px, #0a0a0a 40px)' }}
       />
 
-      {/* Corner markers */}
-      {['top-4 left-4', 'top-4 right-4', 'bottom-4 left-4', 'bottom-4 right-4'].map((pos, i) => (
-        <div key={i} className={`absolute ${pos} w-8 h-8 border-2 border-emergency opacity-40`}
-          style={{
-            borderTop: pos.includes('top') ? '2px solid #facc15' : 'none',
-            borderBottom: pos.includes('bottom') ? '2px solid #facc15' : 'none',
-            borderLeft: pos.includes('left') ? '2px solid #facc15' : 'none',
-            borderRight: pos.includes('right') ? '2px solid #facc15' : 'none',
-          }}
-        />
-      ))}
-
-      {/* Scientist Portrait — left side */}
+      {/* Side Graphics - Hidden on mobile to avoid overlap */}
       <motion.div
-        className="absolute left-4 sm:left-8 lg:left-16 bottom-12 pointer-events-none"
+        className="absolute left-4 lg:left-16 bottom-12 pointer-events-none hidden md:block opacity-40 lg:opacity-80"
         initial={{ opacity: 0, x: -40 }}
-        animate={{ opacity: 1, x: 0 }}
+        animate={{ opacity: 0.8, x: 0 }}
         transition={{ delay: 0.6, duration: 0.8 }}
       >
-        <div className="relative">
-          <img
-            src={SCIENTIST_URL}
-            alt="Doctora Micra"
-            style={{
-              width: 'clamp(80px, 18vw, 200px)',
-              height: 'auto',
-              objectFit: 'contain',
-              filter: 'drop-shadow(0 0 20px rgba(34, 197, 94, 0.3))',
-              opacity: 0.85,
-            }}
-          />
-          <motion.div
-            className="absolute inset-0"
-            style={{
-              background: 'radial-gradient(circle at 50% 50%, rgba(34,197,94,0.08) 0%, transparent 70%)',
-            }}
-            animate={{ opacity: [0.3, 0.7, 0.3] }}
-            transition={{ duration: 3, repeat: Infinity }}
-          />
-        </div>
-        <p className="text-bio-green/40 text-center mt-1 tracking-[0.2em] uppercase"
-          style={{ fontSize: 'clamp(0.45rem, 1vw, 0.6rem)' }}
-        >
-          Dra. Micra
-        </p>
+        <img src={SCIENTIST_URL} alt="Micra" style={{ width: 'clamp(100px, 15vw, 180px)', height: 'auto', filter: 'drop-shadow(0 0 20px rgba(34,197,94,0.2))' }} />
       </motion.div>
 
-      {/* Microscope — right side */}
       <motion.div
-        className="absolute right-4 sm:right-8 lg:right-16 bottom-12 pointer-events-none"
+        className="absolute right-4 lg:right-16 bottom-12 pointer-events-none hidden md:block opacity-40 lg:opacity-80"
         initial={{ opacity: 0, x: 40 }}
-        animate={{ opacity: 1, x: 0 }}
+        animate={{ opacity: 0.8, x: 0 }}
         transition={{ delay: 0.8, duration: 0.8 }}
       >
-        <div className="relative">
-          <img
-            src={MICROSCOPE_URL}
-            alt="Microscopio"
-            style={{
-              width: 'clamp(70px, 16vw, 180px)',
-              height: 'auto',
-              objectFit: 'contain',
-              filter: 'drop-shadow(0 0 20px rgba(250, 204, 21, 0.3))',
-              opacity: 0.8,
-            }}
-          />
-          <motion.div
-            className="absolute inset-0"
-            style={{
-              background: 'radial-gradient(circle at 50% 50%, rgba(250,204,21,0.08) 0%, transparent 70%)',
-            }}
-            animate={{ opacity: [0.3, 0.6, 0.3] }}
-            transition={{ duration: 4, repeat: Infinity }}
-          />
-        </div>
-        <p className="text-emergency/40 text-center mt-1 tracking-[0.2em] uppercase"
-          style={{ fontSize: 'clamp(0.45rem, 1vw, 0.6rem)' }}
-        >
-          Microscopio BSL-4
-        </p>
+        <img src={MICROSCOPE_URL} alt="Scope" style={{ width: 'clamp(100px, 15vw, 160px)', height: 'auto', filter: 'drop-shadow(0 0 20px rgba(250,204,21,0.2))' }} />
       </motion.div>
 
-      {/* Official Logo */}
+      {/* Main Logo Container */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1, duration: 0.6 }}
-        className="mb-6"
-        style={{
-          filter: 'drop-shadow(0 0 24px rgba(250, 204, 21, 0.45))',
-        }}
+        className="mb-8 relative z-10"
       >
         <img
           src={LOGO_URL}
           alt="Micropia Logo"
-          style={{
-            width: '180px',
-            height: 'auto',
-            objectFit: 'contain',
-          }}
+          className="w-32 md:w-44 h-auto mx-auto filter drop-shadow-[0_0_20px_rgba(250,204,21,0.4)]"
         />
       </motion.div>
 
-      {/* Title — bold neon yellow glow */}
-      <motion.h1
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-        className="font-bold tracking-wider mb-2"
-        style={{
-          fontSize: 'clamp(2.5rem, 10vw, 5rem)',
-          color: '#facc15',
-          textShadow:
-            '0 0 8px #facc15, 0 0 24px #facc15, 0 0 48px #fde047, 0 0 80px rgba(250, 204, 21, 0.6)',
-          WebkitTextStroke: '0.5px #fef08a',
-        }}
-      >
-        Micropia
-      </motion.h1>
+      {/* Titles */}
+      <div className="relative z-10 max-w-full px-4">
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="font-black tracking-tighter mb-2"
+          style={{
+            fontSize: 'clamp(2rem, 12vw, 5rem)',
+            color: '#facc15',
+            textShadow: '0 0 10px #facc15, 0 0 30px #facc15, 0 0 60px rgba(250,204,21,0.5)',
+            lineHeight: 0.9
+          }}
+        >
+          Micropia
+        </motion.h1>
 
-      {/* Slogan — clearly visible */}
-      <motion.p
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
-        className="font-bold tracking-wide mb-3 text-center"
-        style={{
-          fontSize: 'clamp(1rem, 4vw, 1.4rem)',
-          color: '#e5e5e5',
-          textShadow: '0 0 12px rgba(255,255,255,0.25)',
-          letterSpacing: '0.08em',
-        }}
-      >
-        Un mundo dentro de tu mundo
-      </motion.p>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+          className="text-xs md:text-sm font-black tracking-[0.4em] uppercase text-white/40 mb-12"
+        >
+          El Zoo Invisible
+        </motion.p>
+      </div>
 
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.65 }}
-        className="tracking-[0.3em] uppercase mb-1 text-neutral-400"
-        style={{ fontSize: 'clamp(0.75rem, 2.5vw, 1.05rem)' }}
-      >
-        El Zoo Invisible
-      </motion.p>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.8 }}
-        className="tracking-[0.5em] uppercase mb-12 text-red-500/70"
-        style={{ fontSize: 'clamp(0.6rem, 1.8vw, 0.8rem)' }}
-      >
-        ⚠ Instalación BSL-4 • Acceso Restringido ⚠
-      </motion.div>
-
-      {/* Scan button / progress */}
-      <AnimatePresence mode="wait">
-        {phase === 'idle' && (
-          <motion.button
-            key="scanBtn"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            transition={{ delay: 1 }}
-            onClick={startScan}
-            className="relative group cursor-pointer"
-          >
-            <div className="px-10 py-4 border-2 border-bio-green/40 bg-bio-green/5 
-                          text-bio-green font-bold tracking-[0.2em] uppercase
-                          hover:border-bio-green hover:bg-bio-green/10 hover:shadow-[0_0_30px_rgba(34,197,94,0.2)]
-                          transition-all duration-300"
-              style={{ fontSize: 'clamp(0.75rem, 2.5vw, 0.9rem)' }}
+      {/* Interaction Area */}
+      <div className="relative z-10 w-full max-w-xs md:max-w-sm">
+        <AnimatePresence mode="wait">
+          {phase === 'idle' && (
+            <motion.button
+              key="scanBtn"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              onClick={startScan}
+              className="w-full py-4 border-2 border-green-500/40 bg-green-500/5 text-green-400 font-black tracking-widest uppercase hover:bg-green-500 hover:text-black transition-all rounded-2xl text-xs"
             >
-              ▶ ENTRADA AL LABORATORIO
-            </div>
-            <div className="absolute -bottom-6 left-0 right-0 text-center text-neutral-600 tracking-widest"
-              style={{ fontSize: 'clamp(0.55rem, 1.5vw, 0.65rem)' }}
-            >
-              PRESIONE PARA ESCANEO DE SEGURIDAD
-            </div>
-          </motion.button>
-        )}
+              ▶ Acceder al Laboratorio
+            </motion.button>
+          )}
 
-        {phase === 'scanning' && (
-          <motion.div
-            key="scanning"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="w-72 md:w-96"
-          >
-            <div className="text-center text-bio-green tracking-[0.3em] mb-4"
-              style={{ animation: 'flicker 0.5s infinite', fontSize: 'clamp(0.65rem, 2vw, 0.8rem)' }}
-            >
-              ◉ ESCANEANDO AUTORIZACIÓN...
-            </div>
+          {phase === 'scanning' && (
+            <motion.div key="scanning" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
+              <div className="text-[9px] font-black text-green-500 tracking-[0.4em] animate-pulse uppercase">Escaneando Biometría: {scanProgress}%</div>
+              <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                <motion.div 
+                  className="h-full bg-green-500 shadow-[0_0_15px_#22c55e]"
+                  style={{ width: `${scanProgress}%` }}
+                />
+              </div>
+              <p className="text-[8px] font-mono text-white/30 uppercase tracking-widest">
+                {scanProgress > 50 ? 'Clearance Omega Confirmado' : 'Analizando Retina...'}
+              </p>
+            </motion.div>
+          )}
 
-            <div className="h-1 bg-neutral-800 rounded-full overflow-hidden mb-3">
-              <motion.div
-                className="h-full rounded-full"
-                style={{
-                  width: `${scanProgress}%`,
-                  background: 'linear-gradient(90deg, #22c55e, #86efac)',
-                  boxShadow: '0 0 10px #22c55e',
-                }}
-              />
-            </div>
+          {phase === 'authorized' && (
+            <motion.div key="auth" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} className="text-green-500 font-black tracking-[0.2em] uppercase">
+              <div className="text-lg mb-1">Acceso Autorizado</div>
+              <div className="text-[10px] opacity-60 italic">Bienvenido, Nando</div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
 
-            <div className="text-neutral-500 space-y-1 font-mono"
-              style={{ fontSize: 'clamp(0.6rem, 1.5vw, 0.7rem)' }}
-            >
-              {scanProgress > 10 && <p className="text-bio-green/60">✓ Huella dactilar verificada</p>}
-              {scanProgress > 30 && <p className="text-bio-green/60">✓ Retina escaneada</p>}
-              {scanProgress > 50 && <p className="text-bio-green/60">✓ Nivel de clearance: OMEGA</p>}
-              {scanProgress > 70 && <p className="text-bio-green/60">✓ Protocolos de contención activos</p>}
-              {scanProgress > 90 && <p className="text-emergency/80">⚡ Despresurizando cámara...</p>}
-            </div>
-          </motion.div>
-        )}
+      <div className="absolute bottom-8 left-0 right-0 z-10 opacity-20">
+         <p className="text-[8px] font-black tracking-[0.5em] uppercase text-red-500 animate-pulse">
+            ⚠ Instalación BSL-4 • Protocolo de Contención Activo ⚠
+         </p>
+      </div>
 
-        {phase === 'authorized' && (
-          <motion.div
-            key="authorized"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="text-center"
-          >
-            <div className="font-bold tracking-widest mb-2 text-bio-green"
-              style={{
-                fontSize: 'clamp(1.2rem, 5vw, 2rem)',
-                textShadow: '0 0 20px rgba(34, 197, 94, 0.5)',
-              }}
-            >
-              ACCESO AUTORIZADO
-            </div>
-            <div className="text-neutral-500 tracking-[0.3em]"
-              style={{ fontSize: 'clamp(0.6rem, 1.5vw, 0.75rem)' }}
-            >
-              BIENVENIDO AL NIVEL BSL-4
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Floating particles */}
-      {[...Array(20)].map((_, i) => (
+      {/* Ambient particles */}
+      {[...Array(15)].map((_, i) => (
         <motion.div
           key={i}
-          className="absolute w-1 h-1 rounded-full bg-bio-green/20"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-          }}
-          animate={{
-            y: [0, -30, 0],
-            opacity: [0.1, 0.4, 0.1],
-          }}
-          transition={{
-            duration: 3 + Math.random() * 4,
-            repeat: Infinity,
-            delay: Math.random() * 3,
-          }}
+          className="absolute w-0.5 h-0.5 rounded-full bg-green-500/20"
+          style={{ left: `${Math.random() * 100}%`, top: `${Math.random() * 100}%` }}
+          animate={{ y: [0, -40, 0], opacity: [0, 0.4, 0] }}
+          transition={{ duration: 3 + Math.random() * 5, repeat: Infinity, delay: Math.random() * 5 }}
         />
       ))}
     </motion.div>
