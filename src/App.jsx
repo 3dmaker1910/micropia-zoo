@@ -9,7 +9,8 @@ import HantavirusMission from './components/HantavirusMission';
 import VectorRoom from './components/VectorRoom';
 import BodyScanner from './components/BodyScanner';
 import CyanobacteriaRoom from './components/CyanobacteriaRoom';
-import BiotecnofilosRoom from './components/BiotecnofilosRoom';
+// Temporarily disabling BiotecnofilosRoom to debug build error
+// import BiotecnofilosRoom from './components/BiotecnofilosRoom';
 
 function App() {
   const [screen, setScreen] = useState('landing');
@@ -53,7 +54,13 @@ function App() {
           <LandingScreen key="landing" onEnter={handleEnter} />
         )}
         {screen === 'hall' && (
-          <ContainmentHall key="hall" onGoToHub={handleGoToHub} onGoToMap={handleGoToMap} onGoToVectors={handleGoToVectors} onNavigate={handleNavigate} />
+          <ContainmentHall
+            key="hall"
+            onGoToHub={handleGoToHub}
+            onGoToMap={handleGoToMap}
+            onGoToVectors={handleGoToVectors}
+            onNavigate={handleNavigate}
+          />
         )}
         {screen === 'hub' && (
           <DoctorHub key="hub" onBack={handleBackToHall} onStartQuiz={handleStartQuiz} />
@@ -76,9 +83,9 @@ function App() {
         {screen === 'cyanobacteria' && (
           <CyanobacteriaRoom key="cyanobacteria" onNavigate={handleNavigate} />
         )}
-        {screen === 'biotecnofilos' && (
+        {/* screen === 'biotecnofilos' && (
           <BiotecnofilosRoom key="biotecnofilos" onNavigate={handleNavigate} />
-        )}
+        )*/}
       </AnimatePresence>
     </div>
   );
