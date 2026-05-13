@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { useSpeech } from '../hooks/useSpeech';
+import useSpeech from '../hooks/useSpeech';
 
 function StatBar({ label, value, color, delay }) {
   return (
@@ -26,7 +26,7 @@ export default function MicrobeCard({ microbe, onClose }) {
 
   if (!microbe) return null;
 
-  const { name, scientific, type, icon, color, colorDim, glowColor, 
+  const { name, scientific, type, icon, color, colorDim, glowColor,
           letalidad, peligrosidad, descubrimiento, vectorTransmision, impacto, misterio, stats } = microbe;
 
   const speakCard = () => {
@@ -34,13 +34,13 @@ export default function MicrobeCard({ microbe, onClose }) {
       stop();
       return;
     }
-    const text = `Expediente de ${name}, ${scientific}. 
-      Clasificación: ${type}. 
-      Letalidad: ${letalidad}. 
-      Peligrosidad: ${peligrosidad}. 
-      Descubrimiento: ${descubrimiento}. 
-      Vector de transmisión: ${vectorTransmision}. 
-      Impacto histórico: ${impacto}. 
+    const text = `Expediente de ${name}, ${scientific}.
+      Clasificación: ${type}.
+      Letalidad: ${letalidad}.
+      Peligrosidad: ${peligrosidad}.
+      Descubrimiento: ${descubrimiento}.
+      Vector de transmisión: ${vectorTransmision}.
+      Impacto histórico: ${impacto}.
       Dato de misterio: ${misterio}.`;
     speak(text);
   };
