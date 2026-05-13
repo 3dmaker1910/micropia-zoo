@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// Reliable high-res tech world map background
-const MAP_BG_URL = 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop';
+// NUEVO MAPA MUNDI GLOBAL - Estética Neon Blue / Dark
+const MAP_BG_URL = 'https://images.unsplash.com/photo-1589519160732-57fc498494f8?q=80&w=2070&auto=format&fit=crop';
 
 const HOTSPOTS = [
   {
     id: 'argentina',
-    x: '22%',
+    x: '28%',
     y: '78%',
     label: 'ARGENTINA — Ushuaia',
     sublabel: 'Brote Hantavirus • MV Hondius',
@@ -18,18 +18,18 @@ const HOTSPOTS = [
   },
   {
     id: 'canada',
-    x: '22%',
-    y: '28%',
+    x: '20%',
+    y: '22%',
     label: 'CANADÁ — Toronto',
     sublabel: 'Misión Ártica • Patógenos del Permafrost',
     icon: '🇨🇦',
-    color: '#ef4444',
+    color: '#3b82f6',
     critical: false,
     navigateTo: null,
   },
   {
     id: 'spain',
-    x: '47%',
+    x: '46%',
     y: '33%',
     label: 'ESPAÑA — Madrid',
     sublabel: 'Centro Nacional de Biotecnología',
@@ -52,7 +52,7 @@ const HOTSPOTS = [
   {
     id: 'netherlands',
     x: '49%',
-    y: '28%',
+    y: '25%',
     label: 'PAÍSES BAJOS — Ámsterdam',
     sublabel: 'Sede Central Micropia',
     icon: '🇳🇱',
@@ -62,8 +62,8 @@ const HOTSPOTS = [
   },
   {
     id: 'elba',
-    x: '50%',
-    y: '35%',
+    x: '51%',
+    y: '32%',
     label: 'ITALIA — Isla de Elba',
     sublabel: 'Fiebre Mediterránea • Archivo Histórico',
     icon: '🇮🇹',
@@ -74,7 +74,7 @@ const HOTSPOTS = [
   {
     id: 'capetown',
     x: '53%',
-    y: '78%',
+    y: '75%',
     label: 'SUDÁFRICA — Ciudad del Cabo',
     sublabel: 'Resistencia Extrema • Vigilancia',
     icon: '🇿🇦',
@@ -84,8 +84,8 @@ const HOTSPOTS = [
   },
   {
     id: 'seoul',
-    x: '82%',
-    y: '36%',
+    x: '85%',
+    y: '35%',
     label: 'COREA DEL SUR — Seúl',
     sublabel: 'Tecnología de Diagnóstico Cuántico',
     icon: '🇰🇷',
@@ -95,8 +95,8 @@ const HOTSPOTS = [
   },
   {
     id: 'cyanobacteria',
-    x: '72%',
-    y: '68%',
+    x: '82%',
+    y: '75%',
     label: 'AUSTRALIA — Shark Bay',
     sublabel: 'Sala 3 • Cianobacterias: El Primer Aliento',
     icon: '🦠',
@@ -106,7 +106,7 @@ const HOTSPOTS = [
   },
   {
     id: 'biotecnofilos',
-    x: '55%',
+    x: '65%',
     y: '85%',
     label: 'ISLA DE LOS BIOTECNÓFILOS',
     sublabel: 'Sala 4 • Biopelículas y Bacterias Sociales',
@@ -222,24 +222,13 @@ export default function GlobalIntelligenceMap({ onNavigate }) {
       <div className="max-w-6xl mx-auto px-4 pt-6 pb-4">
         <div className="relative rounded-2xl overflow-hidden" style={{ border: '1px solid rgba(239,68,68,0.15)', boxShadow: '0 0 80px rgba(239,68,68,0.05), inset 0 0 60px rgba(0,0,0,0.5)' }}>
           <div className="relative" style={{ aspectRatio: '16/9' }}>
-            <img src={MAP_BG_URL} alt="Mapa Mundial" className="w-full h-full object-cover" style={{ filter: 'brightness(0.7) contrast(1.2) saturate(0.8)' }} />
-            <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(5,10,20,0.3) 0%, rgba(5,10,20,0.15) 50%, rgba(5,10,20,0.4) 100%)' }} />
-            <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'linear-gradient(rgba(239,68,68,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(239,68,68,0.5) 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
+            <img src={MAP_BG_URL} alt="Mapa Mundial" className="w-full h-full object-cover" style={{ filter: 'brightness(0.8) contrast(1.1)' }} />
+            <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(5,10,20,0.2) 0%, transparent 50%, rgba(5,10,20,0.3) 100%)' }} />
             <motion.div className="absolute left-0 right-0 h-[2px] z-10 pointer-events-none" style={{ background: 'linear-gradient(90deg, transparent, rgba(34,197,94,0.5), transparent)', boxShadow: '0 0 10px rgba(34,197,94,0.3)' }} animate={{ top: ['0%', '100%'] }} transition={{ duration: 6, repeat: Infinity, ease: 'linear' }} />
             
             {HOTSPOTS.map((spot) => (
               <HotspotMarker key={spot.id} spot={spot} onClick={handleSpotClick} isHovered={hoveredSpot === spot.id} onHover={setHoveredSpot} onLeave={() => setHoveredSpot(null)} />
             ))}
-
-            <div className="absolute top-3 left-3 z-10">
-              <div className="flex items-center gap-2 mb-1">
-                <motion.div className="w-2 h-2 rounded-full bg-bio-green" animate={{ opacity: [0.3, 1, 0.3] }} transition={{ duration: 1.5, repeat: Infinity }} />
-                <span className="text-bio-green/60 tracking-[0.2em] uppercase font-bold" style={{ fontSize: '0.55rem', textShadow: '0 1px 4px rgba(0,0,0,0.9)' }}>SATÉLITE MICROPIA-7 ACTIVO</span>
-              </div>
-            </div>
-            <div className="absolute bottom-3 right-3 z-10">
-              <span className="text-neutral-500 tracking-wider" style={{ fontSize: '0.5rem', textShadow: '0 1px 4px rgba(0,0,0,0.9)' }}>MICROPIA RED GLOBAL • v11.0</span>
-            </div>
           </div>
 
           <AnimatePresence>
