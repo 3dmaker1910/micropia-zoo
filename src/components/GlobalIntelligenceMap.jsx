@@ -7,8 +7,8 @@ const MAP_BG_URL = 'https://customer-assets.emergentagent.com/wingman/b09505ba-1
 const HOTSPOTS = [
   {
     id: 'canada',
-    x: '23%',
-    y: '30%',
+    x: '26%',
+    y: '28%',
     label: 'CANADÁ — Toronto',
     sublabel: 'Misión Ártica • Patógenos del Permafrost',
     icon: '🇨🇦',
@@ -18,8 +18,8 @@ const HOTSPOTS = [
   },
   {
     id: 'argentina',
-    x: '31%',
-    y: '88%',
+    x: '34%',
+    y: '85%',
     label: 'ARGENTINA — Ushuaia',
     sublabel: 'Brote Hantavirus • MV Hondius',
     icon: '🚢',
@@ -29,8 +29,8 @@ const HOTSPOTS = [
   },
   {
     id: 'netherlands',
-    x: '48%',
-    y: '25%',
+    x: '49.5%',
+    y: '26%',
     label: 'PAÍSES BAJOS — Ámsterdam',
     sublabel: 'Sede Central Micropia',
     icon: '🇳🇱',
@@ -40,7 +40,7 @@ const HOTSPOTS = [
   },
   {
     id: 'spain',
-    x: '46%',
+    x: '47.5%',
     y: '36%',
     label: 'ESPAÑA — Madrid',
     sublabel: 'Centro Nacional de Biotecnología',
@@ -51,8 +51,8 @@ const HOTSPOTS = [
   },
   {
     id: 'canarias',
-    x: '44%',
-    y: '44%',
+    x: '46%',
+    y: '43%',
     label: 'ISLAS CANARIAS',
     sublabel: 'Estación de Vigilancia Transatlántica',
     icon: '🏝️',
@@ -62,7 +62,7 @@ const HOTSPOTS = [
   },
   {
     id: 'elba',
-    x: '50%',
+    x: '51%',
     y: '36%',
     label: 'ITALIA — Isla de Elba',
     sublabel: 'Fiebre Mediterránea • Archivo Histórico',
@@ -73,8 +73,8 @@ const HOTSPOTS = [
   },
   {
     id: 'capetown',
-    x: '52%',
-    y: '82%',
+    x: '53%',
+    y: '78%',
     label: 'SUDÁFRICA — Ciudad del Cabo',
     sublabel: 'Resistencia Extrema • Vigilancia',
     icon: '🇿🇦',
@@ -84,8 +84,8 @@ const HOTSPOTS = [
   },
   {
     id: 'seoul',
-    x: '84%',
-    y: '40%',
+    x: '82%',
+    y: '38%',
     label: 'COREA DEL SUR — Seúl',
     sublabel: 'Tecnología de Diagnóstico Cuántico',
     icon: '🇰🇷',
@@ -95,19 +95,19 @@ const HOTSPOTS = [
   },
   {
     id: 'cyanobacteria',
-    x: '83%',
+    x: '80%',
     y: '78%',
     label: 'AUSTRALIA — Shark Bay',
     sublabel: 'Sala 3 • Cianobacterias: El Primer Aliento',
     icon: '🦠',
     color: '#00c896',
     critical: true,
-    navigateTo: 'cyanobacteria',
+    navigateTo: 'cyanobacteria', 
   },
   {
     id: 'biotecnofilos',
-    x: '62%',
-    y: '86%',
+    x: '63%',
+    y: '85%',
     label: 'ISLA DE LOS BIOTECNÓFILOS',
     sublabel: 'Sala 4 • Biopelículas y Bacterias Sociales',
     icon: '🧫',
@@ -137,12 +137,12 @@ function HotspotMarker({ spot, onClick, onHover, onLeave }) {
       <motion.div
         className="relative flex items-center justify-center rounded-full"
         style={{
-          width: 34, height: 32, marginLeft: -17, marginTop: -16,
+          width: 32, height: 32, marginLeft: -16, marginTop: -16,
           background: `${spot.color}40`, border: `1px solid ${spot.color}`, boxShadow: `0 0 15px ${spot.color}90`
         }}
         whileHover={{ scale: 1.3, boxShadow: `0 0 30px ${spot.color}` }}
       >
-        <span style={{ fontSize: '1rem' }}>{spot.icon}</span>
+        <span style={{ fontSize: '0.9rem' }}>{spot.icon}</span>
       </motion.div>
     </motion.div>
   );
@@ -177,6 +177,7 @@ export default function GlobalIntelligenceMap({ onNavigate }) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
+      {/* Top Header */}
       <div className="p-4 border-b border-cyan-500/20 bg-cyan-950/20 backdrop-blur-md flex items-center justify-between z-50 relative">
         <button onClick={() => onNavigate('hall')} className="text-[10px] font-black tracking-widest text-cyan-400 hover:text-cyan-300 uppercase">◀ PABELLÓN</button>
         <div className="text-center">
@@ -189,8 +190,18 @@ export default function GlobalIntelligenceMap({ onNavigate }) {
         </div>
       </div>
 
-      <div className="relative max-w-full mx-auto p-2 md:p-4 h-[calc(100vh-140px)] flex items-center justify-center">
-        <div className="relative w-full h-full rounded-[1.5rem] overflow-hidden border border-cyan-500/10 shadow-[0_0_100px_rgba(0,255,255,0.05)] bg-black">
+      {/* Main Map Container */}
+      <div className="relative w-full h-[calc(100vh-160px)] flex flex-col items-center justify-center p-4">
+        
+        {/* RE-LOCATED Surveillance Console - NOW ABOVE THE MAP ON THE LEFT (PACIFIC) */}
+        <div className="absolute top-10 left-10 w-80 p-4 rounded-3xl bg-black/60 border border-cyan-500/30 backdrop-blur-xl z-30 font-mono text-[9px] text-cyan-400/70 shadow-2xl pointer-events-none">
+          <p className="mb-2 text-cyan-400 font-black tracking-widest border-b border-cyan-500/20 pb-1">🛰️ CONSOLA DE VIGILANCIA</p>
+          {dataFeed.map((line, i) => (
+            <p key={i} className={i === dataFeed.length -1 ? 'text-cyan-300' : ''}>{line}</p>
+          ))}
+        </div>
+
+        <div className="relative w-full max-w-7xl h-full rounded-[3rem] overflow-hidden border border-white/10 shadow-[0_0_80px_rgba(0,255,255,0.1)] bg-black">
           <img 
             src={MAP_BG_URL} 
             alt="Mapa Plano Azul Eléctrico" 
@@ -221,7 +232,7 @@ export default function GlobalIntelligenceMap({ onNavigate }) {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
-                className="absolute top-10 right-10 w-72 p-6 bg-black/90 border border-cyan-500/40 backdrop-blur-3xl rounded-[2rem] z-30 shadow-[0_0_50px_rgba(0,255,255,0.15)]"
+                className="absolute top-10 right-10 w-72 p-6 bg-black/90 border-2 border-cyan-500/40 backdrop-blur-3xl rounded-[2rem] z-30 shadow-[0_0_50px_rgba(0,255,255,0.2)]"
               >
                 <div className="flex items-center gap-4 mb-4">
                   <span className="text-5xl filter drop-shadow-[0_0_12px_rgba(0,255,255,0.5)]">{hoveredData.icon}</span>
@@ -243,17 +254,8 @@ export default function GlobalIntelligenceMap({ onNavigate }) {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-8 flex justify-between items-end gap-6 pb-6">
-        <div className="w-full md:w-[450px] p-4 rounded-2xl bg-cyan-950/10 border border-cyan-500/10 font-mono text-[9px] text-cyan-400/60">
-          <p className="mb-2 text-cyan-400/40 uppercase font-black tracking-widest">Consola de Vigilancia Satelital</p>
-          {dataFeed.map((line, i) => (
-            <p key={i} className={i === dataFeed.length -1 ? 'text-cyan-300' : ''}>{line}</p>
-          ))}
-        </div>
-        <div className="text-right opacity-30">
-          <p className="text-[10px] text-cyan-400 uppercase tracking-[0.8em] font-black">Micropia Global Net • v11.2</p>
-          <p className="text-[8px] text-cyan-400/50 mt-1 uppercase font-bold tracking-widest italic">Ubicaciones: América • Europa • África • Asia</p>
-        </div>
+      <div className="fixed bottom-6 right-10 opacity-20">
+        <p className="text-[10px] text-cyan-400 uppercase tracking-[0.8em] font-black">Micropia Global Net • v11.3</p>
       </div>
     </motion.div>
   );
