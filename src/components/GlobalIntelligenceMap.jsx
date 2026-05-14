@@ -29,15 +29,18 @@ function HotspotMarker({ spot, onClick, onHover, onLeave }) {
 export default function GlobalIntelligenceMap({ onNavigate }) {
   const [hoveredSpot, setHoveredSpot] = useState(null);
   const [dataFeed, setDataFeed] = useState([]);
+  const [reportText, setReportText] = useState('');
+  
+  const fullReport = "SISTEMA DE VIGILANCIA GLOBAL ACTIVADO. Monitoreo satelital en tiempo real de nodos patogénicos. Alerta en el Atlántico Sur: MV Hondius reporta brote de Hantavirus. Perímetro de contención nivel 3 en progreso. Sincronizando con estaciones en Europa y Asia...";
 
   useEffect(() => {
-    const feeds = ['◈ ENLACE AZUL ELÉCTRICO ACTIVO', '◈ MV Hondius: 12:00 ARR | 18:00 DEP', '◈ Trayecto: Mar Argentino -> Atlántico'];
-    let idx = 0;
-    const interval = setInterval(() => { setDataFeed((prev) => [...prev.slice(-3), feeds[idx % feeds.length]]); idx++; }, 3000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const hoveredData = HOTSPOTS.find((s) => s.id === hoveredSpot);
+    if (reportText.length < fullReport.length) {
+      const timer = setTimeout(() => {
+        setReportText(fullReport.slice(0, reportText.length + 1));
+      }, 40);
+      return () => clearTimeout(timer);
+    }
+  }, [reportText]);
 
   return (
     <motion.div className="min-h-screen bg-black text-white overflow-hidden font-sans" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
@@ -50,29 +53,18 @@ export default function GlobalIntelligenceMap({ onNavigate }) {
       </div>
 
       <div className="relative w-full h-[calc(100vh-160px)] flex flex-col items-center justify-center p-4">
-        <div className="relative w-full max-w-7xl h-full rounded-[3rem] overflow-hidden border border-white/10 bg-black">
-          <img src={MAP_BG_URL} alt="Map" className="w-full h-full object-contain opacity-60" />
+        <div className="relative w-full max-w-7xl h-full rounded-[3rem] overflow-hidden border border-white/10 bg-black shadow-[0_0_80px_rgba(0,255,255,0.05)]">
+          <img src={MAP_BG_URL} alt="Map" className="w-full h-full object-contain opacity-50" />
           
-          <svg className="absolute inset-0 w-full h-full pointer-events-none z-10 opacity-40">
-             {/* Dotted lines for ship path */}
-             <path d="M 480,850 L 520,800 L 580,750" fill="none" stroke="cyan" strokeWidth="1" strokeDasharray="4,4" />
-             <text x="38%" y="82%" fill="cyan" fontSize="8" className="font-mono">12:00 ARR</text>
-             <text x="42%" y="77%" fill="cyan" fontSize="8" className="font-mono">18:00 DEP</text>
-          </svg>
+          {/* Typing Report Overlay */}
+          <div className="absolute top-6 left-8 w-80 p-4 rounded-3xl bg-black/80 border border-cyan-500/30 backdrop-blur-xl z-30 font-mono text-[9px] text-cyan-400/90 shadow-2xl">
+            <p className="mb-2 text-cyan-400 font-black tracking-widest border-b border-cyan-500/20 pb-1 italic">◈ SATÉLITE MICROPIA-7</p>
+            <p className="leading-relaxed">{reportText}<motion.span animate={{opacity:[0,1,0]}} transition={{repeat:Infinity}}>_</motion.span></p>
+          </div>
 
           {HOTSPOTS.map((spot) => (
             <HotspotMarker key={spot.id} spot={spot} onClick={() => spot.navigateTo && onNavigate(spot.navigateTo)} onHover={setHoveredSpot} onLeave={() => setHoveredSpot(null)} />
           ))}
-
-          <AnimatePresence>
-            {hoveredData && (
-              <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} className="absolute top-10 right-10 w-72 p-6 bg-black/90 border border-cyan-500/40 backdrop-blur-3xl rounded-[2rem] z-30 shadow-2xl">
-                <span className="text-5xl mb-2 block">{hoveredData.icon}</span>
-                <h3 className="font-black text-sm text-cyan-400">{hoveredData.label}</h3>
-                <p className="text-[10px] text-white/50">{hoveredData.sublabel}</p>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
       </div>
     </motion.div>
