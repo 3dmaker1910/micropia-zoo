@@ -24,47 +24,44 @@ export default function ContainmentHall({ onGoToHub, onGoToMap, onNavigate }) {
 
   return (
     <motion.div 
-      className="min-h-screen bg-[#050505] text-white overflow-x-auto overflow-y-hidden relative"
+      className="min-h-screen bg-[#050505] text-white overflow-y-auto relative"
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
     >
-      {/* Botones de Control Directo */}
-      <div className="absolute top-6 left-8 z-40 flex flex-col gap-3">
-        <button onClick={onGoToHub} className="px-6 py-2 bg-green-900/20 border border-green-500/40 rounded-full text-[10px] font-black tracking-widest text-green-400 hover:bg-green-500 hover:text-black transition-all shadow-lg">◀ OFICINA DRA. MICRA</button>
-        <button onClick={onGoToMap} className="px-6 py-2 bg-blue-900/20 border border-blue-500/40 rounded-full text-[10px] font-black tracking-widest text-blue-400 hover:bg-blue-500 hover:text-black transition-all shadow-lg">🌐 MAPA GLOBAL</button>
-        <button onClick={() => onNavigate('vectors')} className="px-6 py-2 bg-orange-600 border border-orange-400 rounded-full text-[10px] font-black tracking-widest text-black hover:bg-orange-400 transition-all shadow-[0_0_20px_rgba(255,100,0,0.3)] animate-pulse">🪳 SALA DE VECTORES</button>
+      {/* CONTROLES SUPERIORES - ADAPTADOS A MÓVIL */}
+      <div className="absolute top-4 left-4 right-4 z-40 flex flex-wrap gap-2 md:top-6 md:left-8 md:flex-col">
+        <button onClick={onGoToHub} className="px-4 py-2 bg-green-900/40 border border-green-500/40 rounded-full text-[9px] font-black tracking-widest text-green-400 uppercase shadow-lg">◀ OFICINA</button>
+        <button onClick={onGoToMap} className="px-4 py-2 bg-blue-900/40 border border-blue-500/40 rounded-full text-[9px] font-black tracking-widest text-blue-400 uppercase shadow-lg">🌐 MAPA</button>
+        <button onClick={() => onNavigate('vectors')} className="px-4 py-2 bg-orange-600 border border-orange-400 rounded-full text-[9px] font-black tracking-widest text-black uppercase shadow-lg">🪳 VECTORES</button>
       </div>
 
-      <div className="absolute top-6 right-8 z-40">
+      <div className="absolute top-4 right-4 z-40 md:top-6 md:right-8">
         <button 
           onClick={() => setShowAccessPanel(!showAccessPanel)}
-          className="px-6 py-2 bg-slate-900 border border-white/20 rounded-full text-[10px] font-black tracking-widest text-white/60 hover:bg-white hover:text-black transition-all shadow-xl uppercase"
+          className="p-3 bg-slate-900 border border-white/20 rounded-full text-[10px] font-black text-white shadow-xl"
         >
-          {showAccessPanel ? '✕ CERRAR TERMINAL' : '📂 TERMINAL DE ACCESO'}
+          {showAccessPanel ? '✕' : '📂'}
         </button>
       </div>
 
+      {/* TERMINAL DE ACCESO RESPONSIVA */}
       <AnimatePresence>
         {showAccessPanel && (
           <motion.div 
             initial={{ x: 400, opacity: 0 }} animate={{ x: 0, opacity: 1 }} exit={{ x: 400, opacity: 0 }}
-            className="fixed top-20 right-8 w-85 bg-black border-2 border-white/10 backdrop-blur-3xl rounded-[2.5rem] p-6 z-50 shadow-2xl"
+            className="fixed top-16 right-4 left-4 md:left-auto md:w-85 bg-black/95 border-2 border-white/10 backdrop-blur-3xl rounded-[2.5rem] p-6 z-50 shadow-2xl"
           >
-            <div className="text-center mb-6">
-              <h3 className="text-white font-black tracking-tighter uppercase italic text-sm">Unidad de Navegación</h3>
-              <div className="h-1 w-12 bg-orange-500 mx-auto mt-1 rounded-full" />
-            </div>
-
-            <div className="space-y-2">
+            <h3 className="text-white font-black tracking-tighter uppercase italic text-center mb-4">Menú de Acceso</h3>
+            <div className="grid grid-cols-1 gap-2">
               {ACCESS_PANEL_ROOMS.map(room => (
                 <button 
                   key={room.id} 
                   onClick={() => handleTerminalLink(room.id)}
-                  className="w-full flex items-center gap-4 p-4 bg-white/5 border border-white/5 rounded-2xl hover:bg-white/10 hover:border-white/20 transition-all text-left group"
+                  className="w-full flex items-center gap-3 p-3 bg-white/5 border border-white/5 rounded-2xl active:bg-orange-500/20"
                 >
-                  <span className="text-3xl">{room.icon}</span>
-                  <div>
-                    <p className="text-[11px] font-black text-white/80">{room.name.toUpperCase()}</p>
-                    <p className="text-[8px] text-white/40 uppercase tracking-[0.2em] font-bold">{room.desc}</p>
+                  <span className="text-2xl">{room.icon}</span>
+                  <div className="text-left">
+                    <p className="text-[10px] font-black text-white/80">{room.name.toUpperCase()}</p>
+                    <p className="text-[7px] text-white/30 uppercase tracking-widest">{room.desc}</p>
                   </div>
                 </button>
               ))}
@@ -73,20 +70,28 @@ export default function ContainmentHall({ onGoToHub, onGoToMap, onNavigate }) {
         )}
       </AnimatePresence>
 
-      <div className="h-screen flex items-center px-20">
-        <div className="flex gap-16 min-w-max items-center">
-          {microbes.map((m, i) => (
-            <div key={m.id} className="relative">
+      {/* VISTA DE TUBOS - GRID PARA MÓVIL, FLEX PARA PC */}
+      <div className="min-h-screen flex flex-col items-center justify-center p-10 pt-32">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:flex md:flex-row gap-8 md:gap-16 items-center justify-center">
+          {microbes.map((m) => (
+            <div key={m.id} className="relative scale-90 md:scale-100">
               <ContainmentTube microbe={m} onClick={() => setSelectedMicrobe(m)} />
             </div>
           ))}
         </div>
-        <SecurityGuard />
+
+        <div className="mt-10 md:mt-0">
+           <SecurityGuard />
+        </div>
       </div>
 
       <AnimatePresence>
         {selectedMicrobe && <MicrobeCard microbe={selectedMicrobe} onClose={() => setSelectedMicrobe(null)} />}
       </AnimatePresence>
+
+      <div className="pb-10 text-center text-white/5 font-black tracking-[1em] uppercase text-[8px] pointer-events-none">
+        Bio-Containment Unit BSL-4
+      </div>
     </motion.div>
   );
 }
