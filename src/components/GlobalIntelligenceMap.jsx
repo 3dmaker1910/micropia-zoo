@@ -1,16 +1,15 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// NUEVO MAPA MUNDI PLANO AZUL ELÉCTRICO ENVIADO POR NANDO
 const MAP_BG_URL = 'https://customer-assets.emergentagent.com/wingman/b09505ba-190e-4ca7-9d47-23f73249f18b/attachments/cf293892df9f4aa5af22a096d5ea7224_MAPA%20%20(1).jpg';
 
 const HOTSPOTS = [
   {
     id: 'canada',
-    x: '26%',
-    y: '28%',
-    label: 'CANADÁ — Toronto',
-    sublabel: 'Misión Ártica • Patógenos del Permafrost',
+    x: '20%',
+    y: '22%',
+    label: 'CANADÁ',
+    sublabel: 'Patógenos del Permafrost',
     icon: '🇨🇦',
     color: '#3b82f6',
     critical: false,
@@ -18,8 +17,8 @@ const HOTSPOTS = [
   },
   {
     id: 'argentina',
-    x: '34%',
-    y: '85%',
+    x: '31%',
+    y: '88%',
     label: 'ARGENTINA — Ushuaia',
     sublabel: 'Brote Hantavirus • MV Hondius',
     icon: '🚢',
@@ -29,9 +28,9 @@ const HOTSPOTS = [
   },
   {
     id: 'netherlands',
-    x: '49.5%',
-    y: '26%',
-    label: 'PAÍSES BAJOS — Ámsterdam',
+    x: '46.5%', // 1cm (2%) left from 48.5%
+    y: '22%',   // 45 degrees angle adjustment
+    label: 'PAÍSES BAJOS',
     sublabel: 'Sede Central Micropia',
     icon: '🇳🇱',
     color: '#f97316',
@@ -40,10 +39,10 @@ const HOTSPOTS = [
   },
   {
     id: 'spain',
-    x: '47.5%',
-    y: '36%',
+    x: '44.5%', // 1cm (2%) left from 46.5%
+    y: '33%',   // 45 degrees angle adjustment
     label: 'ESPAÑA — Madrid',
-    sublabel: 'Centro Nacional de Biotecnología',
+    sublabel: 'Centro Nac. Biotecnología',
     icon: '🇪🇸',
     color: '#fbbf24',
     critical: true,
@@ -51,10 +50,10 @@ const HOTSPOTS = [
   },
   {
     id: 'canarias',
-    x: '46%',
-    y: '43%',
+    x: '42%',   // 1cm (2%) left from 44%
+    y: '44%',
     label: 'ISLAS CANARIAS',
-    sublabel: 'Estación de Vigilancia Transatlántica',
+    sublabel: 'Vigilancia Transatlántica',
     icon: '🏝️',
     color: '#f472b6',
     critical: false,
@@ -62,10 +61,10 @@ const HOTSPOTS = [
   },
   {
     id: 'elba',
-    x: '51%',
-    y: '36%',
+    x: '48.5%', // 1cm (2%) left from 50.5%
+    y: '34%',   // 45 degrees angle adjustment
     label: 'ITALIA — Isla de Elba',
-    sublabel: 'Fiebre Mediterránea • Archivo Histórico',
+    sublabel: 'Fiebre Mediterránea',
     icon: '🇮🇹',
     color: '#60a5fa',
     critical: false,
@@ -73,10 +72,10 @@ const HOTSPOTS = [
   },
   {
     id: 'capetown',
-    x: '53%',
-    y: '78%',
-    label: 'SUDÁFRICA — Ciudad del Cabo',
-    sublabel: 'Resistencia Extrema • Vigilancia',
+    x: '52.5%',
+    y: '82%',
+    label: 'SUDÁFRICA',
+    sublabel: 'Ciudad del Cabo',
     icon: '🇿🇦',
     color: '#34d399',
     critical: false,
@@ -84,10 +83,10 @@ const HOTSPOTS = [
   },
   {
     id: 'seoul',
-    x: '82%',
-    y: '38%',
-    label: 'COREA DEL SUR — Seúl',
-    sublabel: 'Tecnología de Diagnóstico Cuántico',
+    x: '84%',
+    y: '40%',
+    label: 'COREA DEL SUR',
+    sublabel: 'Tecnología Cuántica',
     icon: '🇰🇷',
     color: '#a855f7',
     critical: true,
@@ -95,25 +94,14 @@ const HOTSPOTS = [
   },
   {
     id: 'cyanobacteria',
-    x: '80%',
+    x: '83%',
     y: '78%',
-    label: 'AUSTRALIA — Shark Bay',
-    sublabel: 'Sala 3 • Cianobacterias: El Primer Aliento',
+    label: 'AUSTRALIA',
+    sublabel: 'Sala 3 • Cianobacterias',
     icon: '🦠',
     color: '#00c896',
     critical: true,
-    navigateTo: 'cyanobacteria', 
-  },
-  {
-    id: 'biotecnofilos',
-    x: '63%',
-    y: '85%',
-    label: 'ISLA DE LOS BIOTECNÓFILOS',
-    sublabel: 'Sala 4 • Biopelículas y Bacterias Sociales',
-    icon: '🧫',
-    color: '#a855f7',
-    critical: true,
-    navigateTo: 'biotecnofilos',
+    navigateTo: 'cyanobacteria',
   },
 ];
 
@@ -129,8 +117,8 @@ function HotspotMarker({ spot, onClick, onHover, onLeave }) {
       {spot.critical && (
         <motion.div
           className="absolute rounded-full shadow-[0_0_20px_rgba(0,255,255,0.4)]"
-          style={{ width: 44, height: 44, left: -22, top: -22, border: `2px solid ${spot.color}` }}
-          animate={{ scale: [0.8, 1.8], opacity: [0.6, 0] }}
+          style={{ width: 40, height: 40, left: -20, top: -20, border: `2px solid ${spot.color}` }}
+          animate={{ scale: [0.8, 1.8], opacity: [0.7, 0] }}
           transition={{ duration: 1.8, repeat: Infinity }}
         />
       )}
@@ -138,11 +126,11 @@ function HotspotMarker({ spot, onClick, onHover, onLeave }) {
         className="relative flex items-center justify-center rounded-full"
         style={{
           width: 32, height: 32, marginLeft: -16, marginTop: -16,
-          background: `${spot.color}40`, border: `1px solid ${spot.color}`, boxShadow: `0 0 15px ${spot.color}90`
+          background: `${spot.color}40`, border: `2px solid ${spot.color}`, boxShadow: `0 0 15px ${spot.color}90`
         }}
         whileHover={{ scale: 1.3, boxShadow: `0 0 30px ${spot.color}` }}
       >
-        <span style={{ fontSize: '0.9rem' }}>{spot.icon}</span>
+        <span style={{ fontSize: '1rem' }}>{spot.icon}</span>
       </motion.div>
     </motion.div>
   );
@@ -153,13 +141,7 @@ export default function GlobalIntelligenceMap({ onNavigate }) {
   const [dataFeed, setDataFeed] = useState([]);
 
   useEffect(() => {
-    const feeds = [
-      '◈ SATÉLITE MICROPIA-7 — ENLACE AZUL ELÉCTRICO ACTIVO',
-      '◈ Sensor biológico #42 — Ushuaia — ALERTA CRÍTICA',
-      '◈ Red de vigilancia — 147 nodos sincronizados',
-      '◈ Hantavirus Andes — secuencia confirmada en MV Hondius',
-      '◈ Mapa Plano Proyectado — Vigilancia Global',
-    ];
+    const feeds = ['◈ ENLACE AZUL ELÉCTRICO ACTIVO', '◈ Sensor biológico #42 — Ushuaia', '◈ Mapa Plano Proyectado — Vigilancia Global'];
     let idx = 0;
     const interval = setInterval(() => {
       setDataFeed((prev) => [...prev.slice(-3), feeds[idx % feeds.length]]);
@@ -171,91 +153,32 @@ export default function GlobalIntelligenceMap({ onNavigate }) {
   const hoveredData = HOTSPOTS.find((s) => s.id === hoveredSpot);
 
   return (
-    <motion.div 
-      className="min-h-screen bg-black text-white overflow-hidden font-sans"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-    >
-      {/* Top Header */}
+    <motion.div className="min-h-screen bg-black text-white overflow-hidden font-sans" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <div className="p-4 border-b border-cyan-500/20 bg-cyan-950/20 backdrop-blur-md flex items-center justify-between z-50 relative">
         <button onClick={() => onNavigate('hall')} className="text-[10px] font-black tracking-widest text-cyan-400 hover:text-cyan-300 uppercase">◀ PABELLÓN</button>
         <div className="text-center">
           <h1 className="text-base md:text-xl font-black tracking-tighter uppercase italic text-cyan-400 leading-none">Mapa de Inteligencia Global</h1>
-          <p className="text-[8px] text-cyan-500/50 tracking-[0.5em] mt-1">UN MUNDO DENTRO DE TU MUNDO — AZUL ELÉCTRICO</p>
+          <p className="text-[8px] text-cyan-500/50 tracking-[0.5em] mt-1">UN MUNDO DENTRO DE TU MUNDO</p>
         </div>
-        <div className="flex items-center gap-2 bg-cyan-500/10 px-4 py-1.5 rounded-full border border-cyan-500/30 shadow-[0_0_15px_rgba(0,255,255,0.2)]">
-          <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-          <span className="text-[10px] font-black text-cyan-400 tracking-widest uppercase">VIVO</span>
-        </div>
+        <div className="w-20" />
       </div>
 
-      {/* Main Map Container */}
-      <div className="relative w-full h-[calc(100vh-160px)] flex flex-col items-center justify-center p-4">
-        
-        {/* RE-LOCATED Surveillance Console - NOW ABOVE THE MAP ON THE LEFT (PACIFIC) */}
-        <div className="absolute top-10 left-10 w-80 p-4 rounded-3xl bg-black/60 border border-cyan-500/30 backdrop-blur-xl z-30 font-mono text-[9px] text-cyan-400/70 shadow-2xl pointer-events-none">
-          <p className="mb-2 text-cyan-400 font-black tracking-widest border-b border-cyan-500/20 pb-1">🛰️ CONSOLA DE VIGILANCIA</p>
-          {dataFeed.map((line, i) => (
-            <p key={i} className={i === dataFeed.length -1 ? 'text-cyan-300' : ''}>{line}</p>
-          ))}
-        </div>
-
+      <div className="relative w-full h-[calc(100vh-140px)] flex flex-col items-center justify-center p-4">
         <div className="relative w-full max-w-7xl h-full rounded-[3rem] overflow-hidden border border-white/10 shadow-[0_0_80px_rgba(0,255,255,0.1)] bg-black">
-          <img 
-            src={MAP_BG_URL} 
-            alt="Mapa Plano Azul Eléctrico" 
-            className="w-full h-full object-contain"
-          />
-          
-          <div className="absolute inset-0 bg-cyan-900/5 pointer-events-none" />
-          
-          <motion.div 
-            className="absolute left-0 right-0 h-px bg-cyan-400/40 shadow-[0_0_20px_cyan] z-10"
-            animate={{ top: ['0%', '100%'] }}
-            transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
-          />
-
+          <img src={MAP_BG_URL} alt="Mapa Plano Azul" className="w-full h-full object-contain" />
           {HOTSPOTS.map((spot) => (
-            <HotspotMarker 
-              key={spot.id} 
-              spot={spot} 
-              onClick={() => spot.navigateTo && onNavigate(spot.navigateTo)} 
-              onHover={setHoveredSpot}
-              onLeave={() => setHoveredSpot(null)}
-            />
+            <HotspotMarker key={spot.id} spot={spot} onClick={() => spot.navigateTo && onNavigate(spot.navigateTo)} onHover={setHoveredSpot} onLeave={() => setHoveredSpot(null)} />
           ))}
-
           <AnimatePresence>
             {hoveredData && (
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                className="absolute top-10 right-10 w-72 p-6 bg-black/90 border-2 border-cyan-500/40 backdrop-blur-3xl rounded-[2rem] z-30 shadow-[0_0_50px_rgba(0,255,255,0.2)]"
-              >
-                <div className="flex items-center gap-4 mb-4">
-                  <span className="text-5xl filter drop-shadow-[0_0_12px_rgba(0,255,255,0.5)]">{hoveredData.icon}</span>
-                  <div>
-                    <h3 className="font-black text-sm uppercase italic tracking-tighter text-cyan-400">{hoveredData.label}</h3>
-                    <p className="text-[10px] text-white/50 leading-tight uppercase font-bold tracking-wider">{hoveredData.sublabel}</p>
-                  </div>
-                </div>
-                <div className="h-px bg-cyan-500/20 mb-4" />
-                <div className="flex items-center justify-between">
-                  <p className="text-[9px] font-black tracking-widest text-cyan-300 uppercase animate-pulse">
-                    {hoveredData.navigateTo ? '▸ ENLACE DISPONIBLE' : '🔒 ÁREA RESTRINGIDA'}
-                  </p>
-                  {hoveredData.critical && <span className="text-[8px] bg-red-600 text-white px-2 py-0.5 rounded font-black">ALERTA</span>}
-                </div>
+              <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} className="absolute top-10 right-10 w-72 p-6 bg-black/90 border border-cyan-500/40 backdrop-blur-3xl rounded-[2rem] z-30 shadow-[0_0_50px_rgba(0,255,255,0.2)]">
+                <span className="text-5xl mb-2 block">{hoveredData.icon}</span>
+                <h3 className="font-black text-sm uppercase italic text-cyan-400">{hoveredData.label}</h3>
+                <p className="text-[10px] text-white/50 leading-tight uppercase font-bold tracking-wider">{hoveredData.sublabel}</p>
               </motion.div>
             )}
           </AnimatePresence>
         </div>
-      </div>
-
-      <div className="fixed bottom-6 right-10 opacity-20">
-        <p className="text-[10px] text-cyan-400 uppercase tracking-[0.8em] font-black">Micropia Global Net • v11.3</p>
       </div>
     </motion.div>
   );
