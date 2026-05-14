@@ -1,273 +1,91 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { microbes } from '../data/microbes';
 import ContainmentTube from './ContainmentTube';
 import MicrobeCard from './MicrobeCard';
 import SecurityGuard from './SecurityGuard';
-import STLModelViewer from './STLModelViewer';
 
-const LOGO_URL = 'https://static.prod-images.emergentagent.com/jobs/b09505ba-190e-4ca7-9d47-23f73249f18b/images/35f7f965de88ecd8174371ab9698c7c29a20c26e2c37b5022fd3c115fce3eeac.png';
+const ACCESS_PANEL_ROOMS = [
+  { id: 'mission', name: 'Investigación Hantavirus', icon: '🚢', desc: 'Detective en MV Hondius', status: 'Activo' },
+  { id: 'vectors', name: 'Sala de Vectores', icon: '🪳', desc: 'La Pulga de Nando', status: 'Activo' },
+  { id: 'bodyscan', name: 'Escáner Corporal', icon: '🔬', desc: 'Análisis de Amenazas', status: 'Activo' },
+  { id: 'cyanobacteria', name: 'Islas Cianobacterias', icon: '🦠', desc: 'Origen del Oxígeno', status: 'Activo' },
+  { id: 'biotecnofilos', name: 'Sector Biotecnófilos', icon: '🧫', desc: 'Biofilms y Redes', status: 'Activo' },
+];
 
-export default function ContainmentHall({ onGoToHub, onGoToMap, onGoToVectors }) {
+export default function ContainmentHall({ onGoToHub, onGoToMap, onGoToVectors, onNavigate }) {
   const [selectedMicrobe, setSelectedMicrobe] = useState(null);
+  const [showAccessPanel, setShowShowAccessPanel] = useState(false);
 
   return (
-    <div className="min-h-screen relative">
-      {/* Top warning bar */}
-      <div className="sticky top-0 z-40 bg-lab-black/90 backdrop-blur-md border-b border-emergency/20">
-        <div className="h-0.5"
-          style={{
-            background: 'repeating-linear-gradient(90deg, #facc15, #facc15 10px, transparent 10px, transparent 20px)',
-          }}
-        />
-        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <motion.div
-              animate={{ scale: [1, 1.04, 1], opacity: [0.85, 1, 0.85] }}
-              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-              style={{ filter: 'drop-shadow(0 0 8px rgba(250,204,21,0.5))' }}
-            >
-              <img
-                src={LOGO_URL}
-                alt="Micropia"
-                style={{ width: '44px', height: '44px', objectFit: 'contain' }}
-              />
-            </motion.div>
-            <div>
-              <h1 className="font-bold tracking-[0.2em] text-emergency"
-                style={{ fontSize: 'clamp(0.75rem, 2.5vw, 1rem)' }}
-              >
-                MICROPIA
-              </h1>
-              <p className="tracking-[0.3em] text-neutral-600"
-                style={{ fontSize: 'clamp(0.55rem, 1.5vw, 0.7rem)' }}
-              >
-                SALA DE CONTENCIÓN BSL-4
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <motion.div
-              className="w-2 h-2 rounded-full bg-bio-green"
-              animate={{ opacity: [0.3, 1, 0.3] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            />
-            <span className="text-bio-green/70 tracking-[0.2em] hidden sm:inline"
-              style={{ fontSize: 'clamp(0.6rem, 1.5vw, 0.75rem)' }}
-            >
-              CONTENCIÓN ACTIVA
-            </span>
-          </div>
-        </div>
+    <motion.div 
+      className="min-h-screen bg-[#050505] text-white overflow-hidden relative"
+      initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+    >
+      {/* Main UI Controls */}
+      <div className="absolute top-6 left-8 z-40 flex flex-col gap-4">
+        <button onClick={onGoToHub} className="px-6 py-2 bg-green-900/20 border border-green-500/40 rounded-full text-[10px] font-black tracking-widest text-green-400 hover:bg-green-500 hover:text-black transition-all">◀ OFICINA DRA. MICRA</button>
+        <button onClick={onGoToMap} className="px-6 py-2 bg-blue-900/20 border border-blue-500/40 rounded-full text-[10px] font-black tracking-widest text-blue-400 hover:bg-blue-500 hover:text-black transition-all">🌐 MAPA DE INTELIGENCIA</button>
       </div>
 
-      {/* Header section */}
-      <div className="max-w-6xl mx-auto px-4 pt-10 pb-6 text-center">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="font-bold tracking-[0.15em] text-emergency mb-3"
-          style={{
-            fontSize: 'clamp(1.3rem, 5vw, 2.2rem)',
-            textShadow: '0 0 30px rgba(250, 204, 21, 0.2)',
-          }}
+      <div className="absolute top-6 right-8 z-40">
+        <button 
+          onClick={() => setShowShowAccessPanel(!showAccessPanel)}
+          className="px-6 py-2 bg-orange-900/30 border border-orange-500/50 rounded-full text-[10px] font-black tracking-widest text-orange-400 hover:bg-orange-500 hover:text-black transition-all shadow-[0_0_20px_rgba(234,88,12,0.2)]"
         >
-          SALA DE CONTENCIÓN
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="tracking-[0.3em] text-neutral-500 uppercase max-w-md mx-auto"
-          style={{ fontSize: 'clamp(0.65rem, 2vw, 0.85rem)' }}
-        >
-          5 organismos de máxima peligrosidad biológica • Toca un domo para inspección
-        </motion.p>
+          {showAccessPanel ? '✕ CERRAR ACCESO' : '📂 PANEL DE SALAS'}
+        </button>
+      </div>
 
-        {/* Warning ticker */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="mt-4 py-1.5 border-y border-red-500/10 overflow-hidden"
-        >
-          <motion.p
-            animate={{ x: ['100%', '-100%'] }}
-            transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-            className="text-red-500/40 tracking-[0.2em] whitespace-nowrap"
-            style={{ fontSize: 'clamp(0.6rem, 1.5vw, 0.75rem)' }}
+      {/* Room Access Panel Overlay */}
+      <AnimatePresence>
+        {showAccessPanel && (
+          <motion.div 
+            initial={{ x: 400, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: 400, opacity: 0 }}
+            className="fixed top-20 right-8 w-80 bg-black/90 border-2 border-orange-500/30 backdrop-blur-2xl rounded-[2.5rem] p-6 z-50 shadow-2xl"
           >
-            ⚠ ADVERTENCIA: MATERIAL BIOLÓGICO NIVEL 4 • NO ROMPER EL VIDRIO DE CONTENCIÓN • 
-            PROTOCOLO DE EMERGENCIA: EVACUACIÓN INMEDIATA SI SE DETECTA RUPTURA • 
-            EQUIPO DE PROTECCIÓN OBLIGATORIO ⚠
-          </motion.p>
-        </motion.div>
-      </div>
+            <h3 className="text-orange-500 font-black tracking-tighter uppercase italic mb-6 border-b border-orange-500/20 pb-2">Terminal de Acceso Nando</h3>
+            <div className="space-y-3">
+              {ACCESS_PANEL_ROOMS.map(room => (
+                <button 
+                  key={room.id} 
+                  onClick={() => { onNavigate(room.id); setShowShowAccessPanel(false); }}
+                  className="w-full flex items-center gap-4 p-3 bg-white/5 border border-white/10 rounded-2xl hover:bg-orange-500/20 hover:border-orange-500/40 transition-all text-left group"
+                >
+                  <span className="text-2xl">{room.icon}</span>
+                  <div>
+                    <p className="text-[10px] font-black text-white group-hover:text-orange-400">{room.name.toUpperCase()}</p>
+                    <p className="text-[8px] text-white/40 uppercase tracking-widest">{room.desc}</p>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      {/* Security Guard NPC — visible prominently ABOVE the tubes */}
-      <div className="max-w-6xl mx-auto px-4 pb-6">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.5 }}
-          className="max-w-lg"
-        >
-          <SecurityGuard />
-        </motion.div>
-      </div>
-
-      {/* Containment tubes grid */}
-      <div className="max-w-6xl mx-auto px-4 pb-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 md:gap-5">
-          {microbes.map((microbe, index) => (
-            <ContainmentTube
-              key={microbe.id}
-              microbe={microbe}
-              index={index}
-              onClick={() => setSelectedMicrobe(microbe)}
-            />
+      {/* Main Hall Rendering */}
+      <div className="h-screen flex items-center justify-center relative">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl mx-auto items-center">
+          {microbes.slice(0, 3).map((m, i) => (
+            <div key={m.id} className="relative">
+              <ContainmentTube microbe={m} onClick={() => setSelectedMicrobe(m)} />
+            </div>
           ))}
         </div>
+
+        <SecurityGuard />
       </div>
 
-      {/* 3D Model Viewer */}
-      <div className="max-w-6xl mx-auto px-4 pb-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.0 }}
-        >
-          <STLModelViewer modelType="plague" height={320} />
-        </motion.div>
+      <AnimatePresence>
+        {selectedMicrobe && <MicrobeCard microbe={selectedMicrobe} onClose={() => setSelectedMicrobe(null)} />}
+      </AnimatePresence>
+
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/10 font-black tracking-[1em] uppercase text-[10px] pointer-events-none">
+        Pabellón de Contención BSL-4
       </div>
-
-      {/* Navigation buttons */}
-      <div className="max-w-6xl mx-auto px-4 pb-8">
-        <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
-          <motion.button
-            onClick={onGoToVectors}
-            whileHover={{ scale: 1.02, boxShadow: '0 0 25px rgba(168,85,247,0.15)' }}
-            whileTap={{ scale: 0.98 }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8 }}
-            className="relative px-8 py-4 rounded-xl font-bold tracking-[0.15em] uppercase text-sm
-                     transition-all duration-300 group overflow-hidden w-full sm:w-auto"
-            style={{
-              background: 'linear-gradient(180deg, rgba(168,85,247,0.08) 0%, rgba(168,85,247,0.03) 100%)',
-              border: '1px solid rgba(168,85,247,0.2)',
-              color: '#a855f7',
-              boxShadow: '0 0 30px rgba(168,85,247,0.05)',
-            }}
-          >
-            <motion.div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-              style={{ background: 'radial-gradient(circle at center, rgba(168,85,247,0.1) 0%, transparent 70%)' }}
-            />
-            <span className="relative z-10 flex items-center gap-3 justify-center">
-              <motion.span
-                animate={{ scale: [1, 1.15, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                🪳
-              </motion.span>
-              SIGUIENTE SALA: VECTORES
-              <span className="text-purple-400/50">▶</span>
-            </span>
-            <span className="relative z-10 block text-xs text-neutral-500 mt-1 tracking-wider normal-case font-normal">
-              Anatomía de la pulga • Xenopsylla cheopis • Modelo 3D
-            </span>
-          </motion.button>
-
-          <motion.button
-            onClick={onGoToHub}
-            whileHover={{ scale: 1.02, boxShadow: '0 0 25px rgba(250,204,21,0.15)' }}
-            whileTap={{ scale: 0.98 }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.0 }}
-            className="relative px-8 py-4 rounded-xl font-bold tracking-[0.15em] uppercase text-sm
-                     transition-all duration-300 group overflow-hidden w-full sm:w-auto"
-            style={{
-              background: 'linear-gradient(180deg, rgba(250,204,21,0.08) 0%, rgba(250,204,21,0.03) 100%)',
-              border: '1px solid rgba(250,204,21,0.2)',
-              color: '#facc15',
-              boxShadow: '0 0 30px rgba(250,204,21,0.05)',
-            }}
-          >
-            <motion.div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-              style={{ background: 'radial-gradient(circle at center, rgba(250,204,21,0.1) 0%, transparent 70%)' }}
-            />
-            <span className="relative z-10 flex items-center gap-3 justify-center">
-              <motion.span
-                animate={{ scale: [1, 1.15, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                🔬
-              </motion.span>
-              DRA. MICRA
-              <span className="text-emergency/50">▶</span>
-            </span>
-            <span className="relative z-10 block text-xs text-neutral-500 mt-1 tracking-wider normal-case font-normal">
-              Expedientes secretos • Exámenes de 3 niveles • Insignias
-            </span>
-          </motion.button>
-
-          <motion.button
-            onClick={onGoToMap}
-            whileHover={{ scale: 1.02, boxShadow: '0 0 25px rgba(239,68,68,0.15)' }}
-            whileTap={{ scale: 0.98 }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.2 }}
-            className="relative px-8 py-4 rounded-xl font-bold tracking-[0.15em] uppercase text-sm
-                     transition-all duration-300 group overflow-hidden w-full sm:w-auto"
-            style={{
-              background: 'linear-gradient(180deg, rgba(239,68,68,0.08) 0%, rgba(239,68,68,0.03) 100%)',
-              border: '1px solid rgba(239,68,68,0.2)',
-              color: '#ef4444',
-              boxShadow: '0 0 30px rgba(239,68,68,0.05)',
-            }}
-          >
-            <motion.div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-              style={{ background: 'radial-gradient(circle at center, rgba(239,68,68,0.1) 0%, transparent 70%)' }}
-            />
-            <span className="relative z-10 flex items-center gap-3 justify-center">
-              <motion.span
-                animate={{ scale: [1, 1.15, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                🌐
-              </motion.span>
-              MAPA GLOBAL
-              <span className="text-red-400/50">▶</span>
-            </span>
-            <span className="relative z-10 block text-xs text-neutral-500 mt-1 tracking-wider normal-case font-normal">
-              Red de vigilancia epidemiológica • Misión Hantavirus
-            </span>
-          </motion.button>
-        </div>
-      </div>
-
-      {/* Footer */}
-      <div className="border-t border-neutral-800/50 py-6 text-center">
-        <p className="text-neutral-700 tracking-[0.3em] uppercase"
-          style={{ fontSize: 'clamp(0.6rem, 1.5vw, 0.75rem)' }}
-        >
-          Micropia v9.5: El Zoo Invisible • Instalación BSL-4 • Todos los organismos están contenidos
-        </p>
-      </div>
-
-      {/* Modal */}
-      {selectedMicrobe && (
-        <MicrobeCard
-          microbe={selectedMicrobe}
-          onClose={() => setSelectedMicrobe(null)}
-        />
-      )}
-    </div>
+    </motion.div>
   );
 }
