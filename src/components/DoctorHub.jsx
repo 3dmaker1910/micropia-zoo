@@ -4,9 +4,11 @@ import { secretFiles } from '../data/secretFiles.js';
 
 export default function DoctorHub({ onBack, onStartQuiz }) {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [isImageZoomed, setIsImageZoomed] = useState(false);
 
   return (
     <div className="min-h-screen bg-black text-white p-6 font-sans">
+      {/* Header */}
       <div className="max-w-6xl mx-auto flex items-center justify-between mb-8 border-b border-purple-500/20 pb-4">
         <div className="flex items-center gap-3">
           <span className="text-2xl">🧑‍🔬</span>
@@ -15,8 +17,9 @@ export default function DoctorHub({ onBack, onStartQuiz }) {
         <button onClick={onBack} className="px-6 py-2 bg-purple-900/20 border border-purple-500/30 rounded-full text-[10px] font-black text-purple-400 uppercase">◀ SALIR</button>
       </div>
 
+      {/* Files Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-        {secretFiles.map((file, idx) => (
+        {secretFiles.map((file) => (
           <motion.div
             key={file.microbeId}
             whileHover={{ scale: 1.02 }}
@@ -31,20 +34,26 @@ export default function DoctorHub({ onBack, onStartQuiz }) {
         ))}
       </div>
 
+      {/* File Detail Modal */}
       <AnimatePresence>
         {selectedFile && (
           <motion.div 
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl"
-            onClick={() => setSelectedFile(null)}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95 backdrop-blur-xl"
+            onClick={() => { setSelectedFile(null); setIsImageZoomed(false); }}
           >
             <motion.div 
               initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 20 }}
-              className="bg-neutral-900 border-2 rounded-[3rem] p-8 max-w-lg w-full shadow-2xl relative"
+              className="bg-neutral-900 border-2 rounded-[3rem] p-8 max-w-lg w-full shadow-2xl relative max-h-[90vh] overflow-y-auto"
               style={{ borderColor: selectedFile.color }}
               onClick={(e) => e.stopPropagation()}
             >
-              <img src={selectedFile.imageUrl} alt="Microbe" className="w-full aspect-square object-contain mb-6 rounded-3xl bg-black/40" />
+              {/* Image with Click to Zoom */}
+              <div className="relative group cursor-zoom-in" onClick={() => setIsImageZoomed(true)}>
+                <img src={selectedFile.imageUrl} alt="Microbe" className="w-full aspect-square object-contain mb-6 rounded-3xl bg-black/40 border border-white/5 transition-transform group-hover:scale-[1.02]" />
+                <div className="absolute bottom-10 right-4 bg-black/60 px-3 py-1 rounded-full text-[8px] font-black text-white uppercase tracking-tighter opacity-0 group-hover:opacity-100 transition-opacity">🔍 Clic para Ampliar</div>
+              </div>
+
               <h2 className="text-2xl font-black uppercase italic mb-2" style={{ color: selectedFile.color }}>{selectedFile.name}</h2>
               <div className="space-y-3">
                 {selectedFile.facts.map((f, i) => (
@@ -54,8 +63,33 @@ export default function DoctorHub({ onBack, onStartQuiz }) {
                   </div>
                 ))}
               </div>
-              <button onClick={() => setSelectedFile(null)} className="w-full mt-8 py-3 bg-white/5 border border-white/10 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all italic">Cerrar Expediente</button>
+              
+              <button onClick={() => { setSelectedFile(null); setIsImageZoomed(false); }} className="w-full mt-8 py-3 bg-white/5 border border-white/10 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all italic">Cerrar Expediente</button>
             </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* FULLSCREEN ZOOMED IMAGE */}
+      <AnimatePresence>
+        {isImageZoomed && selectedFile && (
+          <motion.div
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center p-2 md:p-10 cursor-zoom-out"
+            onClick={() => setIsImageZoomed(false)}
+          >
+            <motion.img 
+              initial={{ scale: 0.8 }} animate={{ scale: 1 }} exit={{ scale: 0.8 }}
+              src={selectedFile.imageUrl} 
+              className="max-w-full max-h-full object-contain shadow-[0_0_100px_rgba(255,255,255,0.1)]"
+              alt="Zoomed Microbe"
+            />
+            <div className="absolute top-6 right-6">
+              <button className="w-12 h-12 bg-white/10 border border-white/20 rounded-full flex items-center justify-center text-white text-2xl">✕</button>
+            </div>
+            <div className="absolute bottom-8 bg-black/60 backdrop-blur-md px-6 py-2 rounded-full border border-white/10 text-[10px] font-black uppercase tracking-widest text-white/60">
+               Modo de Lectura Detallada — Toca cualquier lugar para salir
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
