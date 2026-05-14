@@ -9,96 +9,131 @@ export default function BodyScanner({ onNavigate }) {
 
   const calculateMass = () => {
     const w = parseFloat(weight);
-    const h = parseFloat(height);
-    if (isNaN(w) || isNaN(h)) return;
+    if (isNaN(w)) return;
 
     setIsScanning(true);
     setTimeout(() => {
-      const bone = (w * 0.15).toFixed(1);
-      const visceral = (w * 0.20).toFixed(1);
-      const muscle = (w * 0.40).toFixed(1);
-      const microbiome = (w * 0.02).toFixed(2);
+      const bone = 15;
+      const visceral = 20;
+      const muscle = 40;
+      const fats = 23;
+      const microbiome = 2; // Fixed approx percentage for impact
       
       setResults({
-        bone, visceral, muscle, microbiome,
-        breakdown: {
-          bacteria: (microbiome * 0.90).toFixed(2),
-          virus: (microbiome * 0.05).toFixed(3),
-          fungi: (microbiome * 0.03).toFixed(3),
-          parasites: (microbiome * 0.02).toFixed(3)
+        bone: (w * 0.15).toFixed(1),
+        visceral: (w * 0.20).toFixed(1),
+        muscle: (w * 0.40).toFixed(1),
+        microbiome: (w * 0.02).toFixed(2),
+        percentages: {
+          bacteria: 90,
+          virus: 5,
+          fungi: 3,
+          others: 2
         }
       });
       setIsScanning(false);
-    }, 2000);
+    }, 2500);
   };
 
   return (
-    <motion.div className="min-h-screen bg-black text-white p-6 font-sans" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-      <div className="max-w-4xl mx-auto">
-        <div className="flex justify-between items-center mb-8 border-b border-white/10 pb-4">
-          <h1 className="text-xl font-black italic uppercase text-green-500">Escáner de Vulnerabilidad Humana</h1>
-          <button onClick={() => onNavigate('hall')} className="text-[10px] font-black text-white/40 uppercase tracking-widest px-4 py-2 border border-white/10 rounded-full">◀ VOLVER</button>
+    <motion.div className="min-h-screen bg-[#050505] text-white p-4 md:p-10 font-sans" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+      <div className="max-w-6xl mx-auto flex flex-col h-full">
+        <div className="flex justify-between items-center mb-10 border-b border-white/10 pb-6">
+          <div className="flex items-center gap-4">
+            <span className="text-3xl">🔬</span>
+            <h1 className="text-2xl font-black italic uppercase text-green-500 tracking-tighter">Escáner de Auditoría Biológica</h1>
+          </div>
+          <button onClick={() => onNavigate('hall')} className="px-8 py-2 bg-white/5 border border-white/20 rounded-full text-[10px] font-black uppercase hover:bg-white hover:text-black transition-all">◀ SALIR AL PABELLÓN</button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          <div className="space-y-6 bg-white/5 p-8 rounded-[2.5rem] border border-white/10">
-            <h2 className="text-sm font-bold uppercase tracking-widest text-green-400">Registro de Biometría</h2>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-[10px] uppercase text-white/40 mb-2">Peso Actual (kg)</label>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center flex-1">
+          {/* LEFT: INPUTS */}
+          <div className="space-y-8 bg-neutral-900/40 p-10 rounded-[3rem] border border-white/5 shadow-2xl">
+            <h2 className="text-sm font-black uppercase tracking-[0.3em] text-green-400 mb-6">Ingreso de Parámetros de Huésped</h2>
+            <div className="space-y-6">
+              <div className="relative">
+                <label className="absolute -top-2 left-6 bg-[#0a0a0a] px-2 text-[9px] font-black text-green-500/60 uppercase">Peso Corporal (KG)</label>
                 <input 
-                  type="text"
-                  inputMode="decimal"
-                  placeholder="Escribe tu peso..."
-                  value={weight} 
-                  onChange={(e) => setWeight(e.target.value.replace(/[^0-9.]/g, ''))} 
-                  className="w-full bg-black border-2 border-green-500/20 p-4 rounded-2xl text-green-400 font-bold text-2xl focus:border-green-500 outline-none transition-all"
+                  type="text" inputMode="decimal" placeholder="Ej: 75"
+                  value={weight} onChange={(e) => setWeight(e.target.value.replace(/[^0-9.]/g, ''))}
+                  className="w-full bg-transparent border-2 border-white/10 p-5 rounded-3xl text-3xl font-black text-white focus:border-green-500 outline-none transition-all"
                 />
               </div>
-              <div>
-                <label className="block text-[10px] uppercase text-white/40 mb-2">Talla / Estatura (cm)</label>
+              <div className="relative">
+                <label className="absolute -top-2 left-6 bg-[#0a0a0a] px-2 text-[9px] font-black text-green-500/60 uppercase">Estatura / Talla (CM)</label>
                 <input 
-                  type="text"
-                  inputMode="decimal"
-                  placeholder="Escribe tu talla..."
-                  value={height} 
-                  onChange={(e) => setHeight(e.target.value.replace(/[^0-9.]/g, ''))} 
-                  className="w-full bg-black border-2 border-green-500/20 p-4 rounded-2xl text-green-400 font-bold text-2xl focus:border-green-500 outline-none transition-all"
+                  type="text" inputMode="decimal" placeholder="Ej: 180"
+                  value={height} onChange={(e) => setHeight(e.target.value.replace(/[^0-9.]/g, ''))}
+                  className="w-full bg-transparent border-2 border-white/10 p-5 rounded-3xl text-3xl font-black text-white focus:border-green-500 outline-none transition-all"
                 />
               </div>
-              <button onClick={calculateMass} className="w-full py-5 bg-green-600 rounded-2xl font-black text-black uppercase tracking-[0.2em] hover:bg-green-400 shadow-[0_0_30px_rgba(34,197,94,0.3)] transition-all">{isScanning ? 'ANALIZANDO MATRIZ...' : 'INICIAR AUDITORÍA BIOLÓGICA'}</button>
+              <button 
+                onClick={calculateMass} 
+                className="w-full py-6 bg-green-500 text-black font-black text-sm uppercase tracking-[0.2em] rounded-[2rem] hover:bg-green-400 shadow-[0_0_50px_rgba(34,197,94,0.3)] transition-all active:scale-95"
+              >
+                {isScanning ? 'ANALIZANDO BIO-DATOS...' : 'EJECUTAR ESCANEO TOTAL'}
+              </button>
             </div>
           </div>
 
-          <AnimatePresence mode="wait">
-            {results ? (
-              <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-4">
-                <div className="p-6 rounded-[2rem] bg-white/5 border border-white/10">
-                  <h3 className="text-xs font-bold text-green-500 uppercase mb-4 tracking-widest">Composición de Masa Estimada</h3>
-                  <div className="grid grid-cols-2 gap-4 text-center">
-                    <div className="p-4 bg-black/60 rounded-2xl border border-white/5"><p className="text-[9px] text-white/30 uppercase">ÓSEA</p><p className="text-lg font-black">{results.bone} kg</p></div>
-                    <div className="p-4 bg-black/60 rounded-2xl border border-white/5"><p className="text-[9px] text-white/30 uppercase">VISCERAL</p><p className="text-lg font-black">{results.visceral} kg</p></div>
-                    <div className="p-4 bg-black/60 rounded-2xl border border-white/5"><p className="text-[9px] text-white/30 uppercase">MUSCULAR</p><p className="text-lg font-black">{results.muscle} kg</p></div>
-                    <div className="p-4 bg-green-900/20 rounded-2xl border border-green-500/30"><p className="text-[9px] text-green-400/60 uppercase">ZOO INVISIBLE</p><p className="text-lg font-black text-green-400">{results.microbiome} kg</p></div>
+          {/* RIGHT: VISUAL RESULTS */}
+          <div className="relative h-full flex items-center justify-center">
+            <AnimatePresence mode="wait">
+              {!results ? (
+                <motion.div key="idle" initial={{ opacity: 0 }} animate={{ opacity: 0.1 }} className="text-[20rem] select-none">🧍</motion.div>
+              ) : (
+                <motion.div key="results" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="w-full space-y-6">
+                  {/* MAIN BARS - VISUAL IMPACT */}
+                  <div className="p-8 rounded-[3rem] bg-white/5 border border-white/10 backdrop-blur-xl">
+                    <h3 className="text-xs font-black text-green-500 uppercase mb-8 tracking-widest text-center italic">Resultados del Análisis de Masa</h3>
+                    
+                    <div className="space-y-6">
+                       {[ 
+                         { label: 'Masa Ósea', val: results.bone, per: 15, col: '#fff' },
+                         { label: 'Masa Muscular', val: results.muscle, per: 40, col: '#22c55e' },
+                         { label: 'Masa Visceral', val: results.visceral, per: 20, col: '#facc15' },
+                         { label: 'Zoo Invisible', val: results.microbiome, per: 2, col: '#ef4444' },
+                       ].map((item, i) => (
+                         <div key={i} className="space-y-2">
+                            <div className="flex justify-between items-end text-[10px] font-black uppercase tracking-widest">
+                               <span style={{ color: item.col }}>{item.label}</span>
+                               <span>{item.val} kg ({item.per}%)</span>
+                            </div>
+                            <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
+                               <motion.div 
+                                 initial={{ width: 0 }} 
+                                 animate={{ width: `${item.per}%` }} 
+                                 transition={{ delay: 0.5 + (i * 0.1), duration: 1.5 }}
+                                 className="h-full" 
+                                 style={{ background: item.col, boxShadow: `0 0 15px ${item.col}50` }}
+                               />
+                            </div>
+                         </div>
+                       ))}
+                    </div>
                   </div>
-                </div>
-                <div className="p-6 rounded-[2rem] bg-red-950/20 border-2 border-red-500/30 shadow-2xl">
-                  <h3 className="text-[10px] font-black text-red-500 uppercase mb-4 tracking-widest">Desglose del Zoo Personal</h3>
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center text-xs"><span>Bacterias Symbiotas</span><span className="font-black text-green-400">{results.breakdown.bacteria} kg</span></div>
-                    <div className="flex justify-between items-center text-xs"><span>Carga Viral</span><span className="font-black text-red-400">{results.breakdown.virus} kg</span></div>
-                    <div className="flex justify-between items-center text-xs"><span>Hongos y Levaduras</span><span className="font-black text-yellow-400">{results.breakdown.fungi} kg</span></div>
-                    <div className="flex justify-between items-center text-xs"><span>Parásitos Endógenos</span><span className="font-black text-purple-400">{results.breakdown.parasites} kg</span></div>
+
+                  {/* MICROBIOME BREAKDOWN - IMPACTFUL GRID */}
+                  <div className="grid grid-cols-2 gap-4">
+                     <div className="p-6 rounded-[2rem] bg-red-950/20 border border-red-500/30 text-center">
+                        <p className="text-[9px] font-black text-red-500/60 uppercase mb-2">Carga Viral</p>
+                        <p className="text-3xl font-black text-red-500">5%</p>
+                        <p className="text-[8px] opacity-40">Vigilancia Nivel 4</p>
+                     </div>
+                     <div className="p-6 rounded-[2rem] bg-green-950/20 border border-green-500/30 text-center">
+                        <p className="text-[9px] font-black text-green-500/60 uppercase mb-2">Bacterias</p>
+                        <p className="text-3xl font-black text-green-400">90%</p>
+                        <p className="text-[8px] opacity-40">Symbiotas Activos</p>
+                     </div>
                   </div>
-                </div>
-              </motion.div>
-            ) : (
-              <div className="flex flex-col items-center justify-center p-10 opacity-20 border-2 border-dashed border-white/10 rounded-[3rem]">
-                 <span className="text-6xl mb-4">⚖️</span>
-                 <p className="text-xs font-black uppercase tracking-[0.3em] text-center">Aguardando Datos <br/> de Entrada</p>
-              </div>
-            )}
-          </AnimatePresence>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
+
+        <div className="mt-12 text-center opacity-10">
+           <p className="text-[8px] font-black tracking-[1em] uppercase">Bio-Audit Unit • Nando-1910 • BSL-4 Certified</p>
         </div>
       </div>
     </motion.div>
