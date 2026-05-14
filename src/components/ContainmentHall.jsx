@@ -11,6 +11,8 @@ const ACCESS_PANEL_ROOMS = [
   { id: 'bodyscan', name: 'Escáner Corporal', icon: '🔬', desc: 'Análisis de Amenazas', status: 'Activo' },
   { id: 'cyanobacteria', name: 'Islas Cianobacterias', icon: '🦠', desc: 'Origen del Oxígeno', status: 'Activo' },
   { id: 'biotecnofilos', name: 'Sector Biotecnófilos', icon: '🧫', desc: 'Biofilms y Redes', status: 'Activo' },
+  { id: 'autofagia', name: 'Sala de Autofagia', icon: '♻️', desc: 'El Reciclaje Maestro', status: 'Próximamente' },
+  { id: 'conan', name: 'Deinococcus', icon: '☢️', desc: 'Conan la Bacteria', status: 'Próximamente' },
 ];
 
 export default function ContainmentHall({ onGoToHub, onGoToMap, onGoToVectors, onNavigate }) {
@@ -59,6 +61,7 @@ export default function ContainmentHall({ onGoToHub, onGoToMap, onGoToVectors, o
                     <p className="text-[10px] font-black text-white group-hover:text-orange-400">{room.name.toUpperCase()}</p>
                     <p className="text-[8px] text-white/40 uppercase tracking-widest">{room.desc}</p>
                   </div>
+                  {room.status === 'Próximamente' && <span className="ml-auto text-[7px] bg-white/10 px-2 py-0.5 rounded text-white/40">PRONTO</span>}
                 </button>
               ))}
             </div>
