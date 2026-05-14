@@ -6,8 +6,8 @@ const MAP_BG_URL = 'https://customer-assets.emergentagent.com/wingman/b09505ba-1
 const HOTSPOTS = [
   {
     id: 'canada',
-    x: '28%', // +1cm right (26 -> 28)
-    y: '32%', // +2cm down (28 -> 32)
+    x: '29%', // +1cm right from 28%
+    y: '34%', // +2cm down from 32%
     label: 'CANADÁ',
     sublabel: 'Patógenos del Permafrost',
     icon: '🇨🇦',
@@ -16,8 +16,8 @@ const HOTSPOTS = [
     navigateTo: null,
   },
   {
-    id: 'argentina',
-    x: '36%', // +1cm right (34 -> 36)
+    id: 'argentina_ship',
+    x: '37%', // +1cm right from 36%
     y: '85%',
     label: 'ARGENTINA — Ushuaia',
     sublabel: 'Brote Hantavirus • MV Hondius',
@@ -27,9 +27,20 @@ const HOTSPOTS = [
     navigateTo: 'mission',
   },
   {
+    id: 'virus_argentina',
+    x: '39%',   // Near the boat
+    y: '88%',   // Near the boat
+    label: 'VIRUS DETECTADO',
+    sublabel: 'Cepa Andes • Alerta Nivel 4',
+    icon: '☣️',
+    color: '#ef4444',
+    critical: true,
+    navigateTo: 'mission',
+  },
+  {
     id: 'netherlands',
     x: '46.5%',
-    y: '32%',   // +3cm down (26 -> 32)
+    y: '35%',   // +3cm down from 32% (actually 32 -> 35 is roughly 3 units in this scale)
     label: 'PAÍSES BAJOS',
     sublabel: 'Sede Central Micropia',
     icon: '🇳🇱',
@@ -40,7 +51,7 @@ const HOTSPOTS = [
   {
     id: 'spain',
     x: '44.5%',
-    y: '40%',   // +2cm down (36 -> 40)
+    y: '42%',   // +2cm down from 40% (40 -> 42)
     label: 'ESPAÑA — Madrid',
     sublabel: 'Centro Nac. Biotecnología',
     icon: '🇪🇸',
@@ -50,7 +61,7 @@ const HOTSPOTS = [
   },
   {
     id: 'canarias',
-    x: '40%',   // +1cm left (42 -> 40)
+    x: '39%',   // +1cm left from 40% (40 -> 39 is roughly it)
     y: '44%',
     label: 'ISLAS CANARIAS',
     sublabel: 'Vigilancia Transatlántica',
@@ -62,7 +73,7 @@ const HOTSPOTS = [
   {
     id: 'elba',
     x: '48.5%',
-    y: '40%',   // +2cm down (36 -> 40)
+    y: '42%',   // +2cm down from 40% (40 -> 42)
     label: 'ITALIA — Isla de Elba',
     sublabel: 'Fiebre Mediterránea',
     icon: '🇮🇹',
@@ -83,7 +94,7 @@ const HOTSPOTS = [
   },
   {
     id: 'seoul',
-    x: '84%',
+    x: '81%',   // Moved back left (was 84%)
     y: '40%',
     label: 'COREA DEL SUR',
     sublabel: 'Tecnología Cuántica',
@@ -93,16 +104,23 @@ const HOTSPOTS = [
     navigateTo: null,
   },
   {
-    id: 'virus_argentina',
-    x: '38%',   // Near the boat
-    y: '88%',   // Near the boat
-    label: 'VIRUS DETECTADO',
-    sublabel: 'Cepa Andes • Alerta Nivel 4',
-    icon: '☣️',
-    color: '#ef4444',
+    id: 'cyanobacteria',
+    x: '83%',
+    y: '78%',
+    label: 'AUSTRALIA',
+    sublabel: 'Sala 3 • Cianobacterias',
+    icon: '🦠',
+    color: '#00c896',
     critical: true,
-    navigateTo: 'mission',
+    navigateTo: 'cyanobacteria',
   },
+];
+
+// Trip segments for the boat
+const SHIP_PATH = [
+  { x: '37%', y: '85%', time: '12:00' },
+  { x: '40%', y: '80%', time: '18:00' },
+  { x: '45%', y: '75%', time: '02:00' },
 ];
 
 function HotspotMarker({ spot, onClick, onHover, onLeave }) {
@@ -126,7 +144,7 @@ function HotspotMarker({ spot, onClick, onHover, onLeave }) {
         className="relative flex items-center justify-center rounded-full"
         style={{
           width: 32, height: 32, marginLeft: -16, marginTop: -16,
-          background: `${spot.color}40`, border: `1px solid ${spot.color}`, boxShadow: `0 0 15px ${spot.color}90`
+          background: `${spot.color}40`, border: `2px solid ${spot.color}`, boxShadow: `0 0 15px ${spot.color}90`
         }}
         whileHover={{ scale: 1.3, boxShadow: `0 0 30px ${spot.color}` }}
       >
@@ -158,28 +176,33 @@ export default function GlobalIntelligenceMap({ onNavigate }) {
         <button onClick={() => onNavigate('hall')} className="text-[10px] font-black tracking-widest text-cyan-400 hover:text-cyan-300 uppercase">◀ PABELLÓN</button>
         <div className="text-center">
           <h1 className="text-base md:text-xl font-black tracking-tighter uppercase italic text-cyan-400 leading-none">Mapa de Inteligencia Global</h1>
-          <p className="text-[8px] text-cyan-500/50 tracking-[0.5em] mt-1">UN MUNDO DENTRO DE TU MUNDO</p>
+          <p className="text-[8px] text-cyan-500/50 tracking-[0.5em] mt-1">VIGILANCIA EPIDEMIOLÓGICA ACTIVA</p>
         </div>
         <div className="w-20" />
       </div>
 
       <div className="relative w-full h-[calc(100vh-160px)] flex flex-col items-center justify-center p-4">
-        {/* Surveillance Console Above Map */}
-        <div className="absolute top-6 left-10 w-80 p-4 rounded-3xl bg-black/60 border border-cyan-500/30 backdrop-blur-xl z-30 font-mono text-[9px] text-cyan-400/70 shadow-2xl pointer-events-none">
-          <p className="mb-2 text-cyan-400 font-black tracking-widest border-b border-cyan-500/20 pb-1">🛰️ CONSOLA DE VIGILANCIA</p>
-          {dataFeed.map((line, i) => (
-            <p key={i} className={i === dataFeed.length -1 ? 'text-cyan-300' : ''}>{line}</p>
-          ))}
-        </div>
-
         <div className="relative w-full max-w-7xl h-full rounded-[3rem] overflow-hidden border border-white/10 shadow-[0_0_80px_rgba(255,255,255,0.1)] bg-black">
-          <img src={MAP_BG_URL} alt="Mapa Plano Azul" className="w-full h-full object-contain" />
+          <img src={MAP_BG_URL} alt="Mapa Plano Azul" className="w-full h-full object-contain opacity-50" />
+          
+          {/* SVG layer for dotted lines and trip times */}
+          <svg className="absolute inset-0 w-full h-full pointer-events-none z-10">
+            <path 
+              d="M 480,850 Q 520,800 580,750" 
+              fill="none" stroke="#ef4444" strokeWidth="2" strokeDasharray="5,5" opacity="0.6"
+              style={{ transform: 'scale(1)', transformOrigin: '0 0' }} // Placeholder logic
+            />
+            <text x="38%" y="83%" fill="#ef4444" fontSize="10" className="font-bold">12:00 ARR</text>
+            <text x="42%" y="78%" fill="#ef4444" fontSize="10" className="font-bold">18:00 DEP</text>
+          </svg>
+
           {HOTSPOTS.map((spot) => (
             <HotspotMarker key={spot.id} spot={spot} onClick={() => spot.navigateTo && onNavigate(spot.navigateTo)} onHover={setHoveredSpot} onLeave={() => setHoveredSpot(null)} />
           ))}
+
           <AnimatePresence>
             {hoveredData && (
-              <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} className="absolute top-10 right-10 w-72 p-6 bg-black/90 border border-cyan-500/40 backdrop-blur-3xl rounded-[2rem] z-30 shadow-[0_0_50px_rgba(0,255,255,0.2)]">
+              <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} className="absolute top-10 right-10 w-72 p-6 bg-black/90 border border-cyan-500/40 backdrop-blur-3xl rounded-[2rem] z-30 shadow-[0_0_50px_rgba(255,255,255,0.2)]">
                 <span className="text-5xl mb-2 block">{hoveredData.icon}</span>
                 <h3 className="font-black text-sm uppercase italic text-cyan-400">{hoveredData.label}</h3>
                 <p className="text-[10px] text-white/50 leading-tight uppercase font-bold tracking-wider">{hoveredData.sublabel}</p>
