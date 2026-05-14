@@ -28,16 +28,13 @@ function HotspotMarker({ spot, onClick, onHover, onLeave }) {
 
 export default function GlobalIntelligenceMap({ onNavigate }) {
   const [hoveredSpot, setHoveredSpot] = useState(null);
-  const [dataFeed, setDataFeed] = useState([]);
   const [reportText, setReportText] = useState('');
   
-  const fullReport = "SISTEMA DE VIGILANCIA GLOBAL ACTIVADO. Monitoreo satelital en tiempo real de nodos patogénicos. Alerta en el Atlántico Sur: MV Hondius reporta brote de Hantavirus. Perímetro de contención nivel 3 en progreso. Sincronizando con estaciones en Europa y Asia...";
+  const fullReport = "SISTEMA DE VIGILANCIA GLOBAL ACTIVADO. Monitoreo satelital en tiempo real de nodos patogénicos. Alerta en el Atlántico Sur: MV Hondius reporta brote de Hantavirus.";
 
   useEffect(() => {
     if (reportText.length < fullReport.length) {
-      const timer = setTimeout(() => {
-        setReportText(fullReport.slice(0, reportText.length + 1));
-      }, 40);
+      const timer = setTimeout(() => { setReportText(fullReport.slice(0, reportText.length + 1)); }, 40);
       return () => clearTimeout(timer);
     }
   }, [reportText]);
@@ -53,13 +50,13 @@ export default function GlobalIntelligenceMap({ onNavigate }) {
       </div>
 
       <div className="relative w-full h-[calc(100vh-160px)] flex flex-col items-center justify-center p-4">
-        <div className="relative w-full max-w-7xl h-full rounded-[3rem] overflow-hidden border border-white/10 bg-black shadow-[0_0_80px_rgba(0,255,255,0.05)]">
-          <img src={MAP_BG_URL} alt="Map" className="w-full h-full object-contain opacity-50" />
+        <div className="relative w-full max-w-7xl h-full rounded-[3rem] overflow-hidden border border-white/20 bg-black">
+          {/* REMOVED ALL FILTERS FOR FULL NITIDEZ */}
+          <img src={MAP_BG_URL} alt="Map" className="w-full h-full object-contain opacity-100" />
           
-          {/* Typing Report Overlay */}
           <div className="absolute top-6 left-8 w-80 p-4 rounded-3xl bg-black/80 border border-cyan-500/30 backdrop-blur-xl z-30 font-mono text-[9px] text-cyan-400/90 shadow-2xl">
             <p className="mb-2 text-cyan-400 font-black tracking-widest border-b border-cyan-500/20 pb-1 italic">◈ SATÉLITE MICROPIA-7</p>
-            <p className="leading-relaxed">{reportText}<motion.span animate={{opacity:[0,1,0]}} transition={{repeat:Infinity}}>_</motion.span></p>
+            <p className="leading-relaxed">{reportText}_</p>
           </div>
 
           {HOTSPOTS.map((spot) => (
