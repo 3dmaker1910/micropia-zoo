@@ -10,9 +10,7 @@ const ACCESS_PANEL_ROOMS = [
   { id: 'vectors', name: 'Sala de Vectores', icon: '🪳', desc: 'La Pulga de Nando', status: 'Activo' },
   { id: 'bodyscan', name: 'Escáner Corporal', icon: '🔬', desc: 'Análisis de Amenazas', status: 'Activo' },
   { id: 'cyanobacteria', name: 'Islas Cianobacterias', icon: '🦠', desc: 'Origen del Oxígeno', status: 'Activo' },
-  { id: 'biotecnofilos', name: 'Sector Biotecnófilos', icon: '🧫', desc: 'Biofilms y Redes', status: 'Activo' },
-  { id: 'autofagia', name: 'Sala de Autofagia', icon: '♻️', desc: 'El Reciclaje Maestro', status: 'Próximamente' },
-  { id: 'conan', name: 'Deinococcus', icon: '☢️', desc: 'Conan la Bacteria', status: 'Próximamente' },
+  { id: 'autofagia', name: 'Sala de Autofagia', icon: '♻️', desc: 'El Reciclaje Maestro', status: 'Activo' },
 ];
 
 export default function ContainmentHall({ onGoToHub, onGoToMap, onGoToVectors, onNavigate }) {
@@ -21,7 +19,7 @@ export default function ContainmentHall({ onGoToHub, onGoToMap, onGoToVectors, o
 
   return (
     <motion.div 
-      className="min-h-screen bg-[#050505] text-white overflow-hidden relative"
+      className="min-h-screen bg-[#050505] text-white overflow-x-auto overflow-y-hidden relative"
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
     >
       {/* Main UI Controls */}
@@ -39,7 +37,6 @@ export default function ContainmentHall({ onGoToHub, onGoToMap, onGoToVectors, o
         </button>
       </div>
 
-      {/* Room Access Panel Overlay */}
       <AnimatePresence>
         {showAccessPanel && (
           <motion.div 
@@ -61,7 +58,6 @@ export default function ContainmentHall({ onGoToHub, onGoToMap, onGoToVectors, o
                     <p className="text-[10px] font-black text-white group-hover:text-orange-400">{room.name.toUpperCase()}</p>
                     <p className="text-[8px] text-white/40 uppercase tracking-widest">{room.desc}</p>
                   </div>
-                  {room.status === 'Próximamente' && <span className="ml-auto text-[7px] bg-white/10 px-2 py-0.5 rounded text-white/40">PRONTO</span>}
                 </button>
               ))}
             </div>
@@ -69,10 +65,10 @@ export default function ContainmentHall({ onGoToHub, onGoToMap, onGoToVectors, o
         )}
       </AnimatePresence>
 
-      {/* Main Hall Rendering */}
-      <div className="h-screen flex items-center justify-center relative">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl mx-auto items-center">
-          {microbes.slice(0, 3).map((m, i) => (
+      {/* Muestra 5 Tubos ahora - Scroll Horizontal */}
+      <div className="h-screen flex items-center px-20">
+        <div className="flex gap-16 min-w-max items-center">
+          {microbes.map((m, i) => (
             <div key={m.id} className="relative">
               <ContainmentTube microbe={m} onClick={() => setSelectedMicrobe(m)} />
             </div>
@@ -87,7 +83,7 @@ export default function ContainmentHall({ onGoToHub, onGoToMap, onGoToVectors, o
       </AnimatePresence>
 
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/10 font-black tracking-[1em] uppercase text-[10px] pointer-events-none">
-        Pabellón de Contención BSL-4
+        Pabellón de Contención BSL-4 • Muestras #001 - #005
       </div>
     </motion.div>
   );
