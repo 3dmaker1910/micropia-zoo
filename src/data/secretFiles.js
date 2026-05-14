@@ -40,6 +40,24 @@ export const secretFiles = [
     ]
   },
   {
+    microbeId: 4,
+    name: "Gripe Española",
+    codeName: "EXPEDIENTE H1N1-∆",
+    classification: "MÁXIMO SECRETO",
+    imageUrl: "https://images.unsplash.com/photo-1604105038794-702630644a1a?q=80&w=1974&auto=format&fit=crop",
+    color: "#3b82f6",
+    facts: [
+      {
+        title: "El Virus del Permafrost",
+        content: "En 1997, se desenterró el cuerpo de una mujer inuit congelada desde 1918. De sus pulmones preservados, los científicos extrajeron y secuenciaron el virus completo."
+      },
+      {
+        title: "La Tormenta de Citoquinas",
+        content: "A diferencia de otras gripes, la Española mataba preferentemente a adultos jóvenes y sanos debido a una reacción exagerada del sistema inmune."
+      }
+    ]
+  },
+  {
     microbeId: 5,
     name: "Tuberculosis",
     codeName: "EXPEDIENTE MYCOBACTERIUM-Ψ",
@@ -52,7 +70,7 @@ export const secretFiles = [
         content: "Mycobacterium tuberculosis tiene una pared celular extraordinariamente gruesa y cerosa que la hace casi impermeable a los ataques del sistema inmune."
       },
       {
-0        title: "XDR-TB: La Pesadilla",
+        title: "XDR-TB: La Pesadilla",
         content: "La TB extremadamente resistente (XDR-TB) no responde a los antibióticos más potentes disponibles. La tasa de mortalidad es superior al 70%."
       }
     ]
