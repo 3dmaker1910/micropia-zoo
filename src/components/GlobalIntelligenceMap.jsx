@@ -6,8 +6,8 @@ const MAP_BG_URL = 'https://customer-assets.emergentagent.com/wingman/b09505ba-1
 const HOTSPOTS = [
   {
     id: 'canada',
-    x: '20%',
-    y: '22%',
+    x: '28%', // +1cm right (26 -> 28)
+    y: '32%', // +2cm down (28 -> 32)
     label: 'CANADÁ',
     sublabel: 'Patógenos del Permafrost',
     icon: '🇨🇦',
@@ -17,8 +17,8 @@ const HOTSPOTS = [
   },
   {
     id: 'argentina',
-    x: '31%',
-    y: '88%',
+    x: '36%', // +1cm right (34 -> 36)
+    y: '85%',
     label: 'ARGENTINA — Ushuaia',
     sublabel: 'Brote Hantavirus • MV Hondius',
     icon: '🚢',
@@ -28,8 +28,8 @@ const HOTSPOTS = [
   },
   {
     id: 'netherlands',
-    x: '46.5%', // 1cm (2%) left from 48.5%
-    y: '22%',   // 45 degrees angle adjustment
+    x: '46.5%',
+    y: '32%',   // +3cm down (26 -> 32)
     label: 'PAÍSES BAJOS',
     sublabel: 'Sede Central Micropia',
     icon: '🇳🇱',
@@ -39,8 +39,8 @@ const HOTSPOTS = [
   },
   {
     id: 'spain',
-    x: '44.5%', // 1cm (2%) left from 46.5%
-    y: '33%',   // 45 degrees angle adjustment
+    x: '44.5%',
+    y: '40%',   // +2cm down (36 -> 40)
     label: 'ESPAÑA — Madrid',
     sublabel: 'Centro Nac. Biotecnología',
     icon: '🇪🇸',
@@ -50,7 +50,7 @@ const HOTSPOTS = [
   },
   {
     id: 'canarias',
-    x: '42%',   // 1cm (2%) left from 44%
+    x: '40%',   // +1cm left (42 -> 40)
     y: '44%',
     label: 'ISLAS CANARIAS',
     sublabel: 'Vigilancia Transatlántica',
@@ -61,8 +61,8 @@ const HOTSPOTS = [
   },
   {
     id: 'elba',
-    x: '48.5%', // 1cm (2%) left from 50.5%
-    y: '34%',   // 45 degrees angle adjustment
+    x: '48.5%',
+    y: '40%',   // +2cm down (36 -> 40)
     label: 'ITALIA — Isla de Elba',
     sublabel: 'Fiebre Mediterránea',
     icon: '🇮🇹',
@@ -93,15 +93,15 @@ const HOTSPOTS = [
     navigateTo: null,
   },
   {
-    id: 'cyanobacteria',
-    x: '83%',
-    y: '78%',
-    label: 'AUSTRALIA',
-    sublabel: 'Sala 3 • Cianobacterias',
-    icon: '🦠',
-    color: '#00c896',
+    id: 'virus_argentina',
+    x: '38%',   // Near the boat
+    y: '88%',   // Near the boat
+    label: 'VIRUS DETECTADO',
+    sublabel: 'Cepa Andes • Alerta Nivel 4',
+    icon: '☣️',
+    color: '#ef4444',
     critical: true,
-    navigateTo: 'cyanobacteria',
+    navigateTo: 'mission',
   },
 ];
 
@@ -116,9 +116,9 @@ function HotspotMarker({ spot, onClick, onHover, onLeave }) {
     >
       {spot.critical && (
         <motion.div
-          className="absolute rounded-full shadow-[0_0_20px_rgba(0,255,255,0.4)]"
+          className="absolute rounded-full shadow-[0_0_20px_rgba(255,255,255,0.4)]"
           style={{ width: 40, height: 40, left: -20, top: -20, border: `2px solid ${spot.color}` }}
-          animate={{ scale: [0.8, 1.8], opacity: [0.7, 0] }}
+          animate={{ scale: [0.8, 1.8], opacity: [0.6, 0] }}
           transition={{ duration: 1.8, repeat: Infinity }}
         />
       )}
@@ -126,11 +126,11 @@ function HotspotMarker({ spot, onClick, onHover, onLeave }) {
         className="relative flex items-center justify-center rounded-full"
         style={{
           width: 32, height: 32, marginLeft: -16, marginTop: -16,
-          background: `${spot.color}40`, border: `2px solid ${spot.color}`, boxShadow: `0 0 15px ${spot.color}90`
+          background: `${spot.color}40`, border: `1px solid ${spot.color}`, boxShadow: `0 0 15px ${spot.color}90`
         }}
         whileHover={{ scale: 1.3, boxShadow: `0 0 30px ${spot.color}` }}
       >
-        <span style={{ fontSize: '1rem' }}>{spot.icon}</span>
+        <span style={{ fontSize: '0.9rem' }}>{spot.icon}</span>
       </motion.div>
     </motion.div>
   );
@@ -163,8 +163,16 @@ export default function GlobalIntelligenceMap({ onNavigate }) {
         <div className="w-20" />
       </div>
 
-      <div className="relative w-full h-[calc(100vh-140px)] flex flex-col items-center justify-center p-4">
-        <div className="relative w-full max-w-7xl h-full rounded-[3rem] overflow-hidden border border-white/10 shadow-[0_0_80px_rgba(0,255,255,0.1)] bg-black">
+      <div className="relative w-full h-[calc(100vh-160px)] flex flex-col items-center justify-center p-4">
+        {/* Surveillance Console Above Map */}
+        <div className="absolute top-6 left-10 w-80 p-4 rounded-3xl bg-black/60 border border-cyan-500/30 backdrop-blur-xl z-30 font-mono text-[9px] text-cyan-400/70 shadow-2xl pointer-events-none">
+          <p className="mb-2 text-cyan-400 font-black tracking-widest border-b border-cyan-500/20 pb-1">🛰️ CONSOLA DE VIGILANCIA</p>
+          {dataFeed.map((line, i) => (
+            <p key={i} className={i === dataFeed.length -1 ? 'text-cyan-300' : ''}>{line}</p>
+          ))}
+        </div>
+
+        <div className="relative w-full max-w-7xl h-full rounded-[3rem] overflow-hidden border border-white/10 shadow-[0_0_80px_rgba(255,255,255,0.1)] bg-black">
           <img src={MAP_BG_URL} alt="Mapa Plano Azul" className="w-full h-full object-contain" />
           {HOTSPOTS.map((spot) => (
             <HotspotMarker key={spot.id} spot={spot} onClick={() => spot.navigateTo && onNavigate(spot.navigateTo)} onHover={setHoveredSpot} onLeave={() => setHoveredSpot(null)} />
