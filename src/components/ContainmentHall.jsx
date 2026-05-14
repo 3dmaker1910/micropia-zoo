@@ -65,7 +65,7 @@ export default function ContainmentHall({ onGoToHub, onGoToMap, onGoToVectors, o
         )}
       </AnimatePresence>
 
-      {/* Muestra 5 Tubos ahora - Scroll Horizontal */}
+      {/* Main Hall - Ensuring 5 Tubes are visible */}
       <div className="h-screen flex items-center px-20">
         <div className="flex gap-16 min-w-max items-center">
           {microbes.map((m, i) => (
@@ -83,7 +83,7 @@ export default function ContainmentHall({ onGoToHub, onGoToMap, onGoToVectors, o
       </AnimatePresence>
 
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/10 font-black tracking-[1em] uppercase text-[10px] pointer-events-none">
-        Pabellón de Contención BSL-4 • Muestras #001 - #005
+        Pabellón de Contención BSL-4 • Muestras Activas
       </div>
     </motion.div>
   );
