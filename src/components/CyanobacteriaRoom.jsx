@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// IMAGEN DE FONDO ACUÁTICA DE ALTA RESOLUCIÓN
 const AQUATIC_BG = 'https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?q=80&w=2034&auto=format&fit=crop';
 
 function makeBubble(id, originX, originY) {
@@ -19,62 +18,63 @@ function Bubble({ b }) {
   );
 }
 
-function Stromatolite({ id, x, y, label, onBurst }) {
-  const [isGlowing, setIsGlowing] = useState(false);
-  return (
-    <motion.div className="absolute cursor-pointer z-20"
-      style={{ left: x, top: y, transform: 'translate(-50%, -50%)' }}
-      onClick={() => { setIsGlowing(true); onBurst(); setTimeout(() => setIsGlowing(false), 1500); }}
-      whileHover={{ scale: 1.1 }}
-    >
-      <motion.div className="w-24 h-24 rounded-[3rem] border-4 flex items-center justify-center shadow-2xl relative"
-        style={{ background: isGlowing ? 'radial-gradient(circle, #06b6d4, #083344)' : 'radial-gradient(circle, #083344, #020617)', borderColor: isGlowing ? '#22d3ee' : '#0e7490' }}
-        animate={isGlowing ? { scale: [1, 1.2, 1], boxShadow: '0 0 50px #22d3ee' } : { y: [0, -5, 0] }}
-        transition={{ duration: 3, repeat: Infinity }}
-      >
-        <span className="text-4xl">🪨</span>
-        {isGlowing && <motion.div className="absolute inset-0 rounded-full border-2 border-cyan-400" animate={{ scale: [1, 2.5], opacity: [1, 0] }} />}
-      </motion.div>
-      <div className="mt-4 text-center">
-         <p className="text-[10px] font-black text-cyan-400 tracking-widest uppercase">{label}</p>
-         <p className="text-[8px] text-white/30 uppercase tracking-tighter italic">Produciendo Oxígeno</p>
-      </div>
-    </motion.div>
-  );
-}
-
 export default function CyanobacteriaRoom({ onNavigate }) {
+  const [oxygenLevel, setOxygenLevel] = useState(0);
   const [bubbles, setBubbles] = useState([]);
-  
-  useEffect(() => {
-    const initialBubbles = Array.from({ length: 20 }).map((_, i) => makeBubble(i, Math.random() * 100, Math.random() * 100));
-    setBubbles(initialBubbles);
-  }, []);
+  const [isAtmosphereBlue, setIsAtmosphereBlue] = useState(false);
+
+  const addOxygen = () => {
+    setOxygenLevel(prev => {
+      const newLevel = Math.min(prev + 10, 100);
+      if (newLevel >= 100) setIsAtmosphereBlue(true);
+      return newLevel;
+    });
+    setBubbles(prev => [...prev, makeBubble(Date.now(), 50, 50)]);
+  };
 
   return (
-    <motion.div className="min-h-screen bg-[#020617] text-white overflow-hidden relative"
+    <motion.div className="min-h-screen transition-colors duration-[3000ms] overflow-hidden relative"
+      style={{ background: isAtmosphereBlue ? '#082f49' : '#1e1b4b' }}
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
     >
       <img src={AQUATIC_BG} alt="Deep Ocean" className="absolute inset-0 w-full h-full object-cover opacity-20" />
-      <div className="absolute inset-0 bg-gradient-to-b from-cyan-950/20 via-transparent to-[#020617]" />
+      
+      {/* HUD Barra de Oxigenación */}
+      <div className="absolute top-10 left-1/2 -translate-x-1/2 z-50 w-full max-w-md px-6">
+        <div className="flex justify-between items-end mb-2">
+           <span className="text-[10px] font-black tracking-widest text-cyan-400">NIVEL DE OXÍGENO ATMOSFÉRICO</span>
+           <span className="text-xl font-black text-cyan-400 italic">{oxygenLevel}%</span>
+        </div>
+        <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden border border-white/10 shadow-[0_0_20px_rgba(34,211,238,0.2)]">
+           <motion.div className="h-full bg-gradient-to-r from-cyan-600 to-cyan-300" animate={{ width: `${oxygenLevel}%` }} />
+        </div>
+      </div>
 
-      <div className="relative z-10 flex flex-col h-full p-8">
-        <header className="text-center mb-10">
-          <h1 className="text-4xl font-black text-cyan-400 italic uppercase tracking-tighter">El Primer Aliento</h1>
-          <p className="text-xs text-white/40 tracking-[0.4em] uppercase">Isla de Cianobacterias • 3.5 BDA</p>
-        </header>
+      <div className="relative z-10 flex flex-col h-full p-8 pt-24 items-center justify-center">
+        {bubbles.map(b => <Bubble key={b.id} b={b} />)}
 
-        <div className="flex-1 relative">
-          {bubbles.map(b => <Bubble key={b.id} b={b} />)}
-          
-          <Stromatolite x="30%" y="60%" label="Estromatólito Alfa" onBurst={() => {}} />
-          <Stromatolite x="70%" y="70%" label="Nodo Primordial" onBurst={() => {}} />
-          <Stromatolite x="50%" y="40%" label="Formación Arcaica" onBurst={() => {}} />
+        {/* Estromatólitos Interactivos */}
+        <div className="relative w-full max-w-4xl flex justify-around items-end h-64">
+           {[1, 2, 3].map(i => (
+             <motion.button key={i} onClick={addOxygen} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} className="group relative">
+                <div className="w-24 h-24 bg-gradient-to-t from-cyan-900 to-slate-800 border-4 border-cyan-700/50 rounded-full flex items-center justify-center shadow-2xl transition-all group-hover:border-cyan-400">
+                   <span className="text-4xl">🪨</span>
+                </div>
+                <p className="mt-4 text-[9px] font-black text-cyan-500/50 tracking-widest uppercase">Tocar para producir O₂</p>
+             </motion.button>
+           ))}
         </div>
 
-        <footer className="flex justify-center mt-10">
-          <button onClick={() => onNavigate('hall')} className="px-10 py-3 bg-cyan-600 rounded-full font-black text-[10px] tracking-widest hover:bg-cyan-400 transition-all uppercase">◀ VOLVER AL PABELLÓN</button>
-        </footer>
+        <AnimatePresence>
+           {isAtmosphereBlue && (
+             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mt-12 p-6 bg-cyan-400 text-black rounded-[2.5rem] font-black text-center shadow-[0_0_50px_rgba(34,211,238,0.5)]">
+                <h2 className="text-2xl uppercase italic">¡EL GRAN EVENTO DE OXIGENACIÓN!</h2>
+                <p className="text-xs mt-2">Gracias a Nando, la atmósfera ahora es respirable. <br/> Has desbloqueado la vida compleja.</p>
+             </motion.div>
+           )}
+        </AnimatePresence>
+
+        <button onClick={() => onNavigate('hall')} className="mt-16 px-10 py-3 border border-white/20 rounded-full font-black text-[9px] tracking-widest hover:bg-white hover:text-black transition-all uppercase opacity-40">◀ VOLVER AL PABELLÓN</button>
       </div>
     </motion.div>
   );
