@@ -9,7 +9,9 @@ import HantavirusMission from './components/HantavirusMission';
 import VectorRoom from './components/VectorRoom';
 import BodyScanner from './components/BodyScanner';
 import CyanobacteriaRoom from './components/CyanobacteriaRoom';
-import AutofagiaRoom from './components/AutofagiaRoom'; // New component to create
+import AutofagiaRoom from './components/AutofagiaRoom';
+import ConanRoom from './components/ConanRoom'; // New
+import HolobionteRoom from './components/HolobionteRoom'; // New
 
 function App() {
   const [screen, setScreen] = useState('landing');
@@ -31,6 +33,8 @@ function App() {
         {screen === 'bodyscan' && <BodyScanner key="bodyscan" onNavigate={handleNavigate} />}
         {screen === 'cyanobacteria' && <CyanobacteriaRoom key="cyanobacteria" onNavigate={handleNavigate} />}
         {screen === 'autofagia' && <AutofagiaRoom key="autofagia" onNavigate={handleNavigate} />}
+        {screen === 'conan' && <ConanRoom key="conan" onNavigate={handleNavigate} />}
+        {screen === 'holobionte' && <HolobionteRoom key="holobionte" onNavigate={handleNavigate} />}
       </AnimatePresence>
     </div>
   );
