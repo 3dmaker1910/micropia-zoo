@@ -34,6 +34,18 @@ const AUTOFAGIA_DATA = [
     title: '5. No Envejecer 🎂',
     content: 'Evita que el cuerpo se llene de basura celular. Ayuda a prevenir el cáncer, evitar el Alzheimer y tener una piel más sana. ¡Es el secreto de la eterna juventud!',
     audio: 'Si la autofagia se detiene, tu cuerpo se llena de basura celular. Es como si en tu casa nunca sacaras la basura: al final, no podrías ni caminar. Mantener la autofagia activa ayuda a prevenir el cáncer eliminando células que se portan mal, evitar el Alzheimer limpiando el cerebro y tener una piel más sana.'
+  },
+  {
+    id: 'nobel',
+    title: 'EXPEDIENTE: Yoshinori Ohsumi 🧪',
+    content: 'Premio Nobel 2016. Su investigación científica es la base de todo lo que sabemos hoy sobre el reciclaje celular. Descubrió los genes que controlan la autofagia.',
+    audio: 'Anexamos el informe técnico. El científico japonés Yoshinori Ohsumi recibió el Premio Nobel en 2016 por sus descubrimientos sobre los mecanismos de la autofagia. Gracias a él, entendemos cómo las células reciclan su contenido, un proceso fundamental para la fisiología humana.'
+  },
+  {
+    id: 'proceso',
+    title: 'ANÁLISIS: Ciclo de Renovación ♻️',
+    content: '1. Secuestro de desechos. 2. Fusión con el Lisosoma. 3. Degradación por enzimas ácidas. 4. Reciclaje de nutrientes vitales.',
+    audio: 'Análisis del proceso biológico. El ciclo de la autofagia tiene cuatro pasos clave: Primero, el secuestro de los componentes dañados en una membrana. Segundo, la fusión con un lisosoma. Tercero, la degradación de los desechos mediante enzimas. Y finalmente, el reciclaje de esos componentes para producir energía nueva.'
   }
 ];
 
@@ -75,13 +87,12 @@ export default function AutofagiaRoom({ onNavigate }) {
              <img src={DOCTOR_IMG} alt="Doctor" className="w-full h-auto object-cover" />
              <div className="absolute inset-0 bg-gradient-to-t from-[#050f0a] via-transparent to-transparent" />
              
-             {/* SPEECH BUTTON OVER DOCTOR */}
              <motion.button 
                onClick={handleSpeak}
                whileHover={{ scale: 1.1 }}
                className={`absolute bottom-10 left-1/2 -translate-x-1/2 px-8 py-3 rounded-full font-black text-[10px] tracking-widest uppercase shadow-2xl transition-all ${speaking ? 'bg-red-600 animate-pulse' : 'bg-emerald-500 text-black'}`}
              >
-               {speaking ? '■ Detener Explicación' : '🔊 Que lo hable el Doctor'}
+               {speaking ? '■ Detener Reporte' : '🔊 Que el Doctor lo hable'}
              </motion.button>
           </div>
         </div>
@@ -96,7 +107,9 @@ export default function AutofagiaRoom({ onNavigate }) {
               exit={{ opacity: 0, x: -50 }}
               className="p-10 rounded-[3rem] bg-neutral-900/60 border border-emerald-500/30 backdrop-blur-xl min-h-[400px] flex flex-col justify-center"
             >
-               <p className="text-[10px] font-black text-emerald-500 mb-4 tracking-[0.3em]">REPORTE DE MANTENIMIENTO CELULAR</p>
+               <p className="text-[10px] font-black text-emerald-500 mb-4 tracking-[0.3em]">
+                 {currentIdx > 4 ? 'Dossier Técnico Científico' : 'Reporte de Mantenimiento Celular'}
+               </p>
                <h2 className="text-3xl md:text-5xl font-black italic uppercase leading-none mb-6 text-white">{AUTOFAGIA_DATA[currentIdx].title}</h2>
                <p className="text-lg md:text-xl text-white/80 leading-relaxed mb-10">
                  {AUTOFAGIA_DATA[currentIdx].content}
@@ -112,14 +125,14 @@ export default function AutofagiaRoom({ onNavigate }) {
                     onClick={handleNext}
                     className="px-10 py-4 bg-white text-black font-black uppercase text-xs rounded-2xl hover:bg-emerald-400 transition-all"
                   >
-                    Siguiente Dato ▶
+                    {currentIdx === AUTOFAGIA_DATA.length - 1 ? 'Reiniciar Teoría ↺' : 'Siguiente Dato ▶'}
                   </button>
                </div>
             </motion.div>
           </AnimatePresence>
 
           <div className="p-6 rounded-3xl bg-emerald-950/20 border border-emerald-500/10 text-[9px] font-medium text-emerald-500/60 leading-relaxed">
-             💡 <strong>Dato Micro-Loco:</strong> El científico Yoshinori Ohsumi ganó el Nobel en 2016 solo por explicarnos este reciclaje. ¡Se cree que tras 16-18 horas sin comer, tus células activan este modo experto!
+             💡 <strong>Información Anexada:</strong> Se han integrado los expedientes técnicos del Nobel 2016 y el ciclo del autofagosoma al final del reporte del Doctor.
           </div>
         </div>
 
