@@ -62,47 +62,50 @@ export default function FluRoom({ onNavigate, onComplete }) {
   };
 
   return (
-    <motion.div className="min-h-screen bg-[#020617] text-white overflow-hidden relative font-sans"
+    <motion.div className="min-h-screen bg-[#020617] text-white overflow-y-auto relative font-sans p-4 md:p-10"
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
     >
-      <img src={MAP_IMG} alt="Historical Map" className="absolute inset-0 w-full h-full object-cover opacity-20 grayscale" />
+      <img src={MAP_IMG} alt="Historical Map" className="fixed inset-0 w-full h-full object-cover opacity-20 grayscale" />
       
-      <div className="relative z-10 flex flex-col h-full p-6 md:p-12 items-center">
-        <header className="w-full max-w-6xl flex justify-between items-center mb-8 border-b border-blue-500/20 pb-4">
-          <h1 className="text-2xl font-black text-blue-400 italic uppercase italic">Misión: El Virus del Hielo</h1>
-          <div className="bg-blue-900/40 px-4 py-1 rounded-full border border-blue-500/30 text-xs font-bold">
-             PUNTOS DE INVESTIGACIÓN: <span className="text-blue-400">{points}</span>
+      <div className="relative z-10 flex flex-col h-full max-w-6xl mx-auto items-center">
+        <header className="w-full flex justify-between items-center mb-8 border-b border-blue-500/20 pb-4">
+          <h1 className="text-xl md:text-2xl font-black text-blue-400 italic uppercase">Misión: El Virus del Hielo</h1>
+          <div className="flex gap-4">
+            <div className="bg-blue-900/40 px-4 py-1 rounded-full border border-blue-500/30 text-[10px] font-bold hidden md:block">
+               PUNTOS: <span className="text-blue-400">{points}</span>
+            </div>
+            <button onClick={() => onNavigate('hall')} className="text-[10px] font-black text-white/40 hover:text-white uppercase tracking-widest px-4 py-2 border border-white/10 rounded-full">◀ REGRESAR</button>
           </div>
         </header>
 
         <AnimatePresence mode="wait">
           {step === 'briefing' && (
-            <motion.div key="b" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl text-center space-y-8">
-               <div className="p-10 rounded-[3rem] bg-black/60 border-2 border-blue-500/30 backdrop-blur-xl">
-                  <h2 className="text-3xl font-black text-blue-400 uppercase mb-4">Dossier 1918</h2>
-                  <p className="text-lg text-white/80 leading-relaxed">
-                    Detective Nando, necesitamos reconstruir la historia de la Gripe Española. 
-                    Ubica los focos de infección y valida los datos de mortalidad para asegurar la muestra.
+            <motion.div key="b" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-3xl space-y-8">
+               <div className="p-8 md:p-12 rounded-[3rem] bg-black/60 border-2 border-blue-500/30 backdrop-blur-xl shadow-2xl">
+                  <h2 className="text-3xl font-black text-blue-400 uppercase mb-6">Dossier 1918: La Gripe Española</h2>
+                  <p className="text-sm md:text-lg text-white/90 leading-relaxed mb-6 italic">
+                    "La pandemia más devastadora de la era moderna comenzó en Kansas en marzo de 1918. Se estima que mató a más de 50 millones de personas en todo el mundo."
                   </p>
-                  <button onClick={startMission} className="mt-8 px-12 py-5 bg-blue-600 rounded-2xl font-black uppercase hover:bg-blue-400 transition-all shadow-[0_0_30px_rgba(59,130,246,0.4)]">INICIAR MISIÓN</button>
+                  <p className="text-sm md:text-lg text-white/90 leading-relaxed mb-8">
+                    "Lo más increíble es cómo la ciencia la rastreó décadas después. En Alaska, en la zona de Brevig Mission, se encontró el cuerpo de una mujer inuit congelada en el permafrost que aún portaba el virus. Gracias a ese hielo, pudimos recuperar su código genético."
+                  </p>
+                  <button onClick={startMission} className="w-full md:w-auto px-12 py-5 bg-blue-600 rounded-2xl font-black uppercase hover:bg-blue-400 transition-all shadow-[0_0_40px_rgba(59,130,246,0.3)]">INICIAR INVESTIGACIÓN</button>
                </div>
             </motion.div>
           )}
 
           {step === 'map_quiz' && (
-            <motion.div key="q" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            <motion.div key="q" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="w-full grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
                <div className="relative rounded-[3rem] overflow-hidden border-2 border-blue-500/20 shadow-2xl bg-black">
                   <img src={MAP_IMG} className="w-full h-auto" alt="Map" />
-                  {/* Alaska Marker */}
                   <motion.div className="absolute top-[18%] left-[10%] w-6 h-6 bg-red-500 rounded-full border-2 border-white animate-pulse" />
-                  {/* Kansas Marker */}
                   <motion.div className="absolute top-[32%] left-[24%] w-4 h-4 bg-yellow-500 rounded-full border border-white" />
                </div>
 
                <div className="space-y-6">
                   <div className="p-8 rounded-[2.5rem] bg-white/5 border border-white/10 backdrop-blur-md">
                     <p className="text-blue-400 font-black text-[10px] uppercase mb-2 tracking-[0.3em]">Pregunta {qIdx + 1} de {QUESTIONS.length}</p>
-                    <h3 className="text-xl font-bold mb-8">{QUESTIONS[qIdx].text}</h3>
+                    <h3 className="text-lg md:text-xl font-bold mb-8">{QUESTIONS[qIdx].text}</h3>
                     <div className="grid grid-cols-1 gap-3">
                        {QUESTIONS[qIdx].options.map(opt => (
                          <button key={opt} onClick={() => handleAnswer(opt)} 
@@ -121,9 +124,8 @@ export default function FluRoom({ onNavigate, onComplete }) {
             <motion.div key="v" initial={{ scale: 0 }} animate={{ scale: 1 }} className="text-center space-y-6">
                <div className="text-8xl mb-4">❄️🏅</div>
                <h2 className="text-5xl font-black text-blue-400 italic uppercase">¡Misión Cumplida!</h2>
-               <p className="text-xl font-bold">Has ganado el Parche del Virus del Hielo</p>
-               <div className="p-8 bg-blue-600 rounded-[2.5rem] shadow-[0_0_50px_rgba(59,130,246,0.6)] text-black font-black">
-                  SCORE FINAL: 100/100
+               <div className="p-8 bg-blue-600 rounded-[2.5rem] shadow-[0_0_50px_rgba(59,130,246,0.5)] text-black font-black">
+                  SCORE: 100/100 • PARCHE OBTENIDO
                </div>
                <button onClick={() => onNavigate('hall')} className="mt-8 px-12 py-4 bg-white text-black font-black uppercase rounded-full">Regresar al Pabellón</button>
             </motion.div>
