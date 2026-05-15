@@ -10,8 +10,9 @@ import VectorRoom from './components/VectorRoom';
 import BodyScanner from './components/BodyScanner';
 import CyanobacteriaRoom from './components/CyanobacteriaRoom';
 import AutofagiaRoom from './components/AutofagiaRoom';
-import ConanRoom from './components/ConanRoom'; // New
-import HolobionteRoom from './components/HolobionteRoom'; // New
+import ConanRoom from './components/ConanRoom';
+import HolobionteRoom from './components/HolobionteRoom';
+import ProbioticosRoom from './components/ProbioticosRoom'; // NEW
 
 function App() {
   const [screen, setScreen] = useState('landing');
@@ -35,6 +36,7 @@ function App() {
         {screen === 'autofagia' && <AutofagiaRoom key="autofagia" onNavigate={handleNavigate} />}
         {screen === 'conan' && <ConanRoom key="conan" onNavigate={handleNavigate} />}
         {screen === 'holobionte' && <HolobionteRoom key="holobionte" onNavigate={handleNavigate} />}
+        {screen === 'probioticos' && <ProbioticosRoom key="probioticos" onNavigate={handleNavigate} />}
       </AnimatePresence>
     </div>
   );
