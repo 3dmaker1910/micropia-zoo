@@ -6,62 +6,63 @@ import MicrobeCard from './MicrobeCard';
 import SecurityGuard from './SecurityGuard';
 
 const ACCESS_PANEL_ROOMS = [
-  { id: 'mission', name: 'Misión Hantavirus', icon: '🚢', desc: 'Investigación en el Mar' },
-  { id: 'vectors', name: 'Sala de la Pulga', icon: '🪳', desc: 'Vector: Peste Negra' },
-  { id: 'bodyscan', name: 'Escáner Corporal', icon: '🔬', desc: 'Auditoría Biológica' },
+  { id: 'mission', name: 'Misión Hantavirus', icon: '🚢', desc: 'Investigación en Ushuaia' },
+  { id: 'vectors', name: 'Sala de la Pulga', icon: '🪳', desc: 'Vectores Biológicos' },
+  { id: 'bodyscan', name: 'Escáner Corporal', icon: '🔬', desc: 'Auditoría Humana' },
   { id: 'cyanobacteria', name: 'Primer Aliento', icon: '🌍', desc: 'Isla de Oxigenación' },
-  { id: 'autofagia', name: 'Sala de Autofagia', icon: '♻️', desc: 'Teoría de Ohsumi' },
+  { id: 'autofagia', name: 'Sala de Autofagia', icon: '♻️', desc: 'Reciclaje de Ohsumi' },
+  { id: 'conan', name: 'Unidad Conan', icon: '☢️', desc: 'Deinococcus Radiodurans' },
+  { id: 'holobionte', name: 'El Holobionte', icon: '🤰', desc: 'Microbiota Evolutiva' },
 ];
 
 export default function ContainmentHall({ onGoToHub, onGoToMap, onNavigate }) {
   const [selectedMicrobe, setSelectedMicrobe] = useState(null);
   const [showAccessPanel, setShowAccessPanel] = useState(false);
 
-  const handleTerminalLink = (targetId) => {
-    onNavigate(targetId);
-    setShowAccessPanel(false);
-  };
-
   return (
     <motion.div 
-      className="min-h-screen bg-[#050505] text-white overflow-y-auto relative"
+      className="min-h-screen bg-[#050505] text-white overflow-x-hidden relative"
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
     >
-      {/* CONTROLES SUPERIORES - ADAPTADOS A MÓVIL */}
-      <div className="absolute top-4 left-4 right-4 z-40 flex flex-wrap gap-2 md:top-6 md:left-8 md:flex-col">
-        <button onClick={onGoToHub} className="px-4 py-2 bg-green-900/40 border border-green-500/40 rounded-full text-[9px] font-black tracking-widest text-green-400 uppercase shadow-lg">◀ OFICINA</button>
-        <button onClick={onGoToMap} className="px-4 py-2 bg-blue-900/40 border border-blue-500/40 rounded-full text-[9px] font-black tracking-widest text-blue-400 uppercase shadow-lg">🌐 MAPA</button>
-        <button onClick={() => onNavigate('vectors')} className="px-4 py-2 bg-orange-600 border border-orange-400 rounded-full text-[9px] font-black tracking-widest text-black uppercase shadow-lg">🪳 VECTORES</button>
+      {/* Main UI Controls */}
+      <div className="absolute top-6 left-8 z-40 flex flex-col gap-4">
+        <button onClick={onGoToHub} className="px-6 py-2 bg-green-900/20 border border-green-500/40 rounded-full text-[10px] font-black tracking-widest text-green-400 hover:bg-green-500 hover:text-black transition-all shadow-lg">◀ OFICINA DRA. MICRA</button>
+        <button onClick={onGoToMap} className="px-6 py-2 bg-blue-900/20 border border-blue-500/40 rounded-full text-[10px] font-black tracking-widest text-blue-400 hover:bg-blue-500 hover:text-black transition-all shadow-lg">🌐 MAPA DE INTELIGENCIA</button>
       </div>
 
-      <div className="absolute top-4 right-4 z-40 md:top-6 md:right-8">
-        <button 
+      {/* BOTÓN MÁS GRANDE Y NOTORIO (Panel de Salas) */}
+      <div className="absolute top-6 right-8 z-50">
+        <motion.button 
           onClick={() => setShowAccessPanel(!showAccessPanel)}
-          className="p-3 bg-slate-900 border border-white/20 rounded-full text-[10px] font-black text-white shadow-xl"
+          whileHover={{ scale: 1.1, boxShadow: '0 0 50px rgba(255,100,0,0.6)' }}
+          animate={{ scale: [1, 1.05, 1] }}
+          transition={{ repeat: Infinity, duration: 2 }}
+          className="px-10 py-5 bg-orange-600 border-2 border-orange-400 rounded-full text-xs font-black tracking-widest text-black shadow-[0_0_30px_rgba(255,100,0,0.4)] hover:bg-orange-500 transition-all uppercase"
         >
-          {showAccessPanel ? '✕' : '📂'}
-        </button>
+          {showAccessPanel ? '✕ CERRAR UNIDAD' : '📂 TERMINAL DE SALAS'}
+        </motion.button>
       </div>
 
-      {/* TERMINAL DE ACCESO RESPONSIVA */}
       <AnimatePresence>
         {showAccessPanel && (
           <motion.div 
-            initial={{ x: 400, opacity: 0 }} animate={{ x: 0, opacity: 1 }} exit={{ x: 400, opacity: 0 }}
-            className="fixed top-16 right-4 left-4 md:left-auto md:w-85 bg-black/95 border-2 border-white/10 backdrop-blur-3xl rounded-[2.5rem] p-6 z-50 shadow-2xl"
+            initial={{ x: 400, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: 400, opacity: 0 }}
+            className="fixed top-24 right-8 w-85 bg-black/95 border-2 border-orange-500/40 backdrop-blur-3xl rounded-[3rem] p-8 z-[60] shadow-[0_0_100px_rgba(0,0,0,1)]"
           >
-            <h3 className="text-white font-black tracking-tighter uppercase italic text-center mb-4">Menú de Acceso</h3>
-            <div className="grid grid-cols-1 gap-2">
+            <h3 className="text-orange-500 font-black tracking-tighter uppercase italic mb-8 border-b border-orange-500/20 pb-4 text-center">Control de Accesos Micropia</h3>
+            <div className="space-y-3">
               {ACCESS_PANEL_ROOMS.map(room => (
                 <button 
                   key={room.id} 
-                  onClick={() => handleTerminalLink(room.id)}
-                  className="w-full flex items-center gap-3 p-3 bg-white/5 border border-white/5 rounded-2xl active:bg-orange-500/20"
+                  onClick={() => { onNavigate(room.id); setShowAccessPanel(false); }}
+                  className="w-full flex items-center gap-5 p-4 bg-white/5 border border-white/10 rounded-[2rem] hover:bg-orange-500/20 hover:border-orange-500/40 transition-all text-left group"
                 >
-                  <span className="text-2xl">{room.icon}</span>
-                  <div className="text-left">
-                    <p className="text-[10px] font-black text-white/80">{room.name.toUpperCase()}</p>
-                    <p className="text-[7px] text-white/30 uppercase tracking-widest">{room.desc}</p>
+                  <span className="text-3xl filter group-hover:scale-125 transition-transform">{room.icon}</span>
+                  <div>
+                    <p className="text-[11px] font-black text-white group-hover:text-orange-400">{room.name.toUpperCase()}</p>
+                    <p className="text-[8px] text-white/30 uppercase tracking-[0.2em]">{room.desc}</p>
                   </div>
                 </button>
               ))}
@@ -70,28 +71,21 @@ export default function ContainmentHall({ onGoToHub, onGoToMap, onNavigate }) {
         )}
       </AnimatePresence>
 
-      {/* VISTA DE TUBOS - GRID PARA MÓVIL, FLEX PARA PC */}
-      <div className="min-h-screen flex flex-col items-center justify-center p-10 pt-32">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:flex md:flex-row gap-8 md:gap-16 items-center justify-center">
+      {/* Main Hall Samples */}
+      <div className="h-screen flex items-center justify-center p-10 pt-32">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:flex gap-8 md:gap-16 items-center justify-center">
           {microbes.map((m) => (
-            <div key={m.id} className="relative scale-90 md:scale-100">
+            <div key={m.id} className="relative">
               <ContainmentTube microbe={m} onClick={() => setSelectedMicrobe(m)} />
             </div>
           ))}
         </div>
-
-        <div className="mt-10 md:mt-0">
-           <SecurityGuard />
-        </div>
+        <SecurityGuard />
       </div>
 
       <AnimatePresence>
         {selectedMicrobe && <MicrobeCard microbe={selectedMicrobe} onClose={() => setSelectedMicrobe(null)} />}
       </AnimatePresence>
-
-      <div className="pb-10 text-center text-white/5 font-black tracking-[1em] uppercase text-[8px] pointer-events-none">
-        Bio-Containment Unit BSL-4
-      </div>
     </motion.div>
   );
 }
