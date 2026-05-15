@@ -10,14 +10,20 @@ const ACCESS_PANEL_ROOMS = [
   { id: 'vectors', name: 'Sala de la Pulga', icon: '🪳', desc: 'Vectores Biológicos' },
   { id: 'bodyscan', name: 'Escáner Corporal', icon: '🔬', desc: 'Auditoría Humana' },
   { id: 'cyanobacteria', name: 'Primer Aliento', icon: '🌍', desc: 'Isla de Oxigenación' },
-  { id: 'autofagia', name: 'Sala de Autofagia', icon: '♻️', desc: 'Reciclaje de Ohsumi' },
-  { id: 'conan', name: 'Unidad Conan', icon: '☢️', desc: 'Deinococcus Radiodurans' },
-  { id: 'holobionte', name: 'El Holobionte', icon: '🤰', desc: 'Microbiota Evolutiva' },
+  { id: 'autofagia', name: 'Sala de Autofagia', icon: '♻️', desc: 'Reciclaje Celular' },
+  { id: 'conan', name: 'Unidad Conan', icon: '☢️', desc: 'Resistencia Extrema' },
+  { id: 'holobionte', name: 'El Holobionte', icon: '🤰', desc: 'Evolución Humana' },
+  { id: 'probioticos', name: 'Superhéroes VIP', icon: '🦸‍♂️', desc: 'Sala de Probióticos' },
 ];
 
 export default function ContainmentHall({ onGoToHub, onGoToMap, onNavigate }) {
   const [selectedMicrobe, setSelectedMicrobe] = useState(null);
   const [showAccessPanel, setShowAccessPanel] = useState(false);
+
+  const handleTerminalLink = (targetId) => {
+    onNavigate(targetId);
+    setShowAccessPanel(false);
+  };
 
   return (
     <motion.div 
@@ -30,7 +36,7 @@ export default function ContainmentHall({ onGoToHub, onGoToMap, onNavigate }) {
         <button onClick={onGoToMap} className="px-6 py-2 bg-blue-900/20 border border-blue-500/40 rounded-full text-[10px] font-black tracking-widest text-blue-400 hover:bg-blue-500 hover:text-black transition-all shadow-lg">🌐 MAPA DE INTELIGENCIA</button>
       </div>
 
-      {/* BOTÓN MÁS GRANDE Y NOTORIO (Panel de Salas) */}
+      {/* BOTÓN TERMINAL DE SALAS */}
       <div className="absolute top-6 right-8 z-50">
         <motion.button 
           onClick={() => setShowAccessPanel(!showAccessPanel)}
@@ -52,17 +58,17 @@ export default function ContainmentHall({ onGoToHub, onGoToMap, onNavigate }) {
             className="fixed top-24 right-8 w-85 bg-black/95 border-2 border-orange-500/40 backdrop-blur-3xl rounded-[3rem] p-8 z-[60] shadow-[0_0_100px_rgba(0,0,0,1)]"
           >
             <h3 className="text-orange-500 font-black tracking-tighter uppercase italic mb-8 border-b border-orange-500/20 pb-4 text-center">Control de Accesos Micropia</h3>
-            <div className="space-y-3">
+            <div className="space-y-2 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar">
               {ACCESS_PANEL_ROOMS.map(room => (
                 <button 
                   key={room.id} 
-                  onClick={() => { onNavigate(room.id); setShowAccessPanel(false); }}
+                  onClick={() => handleTerminalLink(room.id)}
                   className="w-full flex items-center gap-5 p-4 bg-white/5 border border-white/10 rounded-[2rem] hover:bg-orange-500/20 hover:border-orange-500/40 transition-all text-left group"
                 >
                   <span className="text-3xl filter group-hover:scale-125 transition-transform">{room.icon}</span>
                   <div>
                     <p className="text-[11px] font-black text-white group-hover:text-orange-400">{room.name.toUpperCase()}</p>
-                    <p className="text-[8px] text-white/30 uppercase tracking-[0.2em]">{room.desc}</p>
+                    <p className="text-[8px] text-white/40 uppercase tracking-[0.2em]">{room.desc}</p>
                   </div>
                 </button>
               ))}
